@@ -9,20 +9,20 @@
         android:id="@+id/FirstFragment"
         android:name="com.mostafan3ma.android.pcm_helper10.Lines.MainLinesFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/fragment_lines_main">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
+            android:id="@+id/action_LineMainFragment_to_LineDetailsFragment"
             app:destination="@id/SecondFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.mostafan3ma.android.pcm_helper10.LineDetailsFragment"
+        android:name="com.mostafan3ma.android.pcm_helper10.Lines.Operations.LineDetailsFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/fragment_line_details">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
+            android:id="@+id/action_LinesDetailsFragment_to_LinesMainFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>
