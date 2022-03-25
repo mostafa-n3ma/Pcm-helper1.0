@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mostafan3ma.android.pcm_helper10.data.source.PipeLine
+import com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine
 import com.mostafan3ma.android.pcm_helper10.databinding.LineItemBinding
 
 class LinesAdapter(private val clickListener:LineListener)
@@ -27,7 +27,7 @@ class LinesAdapter(private val clickListener:LineListener)
 
 
 class LineViewHolder(private val binding:LineItemBinding):RecyclerView.ViewHolder(binding.root){
-    fun bind(item:PipeLine){
+    fun bind(item: PipeLine){
         binding.pipeLine=item
         binding.executePendingBindings()
     }

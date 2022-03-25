@@ -1,12 +1,11 @@
-package com.mostafan3ma.android.pcm_helper10.data.source
+package com.mostafan3ma.android.pcm_helper10.data.source.database
 
-import android.content.Context
 import androidx.room.*
 
 @Database(entities = [PipeLine::class], version = 1, exportSchema = false)
 @TypeConverters(DataConverter::class)
 abstract class LineDataBase :RoomDatabase(){
-    abstract fun getLineDao():LineDao
+    abstract fun getLineDao(): LineDao
 
 }
 

@@ -1,4 +1,4 @@
-package com.mostafan3ma.android.pcm_helper10.data.source
+package com.mostafan3ma.android.pcm_helper10.data.source.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
@@ -7,7 +7,7 @@ import androidx.room.*
 interface LineDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-     suspend fun insertLine(line:PipeLine)
+     suspend fun insertLine(line: PipeLine)
 
     @Update
     suspend fun updateLine(line: PipeLine)
