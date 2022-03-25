@@ -19,6 +19,7 @@ data class PipeLine(
     var i_end: String?,
     var start_point: String?,
     var end_point: String?,
+    var work_date:String?,
     var points: MutableList<DamagePoint>
 )
 

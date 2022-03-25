@@ -13,7 +13,7 @@ interface LineDao {
     suspend fun updateLine(line: PipeLine)
 
     @Query("select * FROM table_Lines")
-    suspend fun getAllLines():List<PipeLine>
+    suspend fun getAllLines():LiveData<List<PipeLine>>
 
 
     @Query("DELETE FROM table_Lines")
