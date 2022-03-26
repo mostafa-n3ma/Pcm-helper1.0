@@ -7,7 +7,7 @@ import com.mostafan3ma.android.pcm_helper10.data.source.database.LineDataBase
 import com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine
 
 class LocalDataSource(private val dao: LineDao) : DefaultLocalDataSource {
-    override suspend fun getAllLines(): LiveData<List<PipeLine>> {
+    override  fun getAllLines(): LiveData<List<PipeLine>> {
         return dao.getAllLines()
     }
 

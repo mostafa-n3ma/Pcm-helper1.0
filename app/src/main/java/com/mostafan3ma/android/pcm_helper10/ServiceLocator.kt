@@ -21,8 +21,6 @@ object ServiceLocator {
             return pipeLinesRepository?:createPipeLineRepository(context)
         }
 
-
-
     }
 
     private fun createPipeLineRepository(context: Context): PipeLinesRepository {

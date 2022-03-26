@@ -15,10 +15,8 @@ class PipeLinesRepository(
     private val dispatcher:CoroutineDispatcher=Dispatchers.IO
 ) {
 
-    suspend fun getAllLines(): LiveData<List<PipeLine>> {
-        return withContext(dispatcher){
-            localDataSource.getAllLines()
-        }
+     fun getAllLines(): LiveData<List<PipeLine>> {
+           return localDataSource.getAllLines()
     }
 
     suspend fun clearAllLines(){
