@@ -3,26 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/LinesMainFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/LinesMainFragment"
         android:name="com.mostafan3ma.android.pcm_helper10.Lines.MainLinesFragment"
-        android:label="@string/first_fragment_label"
+        android:label="@string/lines_main_fragment_label"
         tools:layout="@layout/fragment_lines_main">
-
         <action
-            android:id="@+id/action_LineMainFragment_to_LineDetailsFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_LinesMainFragment_to_DetailsFragment"
+            app:destination="@id/DetailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
+        android:id="@+id/DetailsFragment"
         android:name="com.mostafan3ma.android.pcm_helper10.Lines.Operations.LineDetailsFragment"
-        android:label="@string/second_fragment_label"
+        android:label="@string/details_fragment_label"
         tools:layout="@layout/fragment_line_details">
 
         <action
             android:id="@+id/action_LinesDetailsFragment_to_LinesMainFragment"
-            app:destination="@id/FirstFragment" />
+            app:destination="@id/LinesMainFragment" />
+        <argument
+            android:name="selected_line"
+            app:argType="com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine" />
     </fragment>
 </navigation>

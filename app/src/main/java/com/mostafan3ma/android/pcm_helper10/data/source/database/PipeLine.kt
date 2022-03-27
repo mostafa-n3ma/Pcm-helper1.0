@@ -1,12 +1,14 @@
 package com.mostafan3ma.android.pcm_helper10.data.source.database
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.parcel.Parcelize
 
-
+@Parcelize
 @Entity(tableName = "table_Lines")
 data class PipeLine(
     @PrimaryKey(autoGenerate = true)
@@ -21,10 +23,10 @@ data class PipeLine(
     var end_point: String?,
     var work_date:String?,
     var points: MutableList<DamagePoint>
-)
+):Parcelable
 
 
-
+@Parcelize
 data class DamagePoint(
     var db: String? = null,
     var Depth: String? = null,
@@ -32,7 +34,7 @@ data class DamagePoint(
     var current2: String? = null,
     var gps_x: String? = null,
     var gps_y: String? = null
-)
+):Parcelable
 
 class DataConverter {
     @TypeConverter

@@ -2,8 +2,8 @@
     <string name="app_name">Pcm-helper1.0</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">Pipe Lines</string>
-    <string name="second_fragment_label">Line Details</string>
+    <string name="lines_main_fragment_label">Pipe Lines</string>
+    <string name="details_fragment_label">Line Details</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
