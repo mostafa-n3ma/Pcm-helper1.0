@@ -1,6 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+        <variable
+            name="point"
+            type="com.mostafan3ma.android.pcm_helper10.data.source.database.DamagePoint" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:backgroundTint="#DAD0D0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="1)"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/text_normal_size"/>
+                <TextView
+                    android:id="@+id/point_db"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="45"
+                    android:layout_weight="1"
+                    android:text="@{point.db}"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/text_normal_size"/>
+                <TextView
+                    android:id="@+id/point_depth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="1.2m"
+                    android:layout_weight="1"
+                    android:text="@{point.depth}"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/text_normal_size"/>
+                <TextView
+                    android:id="@+id/point_current1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="500mA"
+                    android:layout_weight="1"
+                    android:text="@{point.current1}"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/text_normal_size"/>
+                <TextView
+                    android:id="@+id/point_current2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="481mA"
+                    android:layout_weight="1"
+                    android:text="@{point.current2}"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/text_normal_size"/>
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical"
+                   android:layout_marginLeft="5dp"
+                   android:layout_weight="1"
+                   >
+                   <TextView
+                       android:id="@+id/point_gps_x"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       tools:text="551235"
+                       android:layout_gravity="center"
+                       android:text="@{point.gps_x}"
+                       android:textSize="@dimen/text_smale_size"/>
+                   <TextView
+                       android:id="@+id/point_gps_y"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       tools:text="3598221"
+                       android:layout_gravity="center"
+                       android:text="@{point.gps_y}"
+                       android:textSize="@dimen/text_smale_size"/>
+               </LinearLayout>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

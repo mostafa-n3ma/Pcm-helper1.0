@@ -9,107 +9,125 @@
             type="com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Lines.Operations.LineDetailsFragment">
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".Lines.Operations.LineDetailsFragment">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/line_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{selectedLine.name}"
+                    android:textSize="@dimen/text_large_size"
+                    android:textStyle="bold"
+                    tools:text="AD4-13-3H" />
+
+                <TextView
+                    android:id="@+id/line_ogm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{selectedLine.ogm}"
+                    android:textSize="@dimen/text_normal_size"
+                    tools:text="OGM8" />
+
+                <TextView
+                    android:id="@+id/line_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{selectedLine.type}"
+                    android:textSize="@dimen/text_normal_size"
+                    tools:text="OIL" />
+
+                <TextView
+                    android:id="@+id/lion_length"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{selectedLine.length}"
+                    android:textSize="@dimen/text_normal_size"
+                    tools:text="2300m" />
+
+                <TextView
+                    android:id="@+id/line_work_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{selectedLine.work_date}"
+                    android:textSize="@dimen/text_normal_size"
+                    tools:text="27/3/2022" />
+
+                <TextView
+                    android:id="@+id/line_start_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{selectedLine.start_point}"
+                    android:textSize="@dimen/text_normal_size"
+                    tools:text="start Point:551268;3589331" />
+
+                <TextView
+                    android:id="@+id/line_i_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{selectedLine.i_start}"
+                    android:textSize="@dimen/text_normal_size"
+                    tools:text="start current:500mA" />
+
+                <TextView
+                    android:id="@+id/line_end_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{selectedLine.end_point}"
+                    android:textSize="@dimen/text_normal_size"
+                    tools:text="end point :551248;3589220" />
+
+                <TextView
+                    android:id="@+id/line_i_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{selectedLine.i_end}"
+                    android:textSize="@dimen/text_normal_size"
+                    tools:text="end current:50mA" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/points_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="423dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                app:layout_constraintVertical_bias="0.0"
+                tools:listitem="@layout/point_item"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add_point"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/line_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{selectedLine.name}"
-                android:textSize="@dimen/text_large_size"
-                android:textStyle="bold"
-                tools:text="AD4-13-3H" />
-
-            <TextView
-                android:id="@+id/line_ogm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{selectedLine.ogm}"
-                android:textSize="@dimen/text_normal_size"
-                tools:text="OGM8" />
-
-            <TextView
-                android:id="@+id/line_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{selectedLine.type}"
-                android:textSize="@dimen/text_normal_size"
-                tools:text="OIL" />
-
-            <TextView
-                android:id="@+id/lion_length"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{selectedLine.length}"
-                android:textSize="@dimen/text_normal_size"
-                tools:text="2300m" />
-
-            <TextView
-                android:id="@+id/line_work_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{selectedLine.work_date}"
-                android:textSize="@dimen/text_normal_size"
-                tools:text="27/3/2022" />
-
-            <TextView
-                android:id="@+id/line_start_point"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{selectedLine.start_point}"
-                android:textSize="@dimen/text_normal_size"
-                tools:text="start Point:551268;3589331" />
-
-            <TextView
-                android:id="@+id/line_i_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{selectedLine.i_start}"
-                android:textSize="@dimen/text_normal_size"
-                tools:text="start current:500mA" />
-
-            <TextView
-                android:id="@+id/line_end_point"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{selectedLine.end_point}"
-                android:textSize="@dimen/text_normal_size"
-                tools:text="end point :551248;3589220" />
-
-            <TextView
-                android:id="@+id/line_i_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{selectedLine.i_end}"
-                android:textSize="@dimen/text_normal_size"
-                tools:text="end current:50mA" />
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/points_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="423dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.0" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin"
+            app:srcCompat="@drawable/ic_add__point"
+            android:backgroundTint="@color/white"
+            android:contentDescription="@string/add_new_pipe_line_button" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
