@@ -10,27 +10,20 @@ import com.mostafan3ma.android.pcm_helper10.R
 import com.mostafan3ma.android.pcm_helper10.databinding.FragmentLineDetailsBinding
 class LineDetailsFragment : Fragment() {
 
-    private var _binding: FragmentLineDetailsBinding? = null
-    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentLineDetailsBinding.inflate(inflater, container, false)
+        val binding = FragmentLineDetailsBinding.inflate(inflater)
+
+        var args=LineDetailsFragmentArgs.fromBundle(requireArguments())
+
+        binding.selectedLine=args.selectedLine
+
         return binding.root
-
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }
