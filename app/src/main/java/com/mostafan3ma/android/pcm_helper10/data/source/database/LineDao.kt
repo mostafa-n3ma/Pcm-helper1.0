@@ -15,11 +15,14 @@ interface LineDao {
     @Query("select * FROM table_Lines")
      fun getAllLines():LiveData<List<PipeLine>>
 
+     @Query("SELECT * FROM table_Lines WHERE id=:id")
+     suspend fun getPipeLine(id:Int):PipeLine?
 
     @Query("DELETE FROM table_Lines")
     suspend fun clear()
 
-
+   @Query("UPDATE table_Lines SET points=:points WHERE id=:id ")
+   fun updatePointsList(id:Int,points:MutableList<DamagePoint>)
 
 
 }

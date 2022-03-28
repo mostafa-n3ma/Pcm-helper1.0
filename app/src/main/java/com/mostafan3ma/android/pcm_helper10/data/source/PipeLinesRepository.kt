@@ -18,6 +18,9 @@ class PipeLinesRepository(
      fun getAllLines(): LiveData<List<PipeLine>> {
            return localDataSource.getAllLines()
     }
+    suspend fun getPipeLine(id:Int):PipeLine?{
+       return localDataSource.getPipeLine(id)
+    }
 
     suspend fun clearAllLines(){
         withContext(dispatcher){
@@ -37,17 +40,14 @@ class PipeLinesRepository(
         }
     }
 
-
-
-
-
-    //Line points
-     fun getLinePointAt(position: Int,pointList: MutableList<DamagePoint>): DamagePoint {
-        return pointList[position]
+    suspend fun updatePointsList(pipeID:Int,points:MutableList<DamagePoint>){
+        withContext(dispatcher){
+            localDataSource.updatePointsList(pipeID,points)
+        }
     }
-     fun updateLinePointAt(position: Int, pointList: MutableList<DamagePoint>, newPoint: DamagePoint){
-        pointList[position] = newPoint
-    }
+
+
+
 
 
 }

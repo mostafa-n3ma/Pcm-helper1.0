@@ -1,18 +1,14 @@
-package com.mostafan3ma.android.pcm_helper10.Lines
+package com.mostafan3ma.android.pcm_helper10.lines
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.mostafan3ma.android.pcm_helper10.PcmApp
-import com.mostafan3ma.android.pcm_helper10.data.source.database.DamagePoint
-import com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine
 import com.mostafan3ma.android.pcm_helper10.databinding.FragmentLinesMainBinding
 
 class MainLinesFragment : Fragment() {
@@ -47,6 +43,15 @@ class MainLinesFragment : Fragment() {
 
         binding.lineRecycler.adapter=linAdapter
 
+        binding.fabAddLine.setOnClickListener {
+            viewModel.navigateToAddLineFragment()
+        }
+        viewModel.navigateToAddLineFragment.observe(viewLifecycleOwner, Observer {
+            if (it){
+                findNavController().navigate(MainLinesFragmentDirections.actionLinesMainFragmentToAddLineFragment())
+                viewModel.navigateToAddLineFragmentCompleted()
+            }
+        })
 
         return binding.root
 

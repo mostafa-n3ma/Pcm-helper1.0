@@ -10,7 +10,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Lines.MainLinesFragment">
+        tools:context=".lines.MainLinesFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/line_recycler"

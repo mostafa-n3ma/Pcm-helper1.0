@@ -12,7 +12,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "table_Lines")
 data class PipeLine(
     @PrimaryKey(autoGenerate = true)
-    val id:Int,
+    val id:Int=0,
     var name: String?,
     var ogm: String?,
     var length: String?,
@@ -28,8 +28,10 @@ data class PipeLine(
 
 @Parcelize
 data class DamagePoint(
+    @PrimaryKey(autoGenerate = true)
+    val no:Int=1,
     var db: String? = null,
-    var Depth: String? = null,
+    var depth: String? = null,
     var current1: String? = null,
     var current2: String? = null,
     var gps_x: String? = null,

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.mostafan3ma.android.pcm_helper10.lines.operations.AddLineViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".lines.operations.AddLineViewModel">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/name_edit_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/edit_margin"
+                android:gravity="center"
+                android:hint="@string/edit_line_name_hint"
+                android:inputType="textMultiLine"
+                android:text="@={viewModel.name}"
+                />
+
+            <EditText
+                android:id="@+id/ogm_edit_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/edit_margin"
+                android:gravity="center"
+                android:hint="@string/edit_ogm_hint"
+                android:text="@={viewModel.ogm}"
+                />
+
+            <EditText
+                android:id="@+id/length_edit_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/edit_margin"
+                android:gravity="center"
+                android:hint="@string/edit_length_hint"
+                android:text="@={viewModel.length}"
+                />
+
+            <EditText
+                android:id="@+id/type_edit_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/edit_margin"
+                android:gravity="center"
+                android:hint="@string/edit_type_hint"
+                android:text="@={viewModel.type}"
+                  />
+
+            <EditText
+                android:id="@+id/work_date_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/edit_margin"
+                android:gravity="center"
+                android:hint="@string/edit_date_hint"
+                android:text="@={viewModel.work_date}"
+                  />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_line_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

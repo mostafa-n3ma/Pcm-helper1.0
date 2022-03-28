@@ -4,4 +4,5 @@
     <dimen name="text_normal_size">24sp</dimen>
     <dimen name="text_large_size">35sp</dimen>
     <dimen name="text_smale_size">18sp</dimen>
+    <dimen name="edit_margin">8dp</dimen>
 </resources>

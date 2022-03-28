@@ -2,6 +2,7 @@ package com.mostafan3ma.android.pcm_helper10.data.source.LocalDataSource
 
 import androidx.lifecycle.LiveData
 import com.mostafan3ma.android.pcm_helper10.data.source.DefaultLocalDataSource
+import com.mostafan3ma.android.pcm_helper10.data.source.database.DamagePoint
 import com.mostafan3ma.android.pcm_helper10.data.source.database.LineDao
 import com.mostafan3ma.android.pcm_helper10.data.source.database.LineDataBase
 import com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine
@@ -11,9 +12,14 @@ class LocalDataSource(private val dao: LineDao) : DefaultLocalDataSource {
         return dao.getAllLines()
     }
 
+    override suspend fun getPipeLine(id: Int) :PipeLine?{
+         return dao.getPipeLine(id)
+    }
+
     override suspend fun clearAllLines() {
         dao.clear()
     }
+
 
     override suspend fun insertLine(line: PipeLine) {
         dao.insertLine(line)
@@ -21,6 +27,10 @@ class LocalDataSource(private val dao: LineDao) : DefaultLocalDataSource {
 
     override suspend fun updateLine(line: PipeLine) {
         dao.updateLine(line)
+    }
+
+    override suspend fun updatePointsList(pipeId: Int, points: MutableList<DamagePoint>) {
+        dao.updatePointsList(pipeId,points)
     }
 
 }

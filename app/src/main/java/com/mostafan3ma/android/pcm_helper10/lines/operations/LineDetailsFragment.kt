@@ -1,4 +1,4 @@
-package com.mostafan3ma.android.pcm_helper10.Lines.Operations
+package com.mostafan3ma.android.pcm_helper10.lines.operations
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.fragment.findNavController
-import com.mostafan3ma.android.pcm_helper10.Lines.Operations.Points.PointListener
-import com.mostafan3ma.android.pcm_helper10.Lines.Operations.Points.PointsAdapter
-import com.mostafan3ma.android.pcm_helper10.R
+import com.mostafan3ma.android.pcm_helper10.lines.operations.Points.PointListener
+import com.mostafan3ma.android.pcm_helper10.lines.operations.Points.PointsAdapter
 import com.mostafan3ma.android.pcm_helper10.databinding.FragmentLineDetailsBinding
 class LineDetailsFragment : Fragment() {
     private lateinit var pointsAdapter:PointsAdapter
