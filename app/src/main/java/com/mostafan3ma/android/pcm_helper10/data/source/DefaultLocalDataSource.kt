@@ -8,6 +8,7 @@ interface DefaultLocalDataSource {
 
      fun getAllLines(): LiveData<List<PipeLine>>
     suspend fun getPipeLine(id:Int):PipeLine?
+    suspend fun getLastPipeLine():PipeLine?
     suspend fun clearAllLines()
     suspend fun insertLine(line: PipeLine)
     suspend fun updateLine(line: PipeLine)

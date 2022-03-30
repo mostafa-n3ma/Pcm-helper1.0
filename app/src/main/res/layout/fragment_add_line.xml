@@ -74,6 +74,27 @@
                 android:hint="@string/edit_date_hint"
                 android:text="@={viewModel.work_date}"
                   />
+
+            <EditText
+                android:id="@+id/start_point_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/edit_margin"
+                android:gravity="center"
+                android:hint="@string/start_point_hint"
+                android:text="@={viewModel.startPoint}"
+                />
+            <EditText
+                android:id="@+id/i_start_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/edit_margin"
+                android:gravity="center"
+                android:hint="@string/start_curent_hint"
+                android:text="@={viewModel.i_start}"
+                />
+
+
         </LinearLayout>
 
         <Button

@@ -18,6 +18,10 @@ interface LineDao {
      @Query("SELECT * FROM table_Lines WHERE id=:id")
      suspend fun getPipeLine(id:Int):PipeLine?
 
+
+     @Query("SELECT * FROM table_Lines WHERE id=(SELECT MAX(id)FROM table_Lines) LIMIT 1")
+     suspend fun getLastPipeLine():PipeLine?
+
     @Query("DELETE FROM table_Lines")
     suspend fun clear()
 

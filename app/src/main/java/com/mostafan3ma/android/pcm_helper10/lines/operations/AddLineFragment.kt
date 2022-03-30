@@ -4,29 +4,36 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.mostafan3ma.android.pcm_helper10.PcmApp
 import com.mostafan3ma.android.pcm_helper10.databinding.FragmentAddLineBinding
 
 class AddLineFragment :Fragment(){
-    private lateinit var viewModel: AddLineViewModel
+    val viewModel by viewModels<AddLineViewModel>() {
+        AddLineViewModel.AddLineViewModelFactory((requireContext().applicationContext as PcmApp).repository)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding=FragmentAddLineBinding.inflate(inflater)
-        viewModel=ViewModelProvider(this).get(AddLineViewModel::class.java)
         binding.lifecycleOwner=this
         binding.viewModel=viewModel
 
+        viewModel.navigateToDetails.observe(viewLifecycleOwner, Observer {
+            if (it!=null){
+                findNavController()
+                    .navigate(AddLineFragmentDirections.actionAddLineFragmentToDetailsFragment(it))
+                viewModel.navigateToDetailsComplete()
+            }
+        })
 
         binding.button.setOnClickListener {
-            Toast.makeText(requireContext(),"${viewModel.name.value}" +
-                    ":${viewModel.ogm.value}" +
-                    ":${viewModel.type.value}" +
-                    ":${viewModel.length.value}" +
-                    ":${viewModel.work_date.value}"
-                ,Toast.LENGTH_SHORT).show()
+            viewModel.addLineToDatabaseAndNavigateToDetails()
         }
 
         return binding.root

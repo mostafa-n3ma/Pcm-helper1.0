@@ -16,6 +16,10 @@ class LocalDataSource(private val dao: LineDao) : DefaultLocalDataSource {
          return dao.getPipeLine(id)
     }
 
+    override suspend fun getLastPipeLine(): PipeLine? {
+        return dao.getLastPipeLine()
+    }
+
     override suspend fun clearAllLines() {
         dao.clear()
     }

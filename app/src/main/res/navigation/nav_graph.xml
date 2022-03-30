@@ -33,5 +33,11 @@
     <fragment
         android:id="@+id/addLineFragment"
         android:name="com.mostafan3ma.android.pcm_helper10.lines.operations.AddLineFragment"
-        android:label="new Line" />
+        android:label="new Line" >
+        <action
+            android:id="@+id/action_addLineFragment_to_DetailsFragment"
+            app:destination="@id/DetailsFragment"
+            app:popUpTo="@id/LinesMainFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
 </navigation>

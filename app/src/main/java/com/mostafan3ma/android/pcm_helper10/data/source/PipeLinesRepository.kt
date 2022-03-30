@@ -21,6 +21,9 @@ class PipeLinesRepository(
     suspend fun getPipeLine(id:Int):PipeLine?{
        return localDataSource.getPipeLine(id)
     }
+    suspend fun getLastPipeLine():PipeLine?{
+        return localDataSource.getLastPipeLine()
+    }
 
     suspend fun clearAllLines(){
         withContext(dispatcher){
