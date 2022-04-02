@@ -8,6 +8,7 @@
         <variable
             name="selectedLine"
             type="com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine" />
+
         <variable
             name="viewModel"
             type="com.mostafan3ma.android.pcm_helper10.lines.operations.LineDetailsViewModel" />
@@ -17,111 +18,341 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".lines.operations.LineDetailsFragment">
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/line_name_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/line_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingStart="16dp"
+                        android:text="@{selectedLine.name}"
+                        android:textSize="@dimen/text_large_size"
+                        android:textStyle="bold"
+                        tools:text="AD4-13-3H" />
+
+                    <TextView
+                        android:id="@+id/line_ogm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="16dp"
+                        android:text="@{selectedLine.ogm}"
+                        android:textSize="@dimen/text_normal_size"
+                        tools:text="OGM8" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
             <LinearLayout
-                android:id="@+id/linearLayout"
+                android:id="@+id/line_details_lenear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/line_name_cardview">
 
-                <TextView
-                    android:id="@+id/line_name"
-                    android:layout_width="wrap_content"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{selectedLine.name}"
-                    android:textSize="@dimen/text_large_size"
-                    android:textStyle="bold"
-                    tools:text="AD4-13-3H" />
+                    android:layout_margin="2dp">
 
-                <TextView
-                    android:id="@+id/line_ogm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{selectedLine.ogm}"
-                    android:textSize="@dimen/text_normal_size"
-                    tools:text="OGM8" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/line_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{selectedLine.type}"
-                    android:textSize="@dimen/text_normal_size"
-                    tools:text="OIL" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/lion_length"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{selectedLine.length}"
-                    android:textSize="@dimen/text_normal_size"
-                    tools:text="2300m" />
+                            <TextView
+                                android:id="@+id/line_type"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingStart="16dp"
+                                android:text="@{selectedLine.type}"
+                                android:textSize="@dimen/text_normal_size"
+                                tools:text="OIL" />
 
-                <TextView
-                    android:id="@+id/line_work_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{selectedLine.work_date}"
-                    android:textSize="@dimen/text_normal_size"
-                    tools:text="27/3/2022" />
+                            <TextView
+                                android:id="@+id/lion_length"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@{selectedLine.length}"
+                                android:textSize="@dimen/text_normal_size"
+                                tools:text="2300m" />
 
-                <TextView
-                    android:id="@+id/line_start_point"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{selectedLine.start_point}"
-                    android:textSize="@dimen/text_normal_size"
-                    tools:text="start Point:551268;3589331" />
+                            <TextView
+                                android:id="@+id/line_work_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:paddingEnd="16dp"
+                                android:text="@{selectedLine.work_date}"
+                                android:textSize="@dimen/text_normal_size"
+                                tools:text="27/3/2022" />
 
-                <TextView
-                    android:id="@+id/line_i_start"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{selectedLine.i_start}"
-                    android:textSize="@dimen/text_normal_size"
-                    tools:text="start current:500mA" />
 
-                <TextView
-                    android:id="@+id/line_end_point"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{selectedLine.end_point}"
-                    android:textSize="@dimen/text_normal_size"
-                    tools:text="end point :551248;3589220" />
+                        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/line_i_end"
-                    android:layout_width="wrap_content"
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{selectedLine.i_end}"
-                    android:textSize="@dimen/text_normal_size"
-                    tools:text="end current:50mA" />
+                    android:layout_margin="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="16dp"
+                                android:text="Start Point:"
+                                android:textSize="@dimen/text_normal_size" />
+
+                            <TextView
+                                android:id="@+id/line_start_point"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:paddingEnd="16dp"
+                                android:text="@{selectedLine.start_point}"
+                                android:textSize="@dimen/text_normal_size"
+                                tools:text="551268;3589331" />
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="16dp"
+                                android:text="End Point:"
+                                android:textSize="@dimen/text_normal_size" />
+
+                            <TextView
+                                android:id="@+id/line_end_point"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:paddingEnd="16dp"
+                                android:text="@{selectedLine.end_point}"
+                                android:textSize="@dimen/text_normal_size"
+                                tools:text="551248;3589220" />
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="16dp"
+                            android:text="start current:"
+                            android:textSize="@dimen/text_normal_size" />
+
+
+                        <TextView
+                            android:id="@+id/line_i_start"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@{selectedLine.i_start}"
+                            android:textSize="@dimen/text_normal_size"
+                            tools:text="500mA" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="16dp"
+                            android:text="end current:"
+                            android:textSize="@dimen/text_normal_size" />
+
+
+                        <TextView
+                            android:id="@+id/line_i_end"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@{selectedLine.i_end}"
+                            android:textSize="@dimen/text_normal_size"
+                            tools:text="50mA" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/points_recycler"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/point_titles"
                 android:layout_width="match_parent"
-                android:layout_height="423dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_height="wrap_content"
+                android:elevation="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/line_details_lenear">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="NO."
+                        android:textSize="@dimen/text_smale_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:text="Dp"
+                        android:textSize="@dimen/text_smale_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:text="Depth"
+                        android:textSize="@dimen/text_smale_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:text="current1"
+                        android:textSize="@dimen/text_smale_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:text="current2"
+                        android:textSize="@dimen/text_smale_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:text="   GPS   "
+                        android:textSize="@dimen/text_smale_size" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/recycler_linear"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-                app:layout_constraintVertical_bias="0.0"
-                tools:listitem="@layout/point_item" />
+                app:layout_constraintTop_toBottomOf="@+id/point_titles">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/points_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="12"
+                    tools:listitem="@layout/point_item" />
+            </LinearLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add_point"
@@ -132,367 +363,413 @@
             android:layout_marginBottom="@dimen/fab_margin"
             android:backgroundTint="@color/white"
             android:contentDescription="@string/add_new_pipe_line_button"
+            android:onClick="@{()-> viewModel.openBottomSheet()}"
             app:srcCompat="@drawable/ic_add__point" />
 
         <LinearLayout
             android:id="@+id/point_bottom_sheet_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/shap_add_point_bottom_sheet"
-            android:orientation="vertical"
             android:layout_margin="16dp"
-            app:behavior_hideable="true"
+            android:background="@drawable/shap_add_point_bottom_sheet"
             app:behavior_peekHeight="0dp"
             app:layout_behavior="@string/bottom_sheet_behavior">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/textView"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:gravity="center"
-                    android:text="Add New Point"
-                    android:textSize="35sp"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/dp_cardView"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
-                    app:cardCornerRadius="25dp"
-                    app:cardElevation="10dp"
-                    app:layout_constraintEnd_toStartOf="@+id/depth_cardView"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView">
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Add New Point"
+                            android:textSize="35sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/bottom_cancel_btn"
+                            android:layout_width="40sp"
+                            android:layout_height="40sp"
+                            android:layout_margin="8dp"
+                            android:onClick="@{()-> viewModel.closeBottomSheet()}"
+                            app:srcCompat="@drawable/cancel" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/dp_cardView"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_weight="1"
+                            app:cardCornerRadius="25dp"
+                            app:cardElevation="10dp"
+                            app:layout_constraintEnd_toStartOf="@+id/depth_cardView"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="DP"
+                                    android:textSize="40sp"
+                                    android:textStyle="bold" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <NumberPicker
+                                        android:id="@+id/dp_picker1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="10dp"
+                                        android:layout_weight="1"
+                                        android:value="@={viewModel.dp1}" />
+
+                                    <NumberPicker
+                                        android:id="@+id/dp_picker2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="10dp"
+                                        android:layout_weight="1"
+                                        android:value="@={viewModel.dp2}" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/depth_cardView"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_weight="1"
+                            app:cardCornerRadius="25dp"
+                            app:cardElevation="10dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/dp_cardView"
+                            app:layout_constraintTop_toBottomOf="@+id/textView">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="Depth"
+                                    android:textSize="40sp"
+                                    android:textStyle="bold" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <NumberPicker
+                                        android:id="@+id/depth_picker1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="5dp"
+                                        android:layout_weight="1"
+                                        android:value="@={viewModel.depth1}" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:text="."
+                                        android:textSize="60dp" />
+
+
+                                    <NumberPicker
+                                        android:id="@+id/depth_picker2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="5dp"
+                                        android:layout_weight="1"
+                                        android:value="@={viewModel.depth2}" />
+
+                                    <NumberPicker
+                                        android:id="@+id/depth_picker3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="5dp"
+                                        android:layout_weight="1"
+                                        android:value="@={viewModel.depth3}" />
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/current1_cardView"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_weight="1"
+                            app:cardCornerRadius="25dp"
+                            app:cardElevation="10dp"
+                            app:layout_constraintEnd_toEndOf="@+id/dp_cardView"
+                            app:layout_constraintStart_toStartOf="@+id/dp_cardView"
+                            app:layout_constraintTop_toBottomOf="@+id/dp_cardView">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="current1"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <NumberPicker
+                                    android:id="@+id/current1_numberPicker"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:value="@={viewModel.current1}" />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/current2_cardView"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_weight="1"
+                            app:cardCornerRadius="25dp"
+                            app:cardElevation="10dp"
+                            app:layout_constraintEnd_toEndOf="@+id/depth_cardView"
+                            app:layout_constraintStart_toStartOf="@+id/depth_cardView"
+                            app:layout_constraintTop_toBottomOf="@+id/depth_cardView">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="current2"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <NumberPicker
+                                    android:id="@+id/current2_numberPicker"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:value="@={viewModel.current2}" />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="8dp"
+                            app:cardCornerRadius="25dp"
+                            app:cardElevation="10dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/current2_cardView"
+                            app:layout_constraintHorizontal_bias="0.476"
+                            app:layout_constraintStart_toStartOf="@+id/current1_cardView"
+                            app:layout_constraintTop_toBottomOf="@+id/current1_cardView">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="GPS"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <ProgressBar
+                                        android:id="@+id/gps_prgrss_bar"
+                                        android:layout_width="100dp"
+                                        android:layout_height="100dp"
+                                        android:visibility="gone"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.5"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <TextView
+                                        android:id="@+id/gps_x_txt"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:text="564845"
+                                        android:textSize="24sp"
+                                        app:layout_constraintBaseline_toBaselineOf="@+id/x"
+                                        app:layout_constraintStart_toEndOf="@+id/x" />
+
+                                    <TextView
+                                        android:id="@+id/gps_y_txt"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="3592334"
+                                        android:textSize="24sp"
+                                        app:layout_constraintBaseline_toBaselineOf="@+id/y"
+                                        app:layout_constraintStart_toEndOf="@+id/y" />
+
+                                    <TextView
+                                        android:id="@+id/x"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="16dp"
+                                        android:layout_marginTop="16dp"
+                                        android:text="X:"
+                                        android:textSize="24sp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <TextView
+                                        android:id="@+id/y"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="16dp"
+                                        android:layout_marginBottom="16dp"
+                                        android:text="Y:"
+                                        android:textSize="24sp"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/x" />
+
+                                    <ImageView
+                                        android:layout_width="50dp"
+                                        android:layout_height="50dp"
+                                        android:layout_margin="16dp"
+                                        android:src="@drawable/loading"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <TextView
+                        <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="DP"
-                            android:textSize="40sp"
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:orientation="horizontal">
-
-                            <NumberPicker
-                                android:id="@+id/dp_picker1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_margin="10dp"
-                                android:value="@={viewModel.dp1}"
-                                android:layout_weight="1" />
-
-                            <NumberPicker
-                                android:id="@+id/dp_picker2"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_margin="10dp"
-                                android:value="@={viewModel.dp2}"
-                                android:layout_weight="1" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/depth_cardView"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    app:cardCornerRadius="25dp"
-                    app:cardElevation="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/dp_cardView"
-                    app:layout_constraintTop_toBottomOf="@+id/textView">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Depth"
-                            android:textSize="40sp"
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                            <NumberPicker
-                                android:id="@+id/depth_picker1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_margin="5dp"
-                                android:value="@={viewModel.depth1}"
-                                android:layout_weight="1" />
+                            android:layout_height="50dp"
+                            android:layout_margin="16dp"
+                            android:onClick="@{()->viewModel.saveButtonClicked()}"
+                            app:cardCornerRadius="25dp"
+                            app:cardElevation="10dp"
+                            app:layout_constraintBottom_toBottomOf="parent">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:id="@+id/bottom_save_btn"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="."
-                                android:textSize="60dp" />
+                                android:text="Save"
+                                android:textSize="35sp" />
 
-
-                            <NumberPicker
-                                android:id="@+id/depth_picker2"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_margin="5dp"
-                                android:value="@={viewModel.depth2}"
-                                android:layout_weight="1" />
-
-                            <NumberPicker
-                                android:id="@+id/depth_picker3"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_margin="5dp"
-                                android:value="@={viewModel.depth3}"
-                                android:layout_weight="1" />
-
-                        </LinearLayout>
-
+                        </androidx.cardview.widget.CardView>
 
                     </LinearLayout>
 
-                </androidx.cardview.widget.CardView>
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/current1_cardView"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="16dp"
-                    app:cardCornerRadius="25dp"
-                    app:cardElevation="10dp"
-                    app:layout_constraintEnd_toEndOf="@+id/dp_cardView"
-                    app:layout_constraintStart_toStartOf="@+id/dp_cardView"
-                    app:layout_constraintTop_toBottomOf="@+id/dp_cardView">
+                </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="current1"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <NumberPicker
-                            android:id="@+id/current1_numberPicker"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:value="@={viewModel.current1}"
-                            />
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/current2_cardView"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="16dp"
-                    app:cardCornerRadius="25dp"
-                    app:cardElevation="10dp"
-                    app:layout_constraintEnd_toEndOf="@+id/depth_cardView"
-                    app:layout_constraintStart_toStartOf="@+id/depth_cardView"
-                    app:layout_constraintTop_toBottomOf="@+id/depth_cardView">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="current2"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <NumberPicker
-                            android:id="@+id/current2_numberPicker"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:value="@={viewModel.current2}"
-                            />
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="76dp"
-                    app:cardCornerRadius="25dp"
-                    app:cardElevation="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/current2_cardView"
-                    app:layout_constraintHorizontal_bias="0.476"
-                    app:layout_constraintStart_toStartOf="@+id/current1_cardView"
-                    app:layout_constraintTop_toBottomOf="@+id/current1_cardView">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="GPS"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <ProgressBar
-                                android:id="@+id/gps_prgrss_bar"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:visibility="gone"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintHorizontal_bias="0.5"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/gps_x_txt"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:text="564845"
-                                android:textSize="30dp"
-                                app:layout_constraintBaseline_toBaselineOf="@+id/x"
-                                app:layout_constraintStart_toEndOf="@+id/x" />
-
-                            <TextView
-                                android:id="@+id/gps_y_txt"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="3592334"
-                                android:textSize="30dp"
-                                app:layout_constraintBaseline_toBaselineOf="@+id/y"
-                                app:layout_constraintStart_toEndOf="@+id/y" />
-
-                            <TextView
-                                android:id="@+id/x"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginTop="16dp"
-                                android:text="X:"
-                                android:textSize="35sp"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/y"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginBottom="16dp"
-                                android:text="Y:"
-                                android:textSize="35sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/x" />
-
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_margin="16dp"
-                                android:src="@drawable/loading"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_margin="16dp"
-                    app:cardCornerRadius="25dp"
-                    app:cardElevation="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent">
-
-                    <TextView
-                        android:id="@+id/bottom_save_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="Save"
-                        android:textSize="35sp" />
-
-                </androidx.cardview.widget.CardView>
-
-                <ImageView
-                    android:id="@+id/bottom_cancel_btn"
-                    android:layout_width="40sp"
-                    android:layout_height="40sp"
-                    android:layout_margin="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/cancel" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
         </LinearLayout>
 
 
