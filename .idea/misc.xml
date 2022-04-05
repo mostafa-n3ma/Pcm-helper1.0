@@ -3,11 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/drawable/ic_baseline_cancel_24.xml" value="0.1625" />
         <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/drawable/shap_add_point_bottom_sheet.xml" value="0.1" />
         <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/layout/activity_main.xml" value="0.5" />
         <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/layout/bottom_sheet_add_point.xml" value="0.14356884057971014" />
         <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/layout/content_main.xml" value="0.16666666666666666" />
-        <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/layout/fragment_add_line.xml" value="0.26878612716763006" />
+        <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/layout/drop_dwon_item.xml" value="0.20906370243693886" />
+        <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/layout/fragment_add_line.xml" value="0.16666666666666666" />
         <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/layout/fragment_first.xml" value="0.2546875" />
         <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/layout/fragment_line_details.xml" value="0.22" />
         <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/layout/fragment_lines_main.xml" value="0.16666666666666666" />

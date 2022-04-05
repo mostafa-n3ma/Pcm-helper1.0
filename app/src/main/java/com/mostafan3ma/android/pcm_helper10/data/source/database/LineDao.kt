@@ -29,4 +29,5 @@ interface LineDao {
    fun updatePointsList(id:Int,points:MutableList<DamagePoint>)
 
 
+
 }

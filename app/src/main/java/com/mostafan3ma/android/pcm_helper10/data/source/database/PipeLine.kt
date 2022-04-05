@@ -1,11 +1,20 @@
 package com.mostafan3ma.android.pcm_helper10.data.source.database
 
+import android.content.Context
+import android.graphics.Color
 import android.os.Parcelable
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.TextView
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.mostafan3ma.android.pcm_helper10.R
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -29,7 +38,7 @@ data class PipeLine(
 @Parcelize
 data class DamagePoint(
     @PrimaryKey(autoGenerate = true)
-    val no:Int=1,
+    var no:Int=1,
     var db: String? = null,
     var depth: String? = null,
     var current1: String? = null,
@@ -59,4 +68,5 @@ class DataConverter {
         return gson.fromJson<MutableList<DamagePoint>>(points, type)
     }
 }
+
 

@@ -18,4 +18,30 @@
     <string name="edit_date_hint">Add Working Date </string>
     <string name="start_curent_hint">Add Start current</string>
     <string name="start_point_hint">Add Start Point gps</string>
+
+    <string-array name="ogms">
+        <item>OGM0</item>
+        <item>OGM1</item>
+        <item>OGM2</item>
+        <item>OGM3</item>
+        <item>OGM4</item>
+        <item>OGM5</item>
+        <item>OGM6</item>
+        <item>OGM7</item>
+        <item>OGM8</item>
+        <item>OGM9</item>
+        <item>OGM10</item>
+        <item>OGM11</item>
+        <item>OGM12</item>
+        <item>OGM13</item>
+        <item>OGM14</item>
+        <item>OGM15</item>
+    </string-array>
+
+    <string-array name="types">
+        <item>Oil</item>
+        <item>Water</item>
+
+    </string-array>
+
 </resources>

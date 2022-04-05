@@ -20,8 +20,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="8dp"
-            android:backgroundTint="#AAA5A3"
-            app:cardCornerRadius="@dimen/card_view_corner">
+            android:elevation="16dp"
+            app:cardCornerRadius="@dimen/card_view_corner"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -32,9 +37,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:text="@{pipeLine.name}"
                     android:textSize="@dimen/text_normal_size"
                     android:textStyle="bold"
-                    android:text="@{pipeLine.name}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -46,9 +51,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
+                    android:text="@{pipeLine.ogm}"
                     android:textSize="@dimen/text_normal_size"
                     android:textStyle="bold"
-                    android:text="@{pipeLine.ogm}"
                     app:layout_constraintBaseline_toBaselineOf="@+id/line_neme"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -72,11 +77,11 @@
                     android:id="@+id/line_length"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{pipeLine.length}"
                     android:textSize="@dimen/text_normal_size"
                     app:layout_constraintBaseline_toBaselineOf="@+id/line_type"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.42"
-                    android:text="@{pipeLine.length}"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:text="1000m" />
 
@@ -85,10 +90,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
+                    android:text="@{pipeLine.work_date}"
                     android:textSize="@dimen/text_normal_size"
                     app:layout_constraintBaseline_toBaselineOf="@+id/line_length"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="@{pipeLine.work_date}"
                     tools:text="25/3/2022" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

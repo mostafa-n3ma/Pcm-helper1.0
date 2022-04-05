@@ -45,7 +45,7 @@ class PointViewHolder(private val binding:PointItemBinding):RecyclerView.ViewHol
 
 class PointDiffCallBack : DiffUtil.ItemCallback<DamagePoint>() {
     override fun areItemsTheSame(oldItem: DamagePoint, newItem: DamagePoint): Boolean {
-        return oldItem.db == newItem.db
+        return oldItem.no == newItem.no
     }
 
     override fun areContentsTheSame(oldItem: DamagePoint, newItem: DamagePoint): Boolean {

@@ -369,407 +369,213 @@
         <LinearLayout
             android:id="@+id/point_bottom_sheet_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:background="@drawable/shap_add_point_bottom_sheet"
             app:behavior_peekHeight="0dp"
             app:layout_behavior="@string/bottom_sheet_behavior">
 
-            <ScrollView
+            <LinearLayout
+                android:id="@+id/test_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:orientation="vertical"
+                android:elevation="10dp"
+               >
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
+                    app:cardCornerRadius="10dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:elevation="10dp"
+                    >
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        >
 
                         <TextView
-                            android:id="@+id/textView"
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="Add New Point"
-                            android:textSize="35sp"
-                            android:textStyle="bold"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/bottom_cancel_btn"
-                            android:layout_width="40sp"
-                            android:layout_height="40sp"
-                            android:layout_margin="8dp"
-                            android:onClick="@{()-> viewModel.closeBottomSheet()}"
-                            app:srcCompat="@drawable/cancel" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/dp_cardView"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="8dp"
+                            android:textColor="@color/design_default_color_primary"
+                            android:textSize="@dimen/text_normal_size" />
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:icon="@drawable/ic_baseline_cancel_24"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:gravity="center"
                             android:layout_weight="1"
-                            app:cardCornerRadius="25dp"
-                            app:cardElevation="10dp"
-                            app:layout_constraintEnd_toStartOf="@+id/depth_cardView"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:text="DP"
-                                    android:textSize="40sp"
-                                    android:textStyle="bold" />
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:orientation="horizontal">
-
-                                    <NumberPicker
-                                        android:id="@+id/dp_picker1"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_margin="10dp"
-                                        android:layout_weight="1"
-                                        android:value="@={viewModel.dp1}" />
-
-                                    <NumberPicker
-                                        android:id="@+id/dp_picker2"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_margin="10dp"
-                                        android:layout_weight="1"
-                                        android:value="@={viewModel.dp2}" />
-                                </LinearLayout>
-                            </LinearLayout>
-
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/depth_cardView"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_weight="1"
-                            app:cardCornerRadius="25dp"
-                            app:cardElevation="10dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/dp_cardView"
-                            app:layout_constraintTop_toBottomOf="@+id/textView">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:text="Depth"
-                                    android:textSize="40sp"
-                                    android:textStyle="bold" />
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="horizontal">
-
-                                    <NumberPicker
-                                        android:id="@+id/depth_picker1"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_margin="5dp"
-                                        android:layout_weight="1"
-                                        android:value="@={viewModel.depth1}" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:gravity="center"
-                                        android:text="."
-                                        android:textSize="60dp" />
-
-
-                                    <NumberPicker
-                                        android:id="@+id/depth_picker2"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_margin="5dp"
-                                        android:layout_weight="1"
-                                        android:value="@={viewModel.depth2}" />
-
-                                    <NumberPicker
-                                        android:id="@+id/depth_picker3"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_margin="5dp"
-                                        android:layout_weight="1"
-                                        android:value="@={viewModel.depth3}" />
-
-                                </LinearLayout>
-
-
-                            </LinearLayout>
-
-                        </androidx.cardview.widget.CardView>
+                            android:onClick="@{()->viewModel.closeBottomSheet()}"
+                            />
 
 
                     </LinearLayout>
-
-                    <LinearLayout
+                </androidx.cardview.widget.CardView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="16dp"
+                    >
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/dp_field"
+                        android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:hint="DP"
+                        app:endIconMode="clear_text"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        >
 
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/current1_cardView"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_weight="1"
-                            app:cardCornerRadius="25dp"
-                            app:cardElevation="10dp"
-                            app:layout_constraintEnd_toEndOf="@+id/dp_cardView"
-                            app:layout_constraintStart_toStartOf="@+id/dp_cardView"
-                            app:layout_constraintTop_toBottomOf="@+id/dp_cardView">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:text="current1"
-                                    android:textSize="24sp"
-                                    android:textStyle="bold" />
-
-                                <NumberPicker
-                                    android:id="@+id/current1_numberPicker"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:value="@={viewModel.current1}" />
-
-                            </LinearLayout>
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/current2_cardView"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_weight="1"
-                            app:cardCornerRadius="25dp"
-                            app:cardElevation="10dp"
-                            app:layout_constraintEnd_toEndOf="@+id/depth_cardView"
-                            app:layout_constraintStart_toStartOf="@+id/depth_cardView"
-                            app:layout_constraintTop_toBottomOf="@+id/depth_cardView">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:text="current2"
-                                    android:textSize="24sp"
-                                    android:textStyle="bold" />
-
-                                <NumberPicker
-                                    android:id="@+id/current2_numberPicker"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:value="@={viewModel.current2}" />
-
-                            </LinearLayout>
-
-                        </androidx.cardview.widget.CardView>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <androidx.cardview.widget.CardView
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/dp_edit_txt"
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="8dp"
-                            app:cardCornerRadius="25dp"
-                            app:cardElevation="10dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/current2_cardView"
-                            app:layout_constraintHorizontal_bias="0.476"
-                            app:layout_constraintStart_toStartOf="@+id/current1_cardView"
-                            app:layout_constraintTop_toBottomOf="@+id/current1_cardView">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:text="GPS"
-                                    android:textSize="24sp"
-                                    android:textStyle="bold" />
-
-                                <androidx.constraintlayout.widget.ConstraintLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
-
-                                    <ProgressBar
-                                        android:id="@+id/gps_prgrss_bar"
-                                        android:layout_width="100dp"
-                                        android:layout_height="100dp"
-                                        android:visibility="gone"
-                                        app:layout_constraintBottom_toBottomOf="parent"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintHorizontal_bias="0.5"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toTopOf="parent" />
-
-                                    <TextView
-                                        android:id="@+id/gps_x_txt"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="8dp"
-                                        android:text="564845"
-                                        android:textSize="24sp"
-                                        app:layout_constraintBaseline_toBaselineOf="@+id/x"
-                                        app:layout_constraintStart_toEndOf="@+id/x" />
-
-                                    <TextView
-                                        android:id="@+id/gps_y_txt"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="3592334"
-                                        android:textSize="24sp"
-                                        app:layout_constraintBaseline_toBaselineOf="@+id/y"
-                                        app:layout_constraintStart_toEndOf="@+id/y" />
-
-                                    <TextView
-                                        android:id="@+id/x"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="16dp"
-                                        android:layout_marginTop="16dp"
-                                        android:text="X:"
-                                        android:textSize="24sp"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toTopOf="parent" />
-
-                                    <TextView
-                                        android:id="@+id/y"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="16dp"
-                                        android:layout_marginBottom="16dp"
-                                        android:text="Y:"
-                                        android:textSize="24sp"
-                                        app:layout_constraintBottom_toBottomOf="parent"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toBottomOf="@+id/x" />
-
-                                    <ImageView
-                                        android:layout_width="50dp"
-                                        android:layout_height="50dp"
-                                        android:layout_margin="16dp"
-                                        android:src="@drawable/loading"
-                                        app:layout_constraintBottom_toBottomOf="parent"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintTop_toTopOf="parent" />
-                                </androidx.constraintlayout.widget.ConstraintLayout>
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:text="@={viewModel.dp}"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/depth_field"
+                        android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <androidx.cardview.widget.CardView
+                        android:hint="Depth"
+                        app:endIconMode="clear_text"
+                        android:layout_marginStart="5dp"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/depth_edit_txt"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_margin="16dp"
-                            android:onClick="@{()->viewModel.saveButtonClicked()}"
-                            app:cardCornerRadius="25dp"
-                            app:cardElevation="10dp"
-                            app:layout_constraintBottom_toBottomOf="parent">
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="numberDecimal"
+                            android:text="@={viewModel.depth}"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/c1_field"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="C1"
+                        android:layout_marginStart="5dp"
+                        app:endIconMode="clear_text"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/c1_edit_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:text="@={viewModel.current1}"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/c2_field"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="C2"
+                        android:layout_marginStart="5dp"
+                        app:endIconMode="clear_text"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/c2_edit_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionDone"
+                            android:inputType="number"
+                            android:text="@={viewModel.current2}"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                            <TextView
-                                android:id="@+id/bottom_save_btn"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:text="Save"
-                                android:textSize="35sp" />
 
-                        </androidx.cardview.widget.CardView>
-
-                    </LinearLayout>
 
 
                 </LinearLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            </ScrollView>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/gps_field"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="Gps"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:helperText="@{viewModel.accuracy}"
+                        app:startIconDrawable="@drawable/start_point">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/start_point_auto_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:text="@{viewModel.gpsX_Y}"
+                            />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ProgressBar
+                        android:id="@+id/start_point_progressField"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:indeterminateTint="@color/design_default_color_primary"
+                        android:visibility="@{viewModel.progressVisibility}"
+                        app:layout_constraintBottom_toBottomOf="@id/gps_field"
+                        app:layout_constraintEnd_toEndOf="@id/gps_field"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="@id/gps_field"
+                        app:layout_constraintTop_toTopOf="@id/gps_field" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:elevation="10dp"
+                    android:layout_margin="16dp"
+                    >
+                    <Button
+                        android:layout_gravity="center"
+                        app:icon="@drawable/add_point"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Add Point"
+                        android:textSize="@dimen/text_normal_size"
+                        android:onClick="@{()->viewModel.addPointButtonClicked()}"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+
+                        />
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
         </LinearLayout>
 
 
