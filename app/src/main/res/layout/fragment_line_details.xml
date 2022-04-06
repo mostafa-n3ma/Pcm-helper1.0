@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -351,20 +352,46 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
             android:id="@+id/fab_add_point"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginBottom="@dimen/fab_margin"
-            android:backgroundTint="@color/white"
-            android:contentDescription="@string/add_new_pipe_line_button"
-            android:onClick="@{()-> viewModel.openBottomSheet()}"
-            app:srcCompat="@drawable/ic_add__point" />
+            android:visibility="visible"
+            fab:fab_expandDirection="up"
+            app:fab_addButtonSize="normal"
+            fab:fab_labelsPosition="left"
+            fab:fab_labelStyle="@style/labelStyle"
+            fab:fab_addButtonColorNormal="@color/design_default_color_primary"
+
+            >
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/white"
+                fab:fab_size="mini"
+                app:fab_icon="@drawable/bend3"
+                fab:fab_title="Add Bend"
+                fab:fab_colorPressed="@color/design_default_color_primary_dark"/>
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="#FFF"
+                fab:fab_title="Add Point"
+                fab:fab_icon="@drawable/add_point_primary_color"
+                fab:fab_colorPressed="@color/design_default_color_primary"
+                android:onClick="@{()-> viewModel.openBottomSheet()}"
+                />
+
+
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
+
 
         <LinearLayout
             android:id="@+id/point_bottom_sheet_layout"

@@ -94,6 +94,7 @@ class LineDetailsFragment : Fragment() {
                 pointBottomSheet.state=BottomSheetBehavior.STATE_EXPANDED
                 viewModel.openBottomSheetCompleted()
                 binding.fabAddPoint.visibility = View.GONE
+                binding.fabAddPoint.collapse()
                 Log.i("viewModel event ", "open bottom sheet called")
                 checkPermissionsAndLocationSettingsAndGetLocation()
             }
