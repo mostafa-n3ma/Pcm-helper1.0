@@ -35,7 +35,6 @@ import com.mostafan3ma.android.pcm_helper10.R
 import com.mostafan3ma.android.pcm_helper10.databinding.FragmentAddLineBinding
 
 
-
 class AddLineFragment : Fragment() {
     val viewModel by viewModels<AddLineViewModel>() {
         AddLineViewModel.AddLineViewModelFactory((requireContext().applicationContext as PcmApp).repository)
@@ -92,14 +91,26 @@ class AddLineFragment : Fragment() {
 
     private fun setDropDawnMenus(binding: FragmentAddLineBinding) {
         //required binding adapters
-        val ogms=resources.getStringArray(R.array.ogms)
+        val ogms = resources.getStringArray(R.array.ogms)
 
-        val ogmAdapter=ArrayAdapter(requireContext(), R.layout.drop_dwon_item,ogms)
+        val ogmAdapter = ArrayAdapter(requireContext(), R.layout.drop_dwon_item, ogms)
         binding.ogmAutoTxt.setAdapter(ogmAdapter)
-        val types=resources.getStringArray(R.array.types)
-        val typeAdapter=ArrayAdapter(requireContext(),R.layout.drop_dwon_item,types)
+        val types = resources.getStringArray(R.array.types)
+        val typeAdapter = ArrayAdapter(requireContext(), R.layout.drop_dwon_item, types)
 
-        binding.typeAutoTxt.setAdapter(typeAdapter)
+        val arradapter =
+            object : ArrayAdapter<String?>(requireContext(), R.layout.drop_dwon_item, types) {
+                private val typeColors = listOf(Color.RED, Color.GREEN)
+                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                    val view = super.getView(position, convertView, parent)
+                    if (view is TextView) {
+//                    view.setTextColor(typeColors[position])
+                        view.setBackgroundColor(typeColors[position])
+                    }
+                    return view
+                }
+            }
+        binding.typeAutoTxt.setAdapter(arradapter)
 
     }
 
