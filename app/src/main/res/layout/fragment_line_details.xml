@@ -374,7 +374,9 @@
                 fab:fab_size="mini"
                 app:fab_icon="@drawable/bend3"
                 fab:fab_title="Add Bend"
-                fab:fab_colorPressed="@color/design_default_color_primary_dark"/>
+                fab:fab_colorPressed="@color/design_default_color_primary_dark"
+                android:onClick="@{()-> viewModel.openBendBottomSheet()}"
+                />
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
@@ -383,7 +385,7 @@
                 fab:fab_title="Add Point"
                 fab:fab_icon="@drawable/add_point_primary_color"
                 fab:fab_colorPressed="@color/design_default_color_primary"
-                android:onClick="@{()-> viewModel.openBottomSheet()}"
+                android:onClick="@{()-> viewModel.openPointBottomSheet()}"
                 />
 
 
@@ -393,12 +395,11 @@
 
 
 
-        <LinearLayout
-            android:id="@+id/point_bottom_sheet_layout"
+        <LinearLayout android:id="@+id/point_bottom_sheet_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:background="@drawable/shap_add_point_bottom_sheet"
+            android:background="@drawable/shap_add_bottom_sheet"
             app:behavior_peekHeight="0dp"
             app:layout_behavior="@string/bottom_sheet_behavior">
 
@@ -440,7 +441,7 @@
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:gravity="center"
                             android:layout_weight="1"
-                            android:onClick="@{()->viewModel.closeBottomSheet()}"
+                            android:onClick="@{()->viewModel.closePointBottomSheet()}"
                             />
 
 
@@ -604,7 +605,126 @@
             </LinearLayout>
 
         </LinearLayout>
+        <LinearLayout android:id="@+id/Bend_bottom_sheet_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/shap_add_bottom_sheet"
+            app:behavior_peekHeight="0dp"
+            app:layout_behavior="@string/bottom_sheet_behavior">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:orientation="vertical"
+                android:elevation="10dp"
+                >
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:elevation="10dp"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Add New Bend"
+                            android:textColor="@color/design_default_color_primary"
+                            android:textSize="@dimen/text_normal_size" />
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:icon="@drawable/ic_baseline_cancel_24"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:onClick="@{()->viewModel.closeBendBottomSheet()}"
+                            />
+
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/gps_field2"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="Gps"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:helperText="@{viewModel.accuracy}"
+                        app:startIconDrawable="@drawable/start_point">
+
+                        <AutoCompleteTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:text="@{viewModel.gpsX_Y}"
+                            />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ProgressBar
+                        android:id="@+id/Bend_progressField"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:indeterminateTint="@color/design_default_color_primary"
+                        android:visibility="@{viewModel.progressVisibility}"
+                        app:layout_constraintBottom_toBottomOf="@id/gps_field2"
+                        app:layout_constraintEnd_toEndOf="@id/gps_field2"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="@id/gps_field2"
+                        app:layout_constraintTop_toTopOf="@id/gps_field2" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:elevation="10dp"
+                    android:layout_margin="16dp"
+                    >
+                    <Button
+                        android:layout_gravity="center"
+                        app:icon="@drawable/bend3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Add Bend"
+                        android:textSize="@dimen/text_normal_size"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:onClick="@{()->viewModel.addBendButtonClicked()}"
+
+                        />
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

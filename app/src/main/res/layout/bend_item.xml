@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+            <variable
+                name="bend"
+                type="com.mostafan3ma.android.pcm_helper10.data.source.database.DamagePoint" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="16dp"
+            android:layout_margin="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/bend_item_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/bend_txt"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="Bend"
+                    android:textSize="@dimen/text_normal_size"
+                    android:textStyle="bold"
+                    app:drawableStartCompat="@drawable/bend3" />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/bend_gps_x"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@{bend.gps_x}"
+                        android:textSize="@dimen/text_smale_size"
+                        tools:text="551235" />
+
+                    <TextView
+                        android:id="@+id/bend_gps_y"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@{bend.gps_y}"
+                        android:textSize="@dimen/text_smale_size"
+                        tools:text="3598221" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

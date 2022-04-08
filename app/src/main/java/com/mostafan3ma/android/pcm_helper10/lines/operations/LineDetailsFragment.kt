@@ -34,9 +34,13 @@ import com.mostafan3ma.android.pcm_helper10.lines.operations.Points.PointsAdapte
 import com.mostafan3ma.android.pcm_helper10.databinding.FragmentLineDetailsBinding
 
 class LineDetailsFragment : Fragment() {
+
+    private lateinit var args:LineDetailsFragmentArgs
     private lateinit var pointsAdapter: PointsAdapter
     private lateinit var binding: FragmentLineDetailsBinding
     private lateinit var pointBottomSheet: BottomSheetBehavior<LinearLayout>
+    private lateinit var bendBottomSheet: BottomSheetBehavior<LinearLayout>
+
     private lateinit var locationManager: LocationManager
     private lateinit var locationListener: LocationListener
     val viewModel by viewModels<LineDetailsViewModel>() {
@@ -47,6 +51,15 @@ class LineDetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
+        args = LineDetailsFragmentArgs.fromBundle(requireArguments())
+        viewModel.getSelectedLine(args.selectedLine)
+
+
+
+
         locationManager =
             requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         locationListener = LocationListener { location ->
@@ -62,40 +75,31 @@ class LineDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentLineDetailsBinding.inflate(inflater)
-        var args = LineDetailsFragmentArgs.fromBundle(requireArguments())
+
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        binding.selectedLine = args.selectedLine
-        viewModel.getSelectedLine(args.selectedLine)
+        binding.selectedLine = viewModel.selectedLine
+
         pointsAdapter = PointsAdapter(PointListener {
             Toast.makeText(requireContext(), "${it.db}", Toast.LENGTH_SHORT).show()
             viewModel.deletePoint(it)
             pointsAdapter.notifyDataSetChanged()
         })
 
-
-        pointsAdapter.submitList(args.selectedLine.points)
+        val c=viewModel.selectedLine.points
+        pointsAdapter.submitList(viewModel.selectedLine.points)
         binding.pointsRecycler.adapter = pointsAdapter
-        pointBottomSheet = setUpBottomSheet()
-        viewModel.closeBottomSheet.observe(viewLifecycleOwner, Observer {
-            if (it){
-                pointBottomSheet.state=BottomSheetBehavior.STATE_COLLAPSED
-                viewModel.closeBottomSheetCompleted()
-                binding.fabAddPoint.visibility=View.VISIBLE
-                Log.i("viewModel event ", "close bottom sheet called")
-                locationManager.removeUpdates(locationListener)
+        pointBottomSheet = setUpPointBottomSheet()
+        bendBottomSheet=setUpBendBottomSheet()
 
-            }
-        })
-        viewModel.openBottomSheet.observe(viewLifecycleOwner, Observer {
+
+        viewModel.openPointBottomSheet.observe(viewLifecycleOwner, Observer {
             if (it){
                 pointBottomSheet.state=BottomSheetBehavior.STATE_EXPANDED
-                viewModel.openBottomSheetCompleted()
-                binding.fabAddPoint.visibility = View.GONE
+                viewModel.openPointBottomSheetCompleted()
+                binding.fabAddPoint.visibility = View.INVISIBLE
                 binding.fabAddPoint.collapse()
-                Log.i("viewModel event ", "open bottom sheet called")
                 checkPermissionsAndLocationSettingsAndGetLocation()
             }
         })
@@ -108,12 +112,61 @@ class LineDetailsFragment : Fragment() {
                 binding.fabAddPoint.visibility=View.VISIBLE
             }
         })
+        viewModel.closePointBottomSheet.observe(viewLifecycleOwner, Observer {
+            if (it){
+                pointBottomSheet.state=BottomSheetBehavior.STATE_COLLAPSED
+                viewModel.closePointBottomSheetCompleted()
+                binding.fabAddPoint.visibility=View.VISIBLE
+                locationManager.removeUpdates(locationListener)
+
+            }
+        })
+
+
+
+
+        viewModel.openBendBottomSheet.observe(viewLifecycleOwner, Observer {
+            if (it){
+                bendBottomSheet.state=BottomSheetBehavior.STATE_EXPANDED
+                viewModel.openBendBottomSheetCompleted()
+                binding.fabAddPoint.visibility = View.INVISIBLE
+                binding.fabAddPoint.collapse()
+                checkPermissionsAndLocationSettingsAndGetLocation()
+            }
+        })
+        viewModel.addBendButtonClicked.observe(viewLifecycleOwner, Observer {
+            if (it){
+                viewModel.addNewBendToPipeList()
+                pointsAdapter.notifyDataSetChanged()
+                bendBottomSheet.state=BottomSheetBehavior.STATE_COLLAPSED
+                viewModel.addBendButtonClickedComplete()
+                binding.fabAddPoint.visibility=View.VISIBLE
+            }
+        })
+        viewModel.closeBendBottomSheet.observe(viewLifecycleOwner, Observer {
+            if (it){
+                bendBottomSheet.state=BottomSheetBehavior.STATE_COLLAPSED
+                viewModel.closeBendBottomSheetCompleted()
+                binding.fabAddPoint.visibility=View.VISIBLE
+                locationManager.removeUpdates(locationListener)
+            }
+        })
+
+
+
 
         return binding.root
     }
 
+    private fun setUpBendBottomSheet(): BottomSheetBehavior<LinearLayout> {
+        val bendBottomSheet=BottomSheetBehavior.from(binding.BendBottomSheetLayout).apply {
+            isDraggable=false
+        }
+        return bendBottomSheet
+    }
 
-    private fun setUpBottomSheet(): BottomSheetBehavior<LinearLayout> {
+
+    private fun setUpPointBottomSheet(): BottomSheetBehavior<LinearLayout> {
         val pointBottomSheet = BottomSheetBehavior.from(binding.pointBottomSheetLayout).apply {
             isDraggable = false
         }

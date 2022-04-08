@@ -9,7 +9,7 @@ import com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine
 import kotlinx.coroutines.launch
 
 class LineDetailsViewModel(private val repository: PipeLinesRepository) : ViewModel() {
-    private lateinit var converter: CoordinateConversion
+    private var converter: CoordinateConversion = CoordinateConversion()
 
     lateinit var selectedLine: PipeLine
     fun getSelectedLine(selectedLine: PipeLine) {
@@ -17,16 +17,19 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository) : ViewMo
     }
 
 
+
+
+    //point info
     val dp = MutableLiveData<String>()
     val depth = MutableLiveData<String>()
     val current1 = MutableLiveData<String>()
     val current2 = MutableLiveData<String>()
-    val gpsX = MediatorLiveData<String>()
-    val gpsY = MediatorLiveData<String>()
+    val gpsX = MutableLiveData<String>()
+    val gpsY = MutableLiveData<String>()
 
 
 
-    val gpsX_Y = MediatorLiveData<String>()
+    val gpsX_Y = MutableLiveData<String>()
     val accuracy=MutableLiveData<String>()
     val progressVisibility=MutableLiveData<Int>()
     fun getGpsCoordinates(x:Double,y:Double,acc:String){
@@ -39,60 +42,76 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository) : ViewMo
 
 
 
+
+
     fun deletePoint(point: DamagePoint) {
         viewModelScope.launch {
             selectedLine.points.remove(point)
-            var updatedList: MutableList<DamagePoint> = selectedLine.points
-            updatedList.map {
-                if (it.no > point.no) {
-                    it.no = it.no - 1
+            val updatedList=selectedLine.points
+            if (point.is_point){
+                updatedList.map {
+                    if (it.no>point.no){
+                        it.no-=1
+                    }
                 }
             }
-            repository.updatePointsList(selectedLine.id, updatedList)
+            repository.updatePointsList(selectedLine.id,updatedList)
         }
     }
-
+    private fun getPointsNo():Int{
+        var pointNO:Int=0
+        selectedLine.points.map { point->
+            if (point.is_point){
+                pointNO+=1
+            }
+        }
+        return pointNO
+    }
+    private fun getNextPointNo():Int{
+        return getPointsNo()+1
+    }
     private fun getNewPointInfo(): DamagePoint {
         return DamagePoint(
-            selectedLine.points.size + 1, dp.value, depth.value, current1.value, current2.value,
+            getNextPointNo(), dp.value, depth.value, current1.value, current2.value,
             gpsX.value, gpsY.value
         )
     }
-
 
     fun addNewPointToPipeList() {
         selectedLine.points.add(getNewPointInfo())
         viewModelScope.launch {
             repository.updatePointsList(selectedLine.id, selectedLine.points)
         }
+
+    }
+     fun addNewBendToPipeList(){
+        val newBend=DamagePoint(no = 0, gps_x = gpsX.value, gps_y = gpsY.value, is_point = false)
+        selectedLine.points.add(newBend)
+        viewModelScope.launch {
+            repository.updatePointsList(selectedLine.id, selectedLine.points)
+        }
     }
 
 
-    private val _closeBottomSheet = MutableLiveData<Boolean>()
-    val closeBottomSheet: LiveData<Boolean> get() = _closeBottomSheet
-    fun closeBottomSheet() {
-        _closeBottomSheet.value = true
+    //Point events
+    private val _closePointBottomSheet = MutableLiveData<Boolean>()
+    val closePointBottomSheet: LiveData<Boolean> get() = _closePointBottomSheet
+    fun closePointBottomSheet() {
+        _closePointBottomSheet.value = true
     }
-    fun closeBottomSheetCompleted() {
-        _closeBottomSheet.value = false
+    fun closePointBottomSheetCompleted() {
+        _closePointBottomSheet.value = false
     }
-
-
-
-
-    private val _openBottomSheet = MutableLiveData<Boolean>()
-    val openBottomSheet: LiveData<Boolean> get() = _openBottomSheet
-    fun openBottomSheet() {
-        _openBottomSheet.value = true
+    ////////////////////////
+    private val _openPointBottomSheet = MutableLiveData<Boolean>()
+    val openPointBottomSheet: LiveData<Boolean> get() = _openPointBottomSheet
+    fun openPointBottomSheet() {
+        _openPointBottomSheet.value = true
     }
-    fun openBottomSheetCompleted() {
-        _openBottomSheet.value = false
+    fun openPointBottomSheetCompleted() {
+        _openPointBottomSheet.value = false
     }
-
-
-
-
-
+/////////////////////////////
     private val _addPointButtonClicked = MutableLiveData<Boolean>()
     val addPointButtonClicked: LiveData<Boolean> get() = _addPointButtonClicked
     fun addPointButtonClicked() {
@@ -101,16 +120,49 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository) : ViewMo
     fun addPointButtonClickedComplete() {
         _addPointButtonClicked.value = false
     }
+///////////////
+
+
+
+
+    //Bend Events
+    private val _closeBendBottomSheet = MutableLiveData<Boolean>()
+    val closeBendBottomSheet: LiveData<Boolean> get() = _closeBendBottomSheet
+    fun closeBendBottomSheet() {
+        _closeBendBottomSheet.value = true
+    }
+    fun closeBendBottomSheetCompleted() {
+        _closeBendBottomSheet.value = false
+    }
+    ////////////////////////
+    private val _openBendBottomSheet = MutableLiveData<Boolean>()
+    val openBendBottomSheet: LiveData<Boolean> get() = _openBendBottomSheet
+    fun openBendBottomSheet() {
+        _openBendBottomSheet.value = true
+    }
+    fun openBendBottomSheetCompleted() {
+        _openBendBottomSheet.value = false
+    }
+    /////////////////////////////
+    private val _addBendButtonClicked = MutableLiveData<Boolean>()
+    val addBendButtonClicked: LiveData<Boolean> get() = _addBendButtonClicked
+    fun addBendButtonClicked() {
+        _addBendButtonClicked.value = true
+    }
+    fun addBendButtonClickedComplete() {
+        _addBendButtonClicked.value = false
+    }
+
+
 
 
     init {
-        converter= CoordinateConversion()
         dp.value = ""
         depth.value = ""
         current1.value = ""
         current2.value = ""
-        _closeBottomSheet.value = false
-        _openBottomSheet.value = false
+        _closePointBottomSheet.value = false
+        _openPointBottomSheet.value = false
         _addPointButtonClicked.value = false
         gpsX.value=""
         gpsY.value=""
@@ -118,6 +170,14 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository) : ViewMo
 
         accuracy.value=""
         progressVisibility.value= View.VISIBLE
+
+        _closeBendBottomSheet.value=false
+        _openBendBottomSheet.value=false
+        _addBendButtonClicked.value=false
+
+
+
+
     }
 
 

@@ -44,8 +44,12 @@ data class DamagePoint(
     var current1: String? = null,
     var current2: String? = null,
     var gps_x: String? = null,
-    var gps_y: String? = null
+    var gps_y: String? = null,
+    var is_point:Boolean=true
 ):Parcelable
+// var is_point value  declare if it is a point or a bend
+// true >> point
+//false >> bend
 
 class DataConverter {
     @TypeConverter
