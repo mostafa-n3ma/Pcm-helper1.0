@@ -8,14 +8,28 @@ import com.mostafan3ma.android.pcm_helper10.data.source.database.DamagePoint
 import com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine
 import kotlinx.coroutines.launch
 
-class LineDetailsViewModel(private val repository: PipeLinesRepository) : ViewModel() {
+class LineDetailsViewModel(private val repository: PipeLinesRepository,  val selectedLine: PipeLine) : ViewModel() {
     private var converter: CoordinateConversion = CoordinateConversion()
 
-    lateinit var selectedLine: PipeLine
-    fun getSelectedLine(selectedLine: PipeLine) {
-        this.selectedLine = selectedLine
-    }
 
+
+
+    val name = MutableLiveData<String>()
+    val ogm = MutableLiveData<String>()
+    val type = MutableLiveData<String>()
+    val length = MutableLiveData<String>()
+    val work_date = MutableLiveData<String>()
+    val i_start = MutableLiveData<String>()
+    val startPoint = MutableLiveData<String>()
+    val startPoint_x = MutableLiveData<String>()
+    val startPoint_y = MutableLiveData<String>()
+    val endPoint = MutableLiveData<String>()
+    val endPoint_x = MutableLiveData<String>()
+    val endPoint_y = MutableLiveData<String>()
+
+    val work_team=MutableLiveData<String>()
+    val input=MutableLiveData<String>()
+    val extra_note=MutableLiveData<String>()
 
 
 
@@ -157,6 +171,24 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository) : ViewMo
 
 
     init {
+        name.value = ""
+        ogm.value = ""
+        work_date.value = ""
+        length.value = ""
+        type.value = ""
+        i_start.value = ""
+        startPoint.value = "${selectedLine.start_point_x};${selectedLine.start_point_y}"
+        startPoint_x.value="${selectedLine.start_point_x!!}"
+        startPoint_y.value="${selectedLine.start_point_y!!}"
+        endPoint.value="${selectedLine.end_point_x};${selectedLine.end_point_x}"
+        endPoint_x.value="${selectedLine.end_point_x!!}"
+        endPoint_y.value="${selectedLine.end_point_y!!}"
+        work_team.value=""
+        input.value=""
+        extra_note.value=""
+
+
+
         dp.value = ""
         depth.value = ""
         current1.value = ""
@@ -182,10 +214,10 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository) : ViewMo
 
 
     @Suppress("UNCHECKED_CAST")
-    class LineDetailsViewModelFactory(private val repository: PipeLinesRepository) :
+    class LineDetailsViewModelFactory(private val repository: PipeLinesRepository,private val selectedLine: PipeLine) :
         ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return (LineDetailsViewModel(repository) as T)
+            return (LineDetailsViewModel(repository,selectedLine) as T)
         }
     }
 }

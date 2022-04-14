@@ -20,9 +20,15 @@ class AddLineViewModel(private val repository: PipeLinesRepository) : ViewModel(
     val work_date = MutableLiveData<String>()
     val i_start = MutableLiveData<String>()
     val startPoint = MutableLiveData<String>()
+    val startPoint_x = MutableLiveData<String>()
+    val startPoint_y = MutableLiveData<String>()
+
+
+
     val work_team=MutableLiveData<String>()
     val input=MutableLiveData<String>()
     val extra_note=MutableLiveData<String>()
+
 
 
 
@@ -36,6 +42,8 @@ class AddLineViewModel(private val repository: PipeLinesRepository) : ViewModel(
         val gpsX:String= converter.latLon2UTM_x(x,y)
         val gpsY:String= converter.latLon2UTM_y(x,y)
         startPoint.value = "$gpsX;$gpsY"
+        startPoint_x.value=gpsX
+        startPoint_y.value=gpsY
         this.accuracy.value="accuracy: $accuracy"
         progressVisibility.value=View.GONE
     }
@@ -54,6 +62,8 @@ class AddLineViewModel(private val repository: PipeLinesRepository) : ViewModel(
         type.value = ""
         i_start.value = ""
         startPoint.value = ""
+        startPoint_x.value=""
+        startPoint_y.value=""
         work_team.value=""
         input.value=""
         extra_note.value=""
@@ -72,9 +82,11 @@ class AddLineViewModel(private val repository: PipeLinesRepository) : ViewModel(
                     type = type.value,
                     length = length.value,
                     work_date = work_date.value,
-                    start_point = startPoint.value,
+                    start_point_x = startPoint_x.value,
+                    start_point_y = startPoint_y.value,
                     i_start = i_start.value,
-                    end_point = "",
+                    end_point_x = "",
+                    end_point_y = "",
                     i_end = "",
                     work_team=work_team.value,
                     input = input.value,

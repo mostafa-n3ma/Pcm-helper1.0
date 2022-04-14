@@ -13,13 +13,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.gms.common.api.ResolvableApiException
@@ -29,13 +27,19 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import com.mostafan3ma.android.pcm_helper10.BuildConfig
 import com.mostafan3ma.android.pcm_helper10.PcmApp
+import com.mostafan3ma.android.pcm_helper10.R
+import com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine
+import com.mostafan3ma.android.pcm_helper10.databinding.FragmentLineDetailsBinding
 import com.mostafan3ma.android.pcm_helper10.lines.operations.Points.PointListener
 import com.mostafan3ma.android.pcm_helper10.lines.operations.Points.PointsAdapter
-import com.mostafan3ma.android.pcm_helper10.databinding.FragmentLineDetailsBinding
+import org.apache.poi.hssf.usermodel.HSSFSheet
+import org.apache.poi.hssf.usermodel.HSSFWorkbook
+import java.io.*
+
 
 class LineDetailsFragment : Fragment() {
 
-    private lateinit var args:LineDetailsFragmentArgs
+    private lateinit var args: LineDetailsFragmentArgs
     private lateinit var pointsAdapter: PointsAdapter
     private lateinit var binding: FragmentLineDetailsBinding
     private lateinit var pointBottomSheet: BottomSheetBehavior<LinearLayout>
@@ -43,8 +47,9 @@ class LineDetailsFragment : Fragment() {
 
     private lateinit var locationManager: LocationManager
     private lateinit var locationListener: LocationListener
-    val viewModel by viewModels<LineDetailsViewModel>() {
-        LineDetailsViewModel.LineDetailsViewModelFactory((requireContext().applicationContext as PcmApp).repository)
+    val viewModel by viewModels<LineDetailsViewModel> {
+        LineDetailsViewModel.LineDetailsViewModelFactory((requireContext().applicationContext as PcmApp).repository
+        ,args.selectedLine)
     }
 
 
@@ -55,17 +60,15 @@ class LineDetailsFragment : Fragment() {
 
 
         args = LineDetailsFragmentArgs.fromBundle(requireArguments())
-        viewModel.getSelectedLine(args.selectedLine)
-
-
 
 
         locationManager =
             requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         locationListener = LocationListener { location ->
-            viewModel.getGpsCoordinates(location.latitude
-                ,location.longitude,
-            location.accuracy.toString())
+            viewModel.getGpsCoordinates(
+                location.latitude, location.longitude,
+                location.accuracy.toString()
+            )
         }
 
     }
@@ -87,16 +90,15 @@ class LineDetailsFragment : Fragment() {
             pointsAdapter.notifyDataSetChanged()
         })
 
-        val c=viewModel.selectedLine.points
         pointsAdapter.submitList(viewModel.selectedLine.points)
         binding.pointsRecycler.adapter = pointsAdapter
         pointBottomSheet = setUpPointBottomSheet()
-        bendBottomSheet=setUpBendBottomSheet()
+        bendBottomSheet = setUpBendBottomSheet()
 
 
         viewModel.openPointBottomSheet.observe(viewLifecycleOwner, Observer {
-            if (it){
-                pointBottomSheet.state=BottomSheetBehavior.STATE_EXPANDED
+            if (it) {
+                pointBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
                 viewModel.openPointBottomSheetCompleted()
                 binding.fabAddPoint.visibility = View.INVISIBLE
                 binding.fabAddPoint.collapse()
@@ -104,19 +106,19 @@ class LineDetailsFragment : Fragment() {
             }
         })
         viewModel.addPointButtonClicked.observe(viewLifecycleOwner, Observer {
-            if (it){
+            if (it) {
                 viewModel.addNewPointToPipeList()
                 pointsAdapter.notifyDataSetChanged()
-                pointBottomSheet.state=BottomSheetBehavior.STATE_COLLAPSED
+                pointBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
                 viewModel.addPointButtonClickedComplete()
-                binding.fabAddPoint.visibility=View.VISIBLE
+                binding.fabAddPoint.visibility = View.VISIBLE
             }
         })
         viewModel.closePointBottomSheet.observe(viewLifecycleOwner, Observer {
-            if (it){
-                pointBottomSheet.state=BottomSheetBehavior.STATE_COLLAPSED
+            if (it) {
+                pointBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
                 viewModel.closePointBottomSheetCompleted()
-                binding.fabAddPoint.visibility=View.VISIBLE
+                binding.fabAddPoint.visibility = View.VISIBLE
                 locationManager.removeUpdates(locationListener)
 
             }
@@ -126,8 +128,8 @@ class LineDetailsFragment : Fragment() {
 
 
         viewModel.openBendBottomSheet.observe(viewLifecycleOwner, Observer {
-            if (it){
-                bendBottomSheet.state=BottomSheetBehavior.STATE_EXPANDED
+            if (it) {
+                bendBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
                 viewModel.openBendBottomSheetCompleted()
                 binding.fabAddPoint.visibility = View.INVISIBLE
                 binding.fabAddPoint.collapse()
@@ -135,32 +137,226 @@ class LineDetailsFragment : Fragment() {
             }
         })
         viewModel.addBendButtonClicked.observe(viewLifecycleOwner, Observer {
-            if (it){
+            if (it) {
                 viewModel.addNewBendToPipeList()
                 pointsAdapter.notifyDataSetChanged()
-                bendBottomSheet.state=BottomSheetBehavior.STATE_COLLAPSED
+                bendBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
                 viewModel.addBendButtonClickedComplete()
-                binding.fabAddPoint.visibility=View.VISIBLE
+                binding.fabAddPoint.visibility = View.VISIBLE
             }
         })
         viewModel.closeBendBottomSheet.observe(viewLifecycleOwner, Observer {
-            if (it){
-                bendBottomSheet.state=BottomSheetBehavior.STATE_COLLAPSED
+            if (it) {
+                bendBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
                 viewModel.closeBendBottomSheetCompleted()
-                binding.fabAddPoint.visibility=View.VISIBLE
+                binding.fabAddPoint.visibility = View.VISIBLE
                 locationManager.removeUpdates(locationListener)
             }
         })
 
-
-
+        setHasOptionsMenu(true)
 
         return binding.root
     }
 
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.details_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.excel_option -> {
+                Toast.makeText(requireContext(), "clicking excel export button", Toast.LENGTH_SHORT)
+                    .show()
+                checkStoragePermissionAndExportFile()
+            }
+
+        }
+        return true
+    }
+
+    fun storagePermissionsApproved(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    fun checkStoragePermissionAndExportFile() {
+        if (storagePermissionsApproved()) {
+            exportFile()
+
+
+        } else {
+            requestPermissions(
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                WRITE_EXTERNAL_STORAGE_REQUEST_CODE
+            )
+        }
+    }
+
+
+
+
+
+    private fun exportFile() {
+        var theFile: File = requireContext().cacheDir
+        theFile=File(theFile,getString(R.string.app_name))
+        if (!theFile.exists()){
+            if (theFile.mkdir()){
+                Toast.makeText(requireContext(),"Dir created successfully",Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(requireContext(),"Dir not created ",Toast.LENGTH_SHORT).show()
+                return
+            }
+        }
+
+        theFile= File(theFile,"${args.selectedLine.name}.xls")
+
+        try {
+            val line=args.selectedLine
+            val fos:FileOutputStream= FileOutputStream(theFile)
+            val workbook= HSSFWorkbook()
+            val sheet=workbook.createSheet("${args.selectedLine.name}")
+            initLabels(sheet,line)
+            setPointsCells(sheet,line)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            workbook.write(fos)
+            fos.flush()
+            fos.close()
+            Toast.makeText(requireContext(),"file written successfully",Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Log.i(TAG, "exportFile: ${e.message}")
+        }
+
+
+
+    }
+
+    private fun setPointsCells(sheet: HSSFSheet, line: PipeLine) {
+        var rowNum=4
+        for (point in line.points){
+            val rowX=sheet.createRow(rowNum)
+            if (point.is_point){
+            rowX.createCell(0).setCellValue(point.no.toString())
+            rowX.createCell(1).setCellValue(point.db)
+            rowX.createCell(2).setCellValue(point.depth)
+            rowX.createCell(3).setCellValue(point.current1)
+            rowX.createCell(4).setCellValue(point.current2)
+            rowX.createCell(5).setCellValue(point.gps_x)
+            rowX.createCell(6).setCellValue(point.gps_y)
+
+            val x_coordinate: Double = (point.gps_x?.toDouble())?.minus(42.2) ?: 0.0
+            val y_coordinate: Double = (point.gps_y?.toDouble())?.minus(481.7) ?: 0.0
+
+            rowX.createCell(7).setCellValue("$x_coordinate;$y_coordinate")
+        }else{
+                rowX.createCell(0).setCellValue("")
+                rowX.createCell(1).setCellValue("")
+                rowX.createCell(2).setCellValue("")
+                rowX.createCell(3).setCellValue("")
+                rowX.createCell(4).setCellValue("Bend")
+                rowX.createCell(5).setCellValue(point.gps_x)
+                rowX.createCell(6).setCellValue(point.gps_y)
+
+                val x_coordinate: Double = (point.gps_x?.toDouble())?.minus(42.2) ?: 0.0
+                val y_coordinate: Double = (point.gps_y?.toDouble())?.minus(481.7) ?: 0.0
+
+                rowX.createCell(7).setCellValue("$x_coordinate;$y_coordinate")
+            }
+            rowNum+=1
+        }
+        setEndPointRow(sheet,line,rowNum)
+    }
+
+    private fun setEndPointRow(sheet: HSSFSheet, line: PipeLine, rowNum: Int) {
+       val endRow=sheet.createRow(rowNum)
+        endRow.createCell(4).setCellValue("End Point:")
+        endRow.createCell(5).setCellValue(line.end_point_x)
+        endRow.createCell(6).setCellValue(line.end_point_y)
+        if (line.end_point_x!!.isNotEmpty()&&line.end_point_y!!.isNotEmpty()){
+            val x_coordinate: Double = (line.end_point_x?.toDouble())?.minus(42.2) ?: 0.0
+            val y_coordinate: Double = (line.end_point_y?.toDouble())?.minus(481.7) ?: 0.0
+            endRow.createCell(7).setCellValue("$x_coordinate;$y_coordinate")
+        }else{
+            endRow.createCell(7).setCellValue("")
+        }
+
+
+    }
+
+    private fun initLabels(sheet: HSSFSheet, line: PipeLine) {
+        //later for styles https://poi.apache.org/components/spreadsheet/quick-guide.html
+        //https://poi.apache.org/components/spreadsheet/quick-guide.html#MergedCells
+
+        val row0=sheet.createRow(0)
+        row0.createCell(0).setCellValue("Pipe Line:")
+        row0.createCell(1).setCellValue(line.name)
+        row0.createCell(2).setCellValue("OGM")
+        row0.createCell(3).setCellValue(line.ogm)
+        row0.createCell(4).setCellValue("Type")
+        row0.createCell(5).setCellValue(line.type)
+        row0.createCell(6).setCellValue("Work Team")
+        row0.createCell(7).setCellValue(line.work_team)
+
+        val row1=sheet.createRow(1)
+        row1.createCell(0).setCellValue("Length:")
+        row1.createCell(1).setCellValue(line.length)
+        row1.createCell(2).setCellValue("WorkDate:")
+        row1.createCell(3).setCellValue(line.work_date)
+        row1.createCell(4).setCellValue("Input current:")
+        row1.createCell(5).setCellValue(line.input)
+        row1.createCell(6).setCellValue("Start_current:")
+        row1.createCell(7).setCellValue(line.i_start)
+        row1.createCell(8).setCellValue("End_current:")
+        row1.createCell(9).setCellValue(line.i_end)
+
+        val row2=sheet.createRow(2)
+        row2.createCell(0).setCellValue("No.")
+        row2.createCell(1).setCellValue("Dp")
+        row2.createCell(2).setCellValue("Depth")
+        row2.createCell(3).setCellValue("current1")
+        row2.createCell(4).setCellValue("Current2")
+        row2.createCell(5).setCellValue("gps_x")
+        row2.createCell(6).setCellValue("gps_y")
+        row2.createCell(7).setCellValue("Map Coordinates")
+
+
+        val row3=sheet.createRow(3)
+        row3.createCell(4).setCellValue("Start Point")
+        row3.createCell(5).setCellValue(line.start_point_x)
+        row3.createCell(6).setCellValue(line.start_point_y)
+
+        val x_coordinate: Double = (line.start_point_x?.toDouble())?.minus(42.2) ?: 0.0
+        val y_coordinate: Double = (line.start_point_y?.toDouble())?.minus(481.7) ?: 0.0
+
+        row3.createCell(7).setCellValue("$x_coordinate;$y_coordinate")
+
+
+    }
+
+
+
     private fun setUpBendBottomSheet(): BottomSheetBehavior<LinearLayout> {
-        val bendBottomSheet=BottomSheetBehavior.from(binding.BendBottomSheetLayout).apply {
-            isDraggable=false
+        val bendBottomSheet = BottomSheetBehavior.from(binding.BendBottomSheetLayout).apply {
+            isDraggable = false
         }
         return bendBottomSheet
     }
@@ -217,6 +413,20 @@ class LineDetailsFragment : Fragment() {
         } else {
             checkDeviceLocationSettingsAndGetLocationUpdates()
         }
+
+        if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST_CODE
+            && grantResults[0] == PackageManager.PERMISSION_DENIED
+        ) {
+            Snackbar.make(
+                requireView(),
+                "you need to grant the storage permission to export file",
+                Snackbar.LENGTH_SHORT
+            ).show()
+        } else {
+            checkStoragePermissionAndExportFile()
+        }
+
+
     }
 
     @SuppressLint("MissingPermission")
@@ -284,6 +494,7 @@ class LineDetailsFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         checkDeviceLocationSettingsAndGetLocationUpdates(false)
     }
 
@@ -291,4 +502,9 @@ class LineDetailsFragment : Fragment() {
 
 private const val LOCATION_PERMISSIONS_REQUEST_CODE = 1
 private const val REQUEST_TURN_DEVICE_LOCATION_ON = 2
+private const val WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 3
+
 private const val TAG = "LineDetailsFragment"
+
+
+
