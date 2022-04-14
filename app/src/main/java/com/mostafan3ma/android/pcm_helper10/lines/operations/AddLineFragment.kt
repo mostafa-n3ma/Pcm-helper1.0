@@ -18,7 +18,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -92,13 +91,15 @@ class AddLineFragment : Fragment() {
     private fun setDropDawnMenus(binding: FragmentAddLineBinding) {
         //required binding adapters
         val ogms = resources.getStringArray(R.array.ogms)
-
         val ogmAdapter = ArrayAdapter(requireContext(), R.layout.drop_dwon_item, ogms)
         binding.ogmAutoTxt.setAdapter(ogmAdapter)
-        val types = resources.getStringArray(R.array.types)
-        val typeAdapter = ArrayAdapter(requireContext(), R.layout.drop_dwon_item, types)
 
-        val arradapter =
+        val inputs=resources.getStringArray(R.array.inputs)
+        val inputsAdapter=ArrayAdapter(requireContext(),R.layout.drop_dwon_item,inputs)
+        binding.inputAutoTxt.setAdapter(inputsAdapter)
+
+        val types = resources.getStringArray(R.array.types)
+        val typeAdapter =
             object : ArrayAdapter<String?>(requireContext(), R.layout.drop_dwon_item, types) {
                 private val typeColors = listOf(Color.RED, Color.GREEN)
                 override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -110,7 +111,7 @@ class AddLineFragment : Fragment() {
                     return view
                 }
             }
-        binding.typeAutoTxt.setAdapter(arradapter)
+        binding.typeAutoTxt.setAdapter(typeAdapter)
 
     }
 

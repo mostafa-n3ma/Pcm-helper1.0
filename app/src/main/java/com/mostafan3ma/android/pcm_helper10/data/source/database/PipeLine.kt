@@ -1,3 +1,4 @@
+
 package com.mostafan3ma.android.pcm_helper10.data.source.database
 
 import android.content.Context
@@ -31,6 +32,9 @@ data class PipeLine(
     var start_point: String?,
     var end_point: String?,
     var work_date:String?,
+    var work_team:String?="",
+    var input:String?="1A",
+    var extra_note:String?="",
     var points: MutableList<DamagePoint>
 ):Parcelable
 

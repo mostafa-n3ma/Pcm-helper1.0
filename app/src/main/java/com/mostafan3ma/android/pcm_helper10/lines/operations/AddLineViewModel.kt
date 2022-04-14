@@ -20,6 +20,9 @@ class AddLineViewModel(private val repository: PipeLinesRepository) : ViewModel(
     val work_date = MutableLiveData<String>()
     val i_start = MutableLiveData<String>()
     val startPoint = MutableLiveData<String>()
+    val work_team=MutableLiveData<String>()
+    val input=MutableLiveData<String>()
+    val extra_note=MutableLiveData<String>()
 
 
 
@@ -51,6 +54,9 @@ class AddLineViewModel(private val repository: PipeLinesRepository) : ViewModel(
         type.value = ""
         i_start.value = ""
         startPoint.value = ""
+        work_team.value=""
+        input.value=""
+        extra_note.value=""
         _navigateToDetails.value = null
         progressVisibility.value=View.VISIBLE
         accuracy.value=""
@@ -70,6 +76,9 @@ class AddLineViewModel(private val repository: PipeLinesRepository) : ViewModel(
                     i_start = i_start.value,
                     end_point = "",
                     i_end = "",
+                    work_team=work_team.value,
+                    input = input.value,
+                    extra_note=extra_note.value,
                     points = mutableListOf()
                 )
             )

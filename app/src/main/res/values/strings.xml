@@ -44,4 +44,11 @@
 
     </string-array>
 
+
+    <string-array name="inputs">
+        <item>1A</item>
+        <item>2A</item>
+        <item>3A</item>
+    </string-array>
+
 </resources>
