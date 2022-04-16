@@ -17,6 +17,7 @@ import android.view.*
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -202,7 +203,7 @@ class LineDetailsFragment : Fragment() {
 
 
     private fun exportFile() {
-        var theFile: File = requireContext().cacheDir
+        var theFile: File = requireContext().filesDir
         theFile=File(theFile,getString(R.string.app_name))
         if (!theFile.exists()){
             if (theFile.mkdir()){
@@ -214,6 +215,10 @@ class LineDetailsFragment : Fragment() {
         }
 
         theFile= File(theFile,"${args.selectedLine.name}.xls")
+        if (theFile.exists()){
+            Log.i(TAG, "exportFile: file ${args.selectedLine.name}.xls is exist")
+        }
+
 
         try {
             val line=args.selectedLine
@@ -222,22 +227,6 @@ class LineDetailsFragment : Fragment() {
             val sheet=workbook.createSheet("${args.selectedLine.name}")
             initLabels(sheet,line)
             setPointsCells(sheet,line)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             workbook.write(fos)
             fos.flush()
             fos.close()
@@ -246,7 +235,20 @@ class LineDetailsFragment : Fragment() {
             Log.i(TAG, "exportFile: ${e.message}")
         }
 
+        val path = FileProvider.getUriForFile(
+            requireContext(),
+            "com.mostafan3ma.android.pcm_helper10.provider",
+            theFile
+        )
 
+
+        //mime types for files in intents
+//        https://www.sitepoint.com/mime-types-complete-list/
+        val shareIntent=Intent(Intent.ACTION_SEND)
+        shareIntent.type = "application/vnd.ms-excel"
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        shareIntent.putExtra(Intent.EXTRA_STREAM,path)
+        startActivity(Intent.createChooser(shareIntent,"share the ${args.selectedLine.name} file"))
 
     }
 

@@ -10,7 +10,7 @@ object LineDB {
             context.applicationContext,
             LineDataBase::class.java,
             "Lins"
-        ).build().getLineDao()
+        ).fallbackToDestructiveMigration().build().getLineDao()
     }
 
 }
