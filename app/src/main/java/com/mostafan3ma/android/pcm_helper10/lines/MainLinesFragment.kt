@@ -1,19 +1,22 @@
 package com.mostafan3ma.android.pcm_helper10.lines
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.appcompat.view.menu.MenuBuilder
+import androidx.appcompat.view.menu.MenuPopupHelper
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.mostafan3ma.android.pcm_helper10.PcmApp
 import com.mostafan3ma.android.pcm_helper10.R
 import com.mostafan3ma.android.pcm_helper10.databinding.FragmentLinesMainBinding
+
 
 class MainLinesFragment : Fragment() {
 
@@ -84,6 +87,21 @@ class MainLinesFragment : Fragment() {
             }
         })
         popupMenu.inflate(R.menu.long_clicked_menu)
+        try {
+            val popup=PopupMenu::class.java.getDeclaredField("mPopup")
+            popup.isAccessible=true
+            val menu=popup.get(popupMenu)
+            menu.javaClass
+                .getDeclaredMethod("setForceShowIcon",Boolean::class.java)
+                .invoke(menu,true)
+        }catch (e:Exception){
+                e.printStackTrace()
+        }finally {
+            popupMenu.show()
+        }
+
+
+
         popupMenu.show()
     }
 
