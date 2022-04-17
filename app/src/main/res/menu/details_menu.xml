@@ -1,8 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/excel_option"
-        android:title="Export Excel File"
-        />
+        app:showAsAction="always"
+        android:icon="@drawable/ic_baseline_more_vert_24"
+        android:title="">
+        <menu>
+            <item
+                android:id="@+id/end_point_option"
+                android:title="Add End Point"
+                android:icon="@drawable/end_option"
+                app:showAsAction="never"
+                />
+            <item
+                android:id="@+id/note_option"
+                android:title="Add Note"
+                android:icon="@drawable/note_option"
+                app:showAsAction="never"
+
+                />
+            <item
+                android:id="@+id/share_option"
+                android:title="Share Excel file"
+                android:icon="@drawable/share_option"
+                app:showAsAction="never"
+
+                />
+            <item
+                android:id="@+id/edit_option"
+                android:title="Edit"
+                android:icon="@drawable/edit_option"
+                app:showAsAction="never"
+                />
+            <item
+                android:id="@+id/settings_option"
+                android:title="Settings"
+                android:icon="@drawable/setting_option"
+                app:showAsAction="never"
+                />
+
+
+        </menu>
+    </item>
 </menu>

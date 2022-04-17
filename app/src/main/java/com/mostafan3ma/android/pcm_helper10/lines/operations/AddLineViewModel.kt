@@ -12,7 +12,6 @@ class AddLineViewModel(private val repository: PipeLinesRepository) : ViewModel(
    private lateinit var converter:CoordinateConversion
 
 
-
     val name = MutableLiveData<String>()
     val ogm = MutableLiveData<String>()
     val type = MutableLiveData<String>()
@@ -57,7 +56,7 @@ class AddLineViewModel(private val repository: PipeLinesRepository) : ViewModel(
         converter=CoordinateConversion()
         name.value = ""
         ogm.value = ""
-        work_date.value = ""
+
         length.value = ""
         type.value = ""
         i_start.value = ""

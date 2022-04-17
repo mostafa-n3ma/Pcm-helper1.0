@@ -16,11 +16,15 @@ import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
@@ -73,6 +77,8 @@ class LineDetailsFragment : Fragment() {
         }
 
     }
+
+
 
 
     override fun onCreateView(
@@ -166,17 +172,18 @@ class LineDetailsFragment : Fragment() {
         inflater.inflate(R.menu.details_menu, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        when (item.itemId) {
-            R.id.excel_option -> {
-                Toast.makeText(requireContext(), "clicking excel export button", Toast.LENGTH_SHORT)
-                    .show()
+        override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.end_point_option->{return true}
+            R.id.note_option->{return true}
+            R.id.share_option->{
                 checkStoragePermissionAndExportFile()
-            }
+                return true}
+            R.id.edit_option->{return true}
+            R.id.settings_option->{return true}
+            else->return false
 
         }
-        return true
     }
 
     fun storagePermissionsApproved(): Boolean {
