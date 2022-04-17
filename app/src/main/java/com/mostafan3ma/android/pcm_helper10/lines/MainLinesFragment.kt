@@ -3,12 +3,16 @@ package com.mostafan3ma.android.pcm_helper10.lines
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.mostafan3ma.android.pcm_helper10.PcmApp
+import com.mostafan3ma.android.pcm_helper10.R
 import com.mostafan3ma.android.pcm_helper10.databinding.FragmentLinesMainBinding
 
 class MainLinesFragment : Fragment() {
@@ -27,9 +31,15 @@ class MainLinesFragment : Fragment() {
         binding.lifecycleOwner=this
 
 
-        linAdapter=LinesAdapter(LineListener {selectedLine->
+        linAdapter=LinesAdapter(
+            LineListener {selectedLine->
            viewModel.navigateToSelectedLine(selectedLine)
-        })
+        },
+            LongClickListener{line,view->
+               viewModel.getLongClickedLine(line)
+                showPopupMenu(view)
+            }
+        )
         viewModel.navigateToSelectedLine.observe(viewLifecycleOwner, Observer { selectedLine->
             if (selectedLine!=null){
                 findNavController().navigate(MainLinesFragmentDirections.actionLinesMainFragmentToDetailsFragment(selectedLine))
@@ -57,6 +67,25 @@ class MainLinesFragment : Fragment() {
 
     }
 
+    private fun showPopupMenu(view: View) {
+        val popupMenu=PopupMenu(requireContext(),view)
+        popupMenu.setOnMenuItemClickListener(object :PopupMenu.OnMenuItemClickListener{
+            override fun onMenuItemClick(item: MenuItem?): Boolean {
+                when(item?.itemId){
+                    R.id.delete_popup_option->{
+                        viewModel.deleteLongClickedLine()
+                        return true
+                    }
+                    R.id.edit_popup_option->{
+                        Toast.makeText(requireContext(),"edit Popup option",Toast.LENGTH_SHORT).show()
+                    }
+                }
+                return true
+            }
+        })
+        popupMenu.inflate(R.menu.long_clicked_menu)
+        popupMenu.show()
+    }
 
 
 }

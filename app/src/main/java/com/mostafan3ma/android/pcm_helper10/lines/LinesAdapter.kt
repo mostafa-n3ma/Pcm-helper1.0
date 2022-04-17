@@ -1,6 +1,7 @@
 package com.mostafan3ma.android.pcm_helper10.lines
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine
 import com.mostafan3ma.android.pcm_helper10.databinding.LineItemBinding
 
-class LinesAdapter(private val clickListener:LineListener)
+class LinesAdapter(private val clickListener:LineListener,private val longListener:LongClickListener)
     :ListAdapter<PipeLine,LineViewHolder>(LineDiffCallBack()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LineViewHolder {
         return LineViewHolder.from(parent)
@@ -18,6 +19,10 @@ class LinesAdapter(private val clickListener:LineListener)
         val lineItem=getItem(position)
         holder.itemView.setOnClickListener {
             clickListener.onClick(lineItem)
+        }
+        holder.itemView.setOnLongClickListener {
+            longListener.onLongClick(lineItem,it)
+            return@setOnLongClickListener true
         }
         holder.bind(lineItem)
     }
@@ -53,6 +58,14 @@ class LineDiffCallBack : DiffUtil.ItemCallback<PipeLine>() {
     }
 }
 
+
+
+
+
 class LineListener(val clickListener: (line: PipeLine) -> Unit) {
     fun onClick(line: PipeLine) = clickListener(line)
+}
+
+class LongClickListener(val longListener:(line:PipeLine,view: View)->Unit){
+    fun onLongClick(line: PipeLine,view: View)=longListener(line,view)
 }

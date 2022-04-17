@@ -30,6 +30,11 @@ class PipeLinesRepository(
             localDataSource.clearAllLines()
         }
     }
+    suspend fun deleteLine(id: Int){
+        withContext(dispatcher){
+            localDataSource.deleteLine(id)
+        }
+    }
 
     suspend fun insertLine(line: PipeLine){
         withContext(dispatcher){

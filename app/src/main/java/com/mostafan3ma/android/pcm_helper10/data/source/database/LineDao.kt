@@ -25,6 +25,12 @@ interface LineDao {
     @Query("DELETE FROM table_Lines")
     suspend fun clear()
 
+    @Query("DELETE FROM table_Lines WHERE id=:id")
+    fun deleteLine(id: Int)
+
+
+
+
    @Query("UPDATE table_Lines SET points=:points WHERE id=:id")
    fun updatePointsList(id:Int,points:MutableList<DamagePoint>)
 

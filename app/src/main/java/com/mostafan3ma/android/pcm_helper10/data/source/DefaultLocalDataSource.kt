@@ -10,6 +10,7 @@ interface DefaultLocalDataSource {
     suspend fun getPipeLine(id:Int):PipeLine?
     suspend fun getLastPipeLine():PipeLine?
     suspend fun clearAllLines()
+    suspend fun deleteLine(id:Int)
     suspend fun insertLine(line: PipeLine)
     suspend fun updateLine(line: PipeLine)
     suspend fun updatePointsList(pipeId:Int,points:MutableList<DamagePoint>)

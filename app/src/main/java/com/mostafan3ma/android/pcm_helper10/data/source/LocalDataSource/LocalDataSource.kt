@@ -24,6 +24,10 @@ class LocalDataSource(private val dao: LineDao) : DefaultLocalDataSource {
         dao.clear()
     }
 
+    override suspend fun deleteLine(id: Int) {
+        dao.deleteLine(id)
+    }
+
 
     override suspend fun insertLine(line: PipeLine) {
         dao.insertLine(line)
