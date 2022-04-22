@@ -17,8 +17,23 @@ class LinesViewModel(private val repository: PipeLinesRepository) : ViewModel() 
     fun deleteLongClickedLine(){
         viewModelScope.launch {
             repository.deleteLine(_longClickedLine!!.id)
+            _undo.value=true
         }
     }
+    fun undoDeleting() {
+        viewModelScope.launch {
+            _longClickedLine?.let { repository.insertLine(it) }
+        }
+    }
+
+    private val _undo=MutableLiveData<Boolean>()
+    val undo:LiveData<Boolean>get() = _undo
+    fun undoCompleted(){
+        _undo.value=false
+    }
+
+
+
 
 
 
@@ -45,7 +60,7 @@ class LinesViewModel(private val repository: PipeLinesRepository) : ViewModel() 
     init {
         _navigateToSelectedLine.value=null
         _navigateToAddLineFragment.value=false
-
+        _undo.value=false
     }
 
 }

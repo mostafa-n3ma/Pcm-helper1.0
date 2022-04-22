@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.mostafan3ma.android.pcm_helper10.PcmApp
 import com.mostafan3ma.android.pcm_helper10.R
 import com.mostafan3ma.android.pcm_helper10.databinding.FragmentLinesMainBinding
@@ -66,8 +67,21 @@ class MainLinesFragment : Fragment() {
             }
         })
 
+        viewModel.undo.observe(viewLifecycleOwner, Observer {
+            if (it){
+                showUndoSnacBar()
+                viewModel.undoCompleted()
+            }
+        })
         return binding.root
 
+    }
+
+    private fun showUndoSnacBar() {
+        Snackbar.make(requireView(),"Deleted Successfully",Snackbar.LENGTH_SHORT)
+            .setAction("UNDO") {
+                viewModel.undoDeleting()
+            }.show()
     }
 
     private fun showPopupMenu(view: View) {
@@ -99,9 +113,6 @@ class MainLinesFragment : Fragment() {
         }finally {
             popupMenu.show()
         }
-
-
-
         popupMenu.show()
     }
 

@@ -12,10 +12,18 @@
         tools:layout="@layout/fragment_lines_main">
         <action
             android:id="@+id/action_LinesMainFragment_to_DetailsFragment"
-            app:destination="@id/DetailsFragment" />
+            app:destination="@id/DetailsFragment"
+            app:enterAnim="@anim/slid_in_from_right"
+            app:exitAnim="@anim/slid_out_to_left"
+            app:popEnterAnim="@anim/slid_in_from_left"
+            app:popExitAnim="@anim/slid_out_to_right" />
         <action
             android:id="@+id/action_LinesMainFragment_to_addLineFragment"
-            app:destination="@id/addLineFragment" />
+            app:destination="@id/addLineFragment"
+            app:enterAnim="@anim/fad_in"
+            app:exitAnim="@anim/fad_out"
+            app:popEnterAnim="@anim/fad_in"
+            app:popExitAnim="@anim/fad_out" />
     </fragment>
     <fragment
         android:id="@+id/DetailsFragment"
@@ -25,7 +33,11 @@
 
         <action
             android:id="@+id/action_LinesDetailsFragment_to_LinesMainFragment"
-            app:destination="@id/LinesMainFragment" />
+            app:destination="@id/LinesMainFragment"
+            app:enterAnim="@anim/fad_in"
+            app:exitAnim="@anim/fad_out"
+            app:popEnterAnim="@anim/fad_in"
+            app:popExitAnim="@anim/fad_out" />
         <argument
             android:name="selected_line"
             app:argType="com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine" />
@@ -37,6 +49,7 @@
         <action
             android:id="@+id/action_addLineFragment_to_DetailsFragment"
             app:destination="@id/DetailsFragment"
+            app:enterAnim="@anim/slid_in_from_right"
             app:popUpTo="@id/LinesMainFragment"
             app:popUpToInclusive="false" />
     </fragment>
