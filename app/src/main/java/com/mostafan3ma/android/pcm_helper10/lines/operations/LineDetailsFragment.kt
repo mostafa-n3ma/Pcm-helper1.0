@@ -49,6 +49,7 @@ class LineDetailsFragment : Fragment() {
     private lateinit var binding: FragmentLineDetailsBinding
     private lateinit var pointBottomSheet: BottomSheetBehavior<LinearLayout>
     private lateinit var bendBottomSheet: BottomSheetBehavior<LinearLayout>
+    private lateinit var endPointBottomSheet: BottomSheetBehavior<LinearLayout>
 
     private lateinit var locationManager: LocationManager
     private lateinit var locationListener: LocationListener
@@ -101,8 +102,9 @@ class LineDetailsFragment : Fragment() {
         binding.pointsRecycler.adapter = pointsAdapter
         pointBottomSheet = setUpPointBottomSheet()
         bendBottomSheet = setUpBendBottomSheet()
+        endPointBottomSheet=setUpendPointBottomSheet()
 
-
+        //Point Bottom Sheet
         viewModel.openPointBottomSheet.observe(viewLifecycleOwner, Observer {
             if (it) {
                 pointBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
@@ -131,9 +133,7 @@ class LineDetailsFragment : Fragment() {
             }
         })
 
-
-
-
+        //Bend Bottom Sheet
         viewModel.openBendBottomSheet.observe(viewLifecycleOwner, Observer {
             if (it) {
                 bendBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
@@ -161,9 +161,48 @@ class LineDetailsFragment : Fragment() {
             }
         })
 
+
+
+        //end point bottom sheet
+        viewModel.openEndPointBottomSheet.observe(viewLifecycleOwner, Observer {
+            if (it){
+                endPointBottomSheet.state=BottomSheetBehavior.STATE_EXPANDED
+                viewModel.openEndPointBottomSheetCompleted()
+                binding.fabAddPoint.visibility=View.INVISIBLE
+                binding.fabAddPoint.collapse()
+                checkPermissionsAndLocationSettingsAndGetLocation()
+            }
+        })
+        viewModel.closeEndPointBottomSheet.observe(viewLifecycleOwner, Observer {
+            if (it){
+                endPointBottomSheet.state=BottomSheetBehavior.STATE_COLLAPSED
+                viewModel.closeEndPointBottomSheetCompleted()
+                binding.fabAddPoint.visibility = View.VISIBLE
+                locationManager.removeUpdates(locationListener)
+            }
+        })
+        viewModel.addEndPointButtonClicked.observe(viewLifecycleOwner, Observer {
+            if (it){
+                endPointBottomSheet.state=BottomSheetBehavior.STATE_COLLAPSED
+                viewModel.addEndPointButtonClickedCompleted()
+                binding.fabAddPoint.visibility=View.VISIBLE
+            }
+        })
+
+
+
+
+
         setHasOptionsMenu(true)
 
         return binding.root
+    }
+
+    private fun setUpendPointBottomSheet(): BottomSheetBehavior<LinearLayout> {
+        val endPointBottomSheet=BottomSheetBehavior.from(binding.endPointBottomSheetLayout).apply {
+            isDraggable=false
+        }
+        return endPointBottomSheet
     }
 
 
@@ -174,7 +213,10 @@ class LineDetailsFragment : Fragment() {
 
         override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.end_point_option->{return true}
+            R.id.end_point_option->{
+                viewModel.openEndPointBottomSheet()
+
+                return true}
             R.id.note_option->{return true}
             R.id.share_option->{
                 checkStoragePermissionAndExportFile()

@@ -29,8 +29,10 @@
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginBottom="@dimen/fab_margin"
-            app:srcCompat="@drawable/ic_add_line"
-            android:contentDescription="@string/add_new_pipe_line_button" />
+            android:elevation="16dp"
+            android:contentDescription="@string/add_new_pipe_line_button"
+            app:backgroundTint="@color/white"
+            app:srcCompat="@drawable/ic_add_line" />
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

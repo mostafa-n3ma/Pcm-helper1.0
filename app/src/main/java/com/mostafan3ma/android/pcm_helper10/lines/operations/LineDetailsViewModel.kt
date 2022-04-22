@@ -26,6 +26,7 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
     val endPoint = MutableLiveData<String>()
     val endPoint_x = MutableLiveData<String>()
     val endPoint_y = MutableLiveData<String>()
+    val i_end=MutableLiveData<String>()
 
     val work_team=MutableLiveData<String>()
     val input=MutableLiveData<String>()
@@ -140,15 +141,6 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
 
 
     //Bend Events
-    private val _closeBendBottomSheet = MutableLiveData<Boolean>()
-    val closeBendBottomSheet: LiveData<Boolean> get() = _closeBendBottomSheet
-    fun closeBendBottomSheet() {
-        _closeBendBottomSheet.value = true
-    }
-    fun closeBendBottomSheetCompleted() {
-        _closeBendBottomSheet.value = false
-    }
-    ////////////////////////
     private val _openBendBottomSheet = MutableLiveData<Boolean>()
     val openBendBottomSheet: LiveData<Boolean> get() = _openBendBottomSheet
     fun openBendBottomSheet() {
@@ -156,6 +148,15 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
     }
     fun openBendBottomSheetCompleted() {
         _openBendBottomSheet.value = false
+    }
+    //////// ////////////////////////
+    private val _closeBendBottomSheet = MutableLiveData<Boolean>()
+    val closeBendBottomSheet: LiveData<Boolean> get() = _closeBendBottomSheet
+    fun closeBendBottomSheet() {
+        _closeBendBottomSheet.value = true
+    }
+    fun closeBendBottomSheetCompleted() {
+        _closeBendBottomSheet.value = false
     }
     /////////////////////////////
     private val _addBendButtonClicked = MutableLiveData<Boolean>()
@@ -165,6 +166,51 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
     }
     fun addBendButtonClickedComplete() {
         _addBendButtonClicked.value = false
+    }
+
+
+
+
+    //End Point Events
+    private val _openEndPointBottomSheet=MutableLiveData<Boolean>()
+    val openEndPointBottomSheet:LiveData<Boolean>get() = _openEndPointBottomSheet
+    fun openEndPointBottomSheet(){
+        _openEndPointBottomSheet.value=true
+    }
+    fun openEndPointBottomSheetCompleted(){
+        _openEndPointBottomSheet.value=false
+    }
+    /////////////////////////
+    private val _closeEndPointBottomSheet=MutableLiveData<Boolean>()
+    val closeEndPointBottomSheet:LiveData<Boolean>get() = _closeEndPointBottomSheet
+    fun closeEndPointBottomSheet(){
+        _closeEndPointBottomSheet.value=true
+    }
+    fun closeEndPointBottomSheetCompleted(){
+        _closeEndPointBottomSheet.value=false
+    }
+    ///////////////////
+    private val _addEndPointButtonClicked=MutableLiveData<Boolean>()
+    val addEndPointButtonClicked:LiveData<Boolean>get() = _addEndPointButtonClicked
+    fun addEndPointButtonClicked(){
+        _addEndPointButtonClicked.value=true
+        updateLinesEndPointAndEndCurrent()
+    }
+
+    fun addEndPointButtonClickedCompleted(){
+        _addEndPointButtonClicked.value=false
+    }
+
+    private fun updateLinesEndPointAndEndCurrent() {
+        endPoint_x.value=gpsX.value
+        endPoint_y.value=gpsY.value
+        endPoint.value=gpsX_Y.value
+        selectedLine.end_point_x=endPoint_x.value
+        selectedLine.end_point_y=endPoint_y.value
+        selectedLine.i_end=i_end.value
+        viewModelScope.launch {
+            repository.updateLine(selectedLine)
+        }
     }
 
 
@@ -186,6 +232,7 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
         work_team.value=""
         input.value=""
         extra_note.value=""
+        i_end.value= selectedLine.i_end!!
 
 
 
@@ -208,6 +255,11 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
         _addBendButtonClicked.value=false
 
 
+
+
+        _openEndPointBottomSheet.value=false
+        _closeEndPointBottomSheet.value=false
+        _addEndPointButtonClicked.value=false
 
 
     }
