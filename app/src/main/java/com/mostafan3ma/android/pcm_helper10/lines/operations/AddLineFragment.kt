@@ -113,7 +113,6 @@ class AddLineFragment : Fragment() {
                 override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                     val view = super.getView(position, convertView, parent)
                     if (view is TextView) {
-//                    view.setTextColor(typeColors[position])
                         view.setBackgroundColor(typeColors[position])
                     }
                     return view

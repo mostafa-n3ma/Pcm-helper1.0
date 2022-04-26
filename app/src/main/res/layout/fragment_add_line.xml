@@ -14,305 +14,279 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".lines.operations.AddLineViewModel">
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-
-
-        <com.google.android.material.textfield.TextInputLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:startIconDrawable="@drawable/pipe3"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            app:endIconMode="clear_text"
-            android:hint="Line Name"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/line_name_txt"
+            android:layout_height="match_parent">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionNext"
-                android:inputType="textCapCharacters"
-                android:text="@={viewModel.name}"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="Work Date"
-            app:startIconDrawable="@drawable/work_date"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            app:endIconMode="clear_text"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/work_date_txt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionDone"
-                android:inputType="date"
-                android:text="@={viewModel.work_date}"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ogmField"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="5dp"
-                android:hint="OGM"
-                app:startIconDrawable="@drawable/ogm1"
-                >
-
-                <AutoCompleteTextView
-                    android:id="@+id/ogm_auto_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="@={viewModel.ogm}"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_weight="1"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:id="@+id/type_Field"
-                app:startIconDrawable="@drawable/type1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:hint="Type">
-
-                <AutoCompleteTextView
-                    android:id="@+id/type_auto_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="@={viewModel.type}"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_weight="1"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:id="@+id/input_Field"
-                app:startIconDrawable="@drawable/input"
-                android:layout_width="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:hint="Input">
-
-                <AutoCompleteTextView
-                    android:id="@+id/input_auto_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="@={viewModel.input}"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:startIconDrawable="@drawable/length2"
-                app:endIconMode="clear_text"
-                android:layout_marginEnd="16dp"
-                android:hint="Lenght"
-                >
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/length_edit_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:inputType="number"
-                    android:text="@={viewModel.length}"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
-
-        </LinearLayout>
-
-
-
-
-
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="Start Current"
-            app:endIconMode="clear_text"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            app:startIconDrawable="@drawable/start_current"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/i_start_txt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:text="@={viewModel.i_start}"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/start_point_field"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:hint="Start Point"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:helperText="@{viewModel.accuracy}"
-                app:startIconDrawable="@drawable/start_point">
+                app:layout_constraintTop_toTopOf="parent">
 
-                <AutoCompleteTextView
-                    android:id="@+id/start_point_auto_txt"
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:text="@={viewModel.startPoint}"
-                    />
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="Line Name"
+                    app:endIconMode="clear_text"
+                    app:startIconDrawable="@drawable/pipe3">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/line_name_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapCharacters"
+                        android:text="@={viewModel.name}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="Work Date"
+                    app:endIconMode="clear_text"
+                    app:startIconDrawable="@drawable/work_date">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/work_date_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:inputType="date"
+                        android:text="@={viewModel.work_date}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/ogmField"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:hint="OGM"
+                        app:startIconDrawable="@drawable/ogm1">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/ogm_auto_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:text="@={viewModel.ogm}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/type_Field"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_weight="1"
+                        android:hint="Type"
+                        app:startIconDrawable="@drawable/type1">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/type_auto_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:text="@={viewModel.type}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_Field"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:hint="Input"
+                        app:startIconDrawable="@drawable/input">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/input_auto_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:text="@={viewModel.input}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_weight="1"
+                        android:hint="Lenght"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/length2">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/length_edit_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:text="@={viewModel.length}" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <ProgressBar
-                android:id="@+id/start_point_progressField"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:indeterminateTint="@color/design_default_color_primary"
-                android:visibility="@{viewModel.progressVisibility}"
-                app:layout_constraintBottom_toBottomOf="@id/start_point_field"
-                app:layout_constraintEnd_toEndOf="@id/start_point_field"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@id/start_point_field"
-                app:layout_constraintTop_toTopOf="@id/start_point_field" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:startIconDrawable="@drawable/work_team"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            app:endIconMode="clear_text"
-            android:hint="Work Team"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/work_team_txt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionNext"
-                android:inputType="textCapWords"
-                android:text="@={viewModel.work_team}"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="Start Current"
+                    app:endIconMode="clear_text"
+                    app:startIconDrawable="@drawable/start_current">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:startIconDrawable="@drawable/extra_note"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            app:endIconMode="clear_text"
-            android:hint="Extra Notes About Work"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/extra_note_txt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionNext"
-                android:inputType="textMultiLine"
-                android:text="@={viewModel.extra_note}"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/i_start_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:text="@={viewModel.i_start}" />
+                </com.google.android.material.textfield.TextInputLayout>
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/start_point_field"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="Start Point"
+                        app:helperText="@{viewModel.accuracy}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:startIconDrawable="@drawable/start_point">
 
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:elevation="10dp"
-            android:layout_margin="16dp"
-            >
-            <Button
-                android:layout_gravity="center"
-                android:id="@+id/textButton"
-                app:icon="@drawable/ic__post_add_"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add Line"
-                android:textSize="@dimen/text_normal_size"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:onClick="@{()-> viewModel.addLineToDatabaseAndNavigateToDetails()}"
-                />
-
-        </androidx.cardview.widget.CardView>
+                        <AutoCompleteTextView
+                            android:id="@+id/start_point_auto_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:text="@={viewModel.startPoint}" />
 
 
+                    </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
-</ScrollView>
+                    <ProgressBar
+                        android:id="@+id/start_point_progressField"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:indeterminateTint="@color/design_default_color_primary"
+                        android:visibility="@{viewModel.progressVisibility}"
+                        app:layout_constraintBottom_toBottomOf="@id/start_point_field"
+                        app:layout_constraintEnd_toEndOf="@id/start_point_field"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="@id/start_point_field"
+                        app:layout_constraintTop_toTopOf="@id/start_point_field" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="Work Team"
+                    app:endIconMode="clear_text"
+                    app:startIconDrawable="@drawable/work_team">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/work_team_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapWords"
+                        android:text="@={viewModel.work_team}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="Extra Notes About Work"
+                    app:endIconMode="clear_text"
+                    app:startIconDrawable="@drawable/extra_note">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/extra_note_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="textMultiLine"
+                        android:text="@={viewModel.extra_note}" />
+                </com.google.android.material.textfield.TextInputLayout>
 
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="16dp"
+                    android:elevation="10dp">
+
+                    <Button
+                        android:id="@+id/textButton"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:onClick="@{()-> viewModel.addLineToDatabaseAndNavigateToDetails()}"
+                        android:text="Add Line"
+                        android:textSize="@dimen/text_normal_size"
+                        app:icon="@drawable/ic__post_add_" />
+
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+        </ScrollView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,11 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <variable
-            name="selectedLine"
-            type="com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine" />
-
         <variable
             name="viewModel"
             type="com.mostafan3ma.android.pcm_helper10.lines.operations.LineDetailsViewModel" />
@@ -44,7 +39,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:paddingStart="16dp"
-                        android:text="@{selectedLine.name}"
+                        android:text="@{viewModel.finalLine.name}"
                         android:textSize="@dimen/text_large_size"
                         android:textStyle="bold"
                         tools:text="AD4-13-3H" />
@@ -54,7 +49,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingEnd="16dp"
-                        android:text="@{selectedLine.ogm}"
+                        android:text="@{viewModel.finalLine.ogm}"
                         android:textSize="@dimen/text_normal_size"
                         tools:text="OGM8" />
 
@@ -93,7 +88,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:paddingStart="16dp"
-                                android:text="@{selectedLine.type}"
+                                android:text="@{viewModel.finalLine.type}"
                                 android:textSize="@dimen/text_normal_size"
                                 tools:text="OIL" />
 
@@ -103,7 +98,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="@{selectedLine.length}"
+                                android:text="@{viewModel.finalLine.length}"
                                 android:textSize="@dimen/text_normal_size"
                                 tools:text="2300m" />
 
@@ -114,7 +109,7 @@
                                 android:layout_weight="1"
                                 android:gravity="end"
                                 android:paddingEnd="16dp"
-                                android:text="@{selectedLine.work_date}"
+                                android:text="@{viewModel.finalLine.work_date}"
                                 android:textSize="@dimen/text_normal_size"
                                 tools:text="27/3/2022" />
 
@@ -223,7 +218,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="@{selectedLine.i_start}"
+                            android:text="@{viewModel.finalLine.i_start}"
                             android:textSize="@dimen/text_normal_size"
                             tools:text="500mA" />
                     </LinearLayout>
@@ -255,7 +250,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="@{viewModel.i_end}"
+                            android:text="@{viewModel.finalLine.i_end}"
                             android:textSize="@dimen/text_normal_size"
                             tools:text="50mA" />
                     </LinearLayout>
@@ -601,7 +596,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
         <LinearLayout  android:id="@+id/Bend_bottom_sheet_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -867,6 +861,386 @@
             </LinearLayout>
 
         </LinearLayout>
+        <LinearLayout android:id="@+id/note_bottom_sheet_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/shap_add_bottom_sheet"
+            app:behavior_peekHeight="0dp"
+            app:layout_behavior="@string/bottom_sheet_behavior"
+            >
+
+            <LinearLayout
+                android:id="@+id/note_point_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:orientation="vertical"
+                android:elevation="10dp"
+                >
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:elevation="10dp"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Add Note"
+                            android:textColor="@color/design_default_color_primary"
+                            android:textSize="@dimen/text_normal_size" />
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:icon="@drawable/ic_baseline_cancel_24"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:onClick="@{()->viewModel.closeNoteBottomSheet()}"
+                            />
+
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/note_field"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="Extra Note"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:startIconDrawable="@drawable/extra_note"
+                    app:endIconMode="clear_text"
+                    >
+
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:text="@={viewModel.extra_note}"
+                        />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:elevation="10dp"
+                    android:layout_margin="16dp"
+                    >
+                    <Button
+                        android:layout_gravity="center"
+                        app:icon="@drawable/extra_note"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Add "
+                        android:textSize="@dimen/text_normal_size"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:onClick="@{()->viewModel.addNoteClicked()}"
+                        />
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout android:id="@+id/edit_bottom_sheet_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:background="@drawable/shap_add_bottom_sheet"
+            app:behavior_peekHeight="0dp"
+            android:orientation="vertical"
+            app:layout_behavior="@string/bottom_sheet_behavior">
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:elevation="10dp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Edit Line"
+                        android:textColor="@color/design_default_color_primary"
+                        android:textSize="@dimen/text_normal_size" />
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/ic_baseline_cancel_24"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:onClick="@{()->viewModel.closeEditBottomSheet()}"
+                        />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="Line Name"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/pipe3">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/line_name_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="textCapCharacters"
+                            android:text="@={viewModel.name}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/ogmField"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="@{viewModel.finalLine.ogm}"
+                        app:startIconDrawable="@drawable/ogm1">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/ogm_auto_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:text="@={viewModel.comingOgm}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/type_Field"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="@{viewModel.finalLine.type}"
+                        app:startIconDrawable="@drawable/type1">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/type_auto_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:text="@={viewModel.comingType}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_Field"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="@{viewModel.finalLine.input}"
+                        app:startIconDrawable="@drawable/input">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/input_auto_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:text="@={viewModel.comingInput}"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="Lenght"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/length2">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/length_edit_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:text="@={viewModel.length}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="Start Current"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/start_current">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/start_current_edit_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:text="@={viewModel.i_start}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="End Current"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/start_current">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/end_current_edit_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:text="@={viewModel.i_end}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="Work Date"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/work_date">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/work_date_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="numberDecimal"
+                            android:text="@={viewModel.work_date}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="Work Team"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/work_team">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/work_team_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="textCapWords"
+                            android:text="@={viewModel.work_team}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="Note"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/note_option">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/note_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionDone"
+                            android:inputType="textMultiLine"
+                            android:text="@={viewModel.extra_note}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:elevation="10dp"
+                        android:layout_margin="16dp"
+                        >
+                        <Button
+                            android:layout_gravity="center"
+                            app:icon="@drawable/save"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Save"
+                            android:textSize="@dimen/text_normal_size"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:onClick="@{()->viewModel.editSaveButtonClicked()}"
+                            />
+
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </ScrollView>
+
+
+        </LinearLayout>
+
+
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

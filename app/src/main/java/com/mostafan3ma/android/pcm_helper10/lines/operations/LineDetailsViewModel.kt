@@ -1,6 +1,7 @@
 package com.mostafan3ma.android.pcm_helper10.lines.operations
 
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.mostafan3ma.android.pcm_helper10.Utils.CoordinateConversion
 import com.mostafan3ma.android.pcm_helper10.data.source.PipeLinesRepository
@@ -12,7 +13,15 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
     private var converter: CoordinateConversion = CoordinateConversion()
 
 
-
+    val finalLine=MutableLiveData<PipeLine>()
+    val comingOgm=MutableLiveData<String>()
+    val comingType=MutableLiveData<String>()
+    val comingInput=MutableLiveData<String>()
+    fun updateFinalLine(){
+        viewModelScope.launch {
+            finalLine.value= repository.getPipeLine(selectedLine.id)
+        }
+    }
 
     val name = MutableLiveData<String>()
     val ogm = MutableLiveData<String>()
@@ -71,6 +80,7 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
                 }
             }
             repository.updatePointsList(selectedLine.id,updatedList)
+            updateFinalLine()
         }
     }
     private fun getPointsNo():Int{
@@ -96,6 +106,7 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
         selectedLine.points.add(getNewPointInfo())
         viewModelScope.launch {
             repository.updatePointsList(selectedLine.id, selectedLine.points)
+            updateFinalLine()
         }
 
     }
@@ -104,6 +115,7 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
         selectedLine.points.add(newBend)
         viewModelScope.launch {
             repository.updatePointsList(selectedLine.id, selectedLine.points)
+            updateFinalLine()
         }
     }
 
@@ -196,11 +208,9 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
         _addEndPointButtonClicked.value=true
         updateLinesEndPointAndEndCurrent()
     }
-
     fun addEndPointButtonClickedCompleted(){
         _addEndPointButtonClicked.value=false
     }
-
     private fun updateLinesEndPointAndEndCurrent() {
         endPoint_x.value=gpsX.value
         endPoint_y.value=gpsY.value
@@ -210,28 +220,133 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
         selectedLine.i_end=i_end.value
         viewModelScope.launch {
             repository.updateLine(selectedLine)
+            updateFinalLine()
         }
     }
 
 
 
 
+    ///extra note events
+    private val _openNoteBottomSheet=MutableLiveData<Boolean>()
+    val openNoteBottomSheet:LiveData<Boolean>get() = _openNoteBottomSheet
+    fun openNoteBottomSheet(){
+        _openNoteBottomSheet.value=true
+    }
+    fun openNoteBottomSheetComplete(){
+        _openNoteBottomSheet.value=false
+    }
+    ///////////////////////
+    private val _closeNoteBottomSheet=MutableLiveData<Boolean>()
+    val closeNoteBottomSheet:LiveData<Boolean>get() = _closeNoteBottomSheet
+    fun closeNoteBottomSheet(){
+        _closeNoteBottomSheet.value=true
+    }
+    fun closeNoteBottomSheetComplete(){
+        _closeNoteBottomSheet.value=false
+    }
+    /////////
+    private val _addNoteClicked=MutableLiveData<Boolean>()
+    val addNoteClicked:LiveData<Boolean>get() = _addNoteClicked
+    fun addNoteClicked(){
+        _addNoteClicked.value=true
+        updateLinesNote()
+    }
+    fun addNoteClickedComplete(){
+        _addNoteClicked.value=false
+    }
+    fun updateLinesNote(){
+        selectedLine.extra_note=extra_note.value
+        viewModelScope.launch {
+            repository.updateLine(selectedLine)
+            updateFinalLine()
+        }
+    }
+
+
+
+
+
+
+
+    //edit bottom sheet
+    private val _openEditBottomSheet=MutableLiveData<Boolean>()
+    val openEditBottomSheet:LiveData<Boolean>get() = _openEditBottomSheet
+    fun openEditBottomSheet(){
+        _openEditBottomSheet.value=true
+    }
+    fun openEditBottomSheetComplete(){
+        _openEditBottomSheet.value=false
+    }
+    ////////////////
+    private val _closeEditBottomSheet=MutableLiveData<Boolean>()
+    val closeEditBottomSheet:LiveData<Boolean>get() = _closeEditBottomSheet
+    fun closeEditBottomSheet(){
+        _closeEditBottomSheet.value=true
+    }
+    fun closeEditBottomSheetComplete(){
+        _closeEditBottomSheet.value=false
+    }
+    /////////
+    private val _editSaveButtonClicked=MutableLiveData<Boolean>()
+    val editSaveButtonClicked:LiveData<Boolean>get() = _editSaveButtonClicked
+    fun editSaveButtonClicked(){
+        _editSaveButtonClicked.value=true
+        editLine()
+    }
+    fun editSaveButtonClickedComplete(){
+        _editSaveButtonClicked.value=false
+    }
+    private fun editLine() {
+        selectedLine.let {
+            it.name=name.value
+            it.length=length.value
+            it.work_date=work_date.value
+            it.i_start=i_start.value
+            it.i_end=i_end.value
+            it.work_team=work_team.value
+            it.extra_note=extra_note.value
+
+            if (comingOgm.value.equals("")
+                &&comingType.value.equals("")
+                &&comingInput.value.equals("")
+            ){
+
+            }else{
+                it.ogm=comingOgm.value
+                it.type=comingType.value
+                it.input=comingInput.value
+            }
+
+
+        }
+        viewModelScope.launch {
+            repository.updateLine(selectedLine)
+            updateFinalLine()
+        }
+    }
+
+
+
+
+
     init {
-        name.value = ""
-        ogm.value = ""
-        work_date.value = ""
-        length.value = ""
-        type.value = ""
-        i_start.value = ""
+        finalLine.value=selectedLine
+        name.value = selectedLine.name?:""
+        ogm.value =selectedLine.ogm?:""
+        work_date.value =selectedLine.work_date?:""
+        length.value =selectedLine.length?:""
+        type.value =selectedLine.type?:""
+        i_start.value =selectedLine.i_start?:""
         startPoint.value = "${selectedLine.start_point_x};${selectedLine.start_point_y}"
         startPoint_x.value="${selectedLine.start_point_x!!}"
         startPoint_y.value="${selectedLine.start_point_y!!}"
         endPoint.value="${selectedLine.end_point_x};${selectedLine.end_point_x}"
         endPoint_x.value="${selectedLine.end_point_x!!}"
         endPoint_y.value="${selectedLine.end_point_y!!}"
-        work_team.value=""
-        input.value=""
-        extra_note.value=""
+        work_team.value=selectedLine.work_team?:""
+        input.value=selectedLine.input?:""
+        extra_note.value=selectedLine.extra_note?:""
         i_end.value= selectedLine.i_end!!
 
 
@@ -261,6 +376,26 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
         _closeEndPointBottomSheet.value=false
         _addEndPointButtonClicked.value=false
 
+
+
+        _openNoteBottomSheet.value=false
+        _closeNoteBottomSheet.value=false
+        _addNoteClicked.value=false
+
+
+
+
+
+        _openEditBottomSheet.value=false
+        _closeEditBottomSheet.value=false
+        _editSaveButtonClicked.value=false
+
+
+
+
+        comingInput.value=""
+        comingOgm.value=""
+        comingType.value=""
 
     }
 
