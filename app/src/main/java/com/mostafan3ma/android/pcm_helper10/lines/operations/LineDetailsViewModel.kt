@@ -2,7 +2,6 @@ package com.mostafan3ma.android.pcm_helper10.lines.operations
 
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.lifecycle.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.mostafan3ma.android.pcm_helper10.Utils.CoordinateConversion
@@ -105,12 +104,25 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
         )
     }
 
+    private fun reInitPointsLiveValues(){
+        dp.value=""
+        depth.value=""
+        current1.value=""
+        current2.value=""
+    }
     fun addNewPointToPipeList() {
         selectedLine.points.add(getNewPointInfo())
         viewModelScope.launch {
             repository.updatePointsList(selectedLine.id, selectedLine.points)
             updateFinalLine()
+            reInitPointsLiveValues()
         }
+
+
+
+
+
+
 
     }
      fun addNewBendToPipeList(){
@@ -309,18 +321,9 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
             it.i_end=i_end.value
             it.work_team=work_team.value
             it.extra_note=extra_note.value
-
-            if (comingOgm.value.equals("")
-                &&comingType.value.equals("")
-                &&comingInput.value.equals("")
-            ){
-
-            }else{
-                it.ogm=comingOgm.value
-                it.type=comingType.value
-                it.input=comingInput.value
-            }
-
+            if (comingOgm.value!!.isNotEmpty())it.ogm=comingOgm.value
+            if (comingType.value!!.isNotEmpty())it.type=comingType.value
+            if (comingInput.value!!.isNotEmpty())it.input=comingInput.value
 
         }
         viewModelScope.launch {

@@ -113,6 +113,7 @@ class LineDetailsFragment : Fragment() {
         viewModel.openPointBottomSheet.observe(viewLifecycleOwner, Observer {
             if (it) {
                 pointBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
+                binding.dpField.requestFocus()
                 viewModel.openPointBottomSheetCompleted()
                 binding.fabAddPoint.visibility = View.INVISIBLE
                 binding.fabAddPoint.collapse()
