@@ -5,7 +5,6 @@ import androidx.lifecycle.*
 import com.mostafan3ma.android.pcm_helper10.Utils.CoordinateConversion
 import com.mostafan3ma.android.pcm_helper10.data.source.PipeLinesRepository
 import com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine
-import com.mostafan3ma.android.pcm_helper10.lines.LinesViewModel
 import kotlinx.coroutines.launch
 
 class AddLineViewModel(private val repository: PipeLinesRepository) : ViewModel() {
@@ -16,7 +15,7 @@ class AddLineViewModel(private val repository: PipeLinesRepository) : ViewModel(
     val ogm = MutableLiveData<String>()
     val type = MutableLiveData<String>()
     val length = MutableLiveData<String>()
-    val work_date = MutableLiveData<String>()
+    val start_work_date = MutableLiveData<String>()
     val i_start = MutableLiveData<String>()
     val startPoint = MutableLiveData<String>()
     val startPoint_x = MutableLiveData<String>()
@@ -56,7 +55,6 @@ class AddLineViewModel(private val repository: PipeLinesRepository) : ViewModel(
         converter=CoordinateConversion()
         name.value = ""
         ogm.value = ""
-
         length.value = ""
         type.value = ""
         i_start.value = ""
@@ -80,7 +78,8 @@ class AddLineViewModel(private val repository: PipeLinesRepository) : ViewModel(
                     ogm = ogm.value,
                     type = type.value,
                     length = length.value,
-                    work_date = work_date.value,
+                    start_work_date = start_work_date.value,
+                    end_work_date="",
                     start_point_x = startPoint_x.value,
                     start_point_y = startPoint_y.value,
                     i_start = i_start.value,

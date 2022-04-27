@@ -10,7 +10,7 @@
         <menu>
             <item
                 android:id="@+id/end_point_option"
-                android:title="Add End Point"
+                android:title="Finish Line"
                 android:icon="@drawable/end_option"
                 app:showAsAction="never"
                 />

@@ -1,5 +1,6 @@
 package com.mostafan3ma.android.pcm_helper10.lines
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,12 @@ class LinesAdapter(private val clickListener:LineListener,private val longListen
 class LineViewHolder(private val binding:LineItemBinding):RecyclerView.ViewHolder(binding.root){
     fun bind(item: PipeLine){
         binding.pipeLine=item
+        if(item.end_work_date!!.isEmpty()){
+            binding.lineEndDate.text="Not Finished yet"
+            binding.lineEndDate.setTextColor(Color.RED)
+        }else{
+            binding.lineEndDate.text=item.end_work_date
+        }
         binding.executePendingBindings()
     }
     companion object{

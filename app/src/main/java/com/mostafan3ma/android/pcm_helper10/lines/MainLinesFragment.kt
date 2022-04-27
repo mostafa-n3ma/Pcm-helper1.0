@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.appcompat.view.menu.MenuBuilder
-import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -69,7 +67,7 @@ class MainLinesFragment : Fragment() {
 
         viewModel.undo.observe(viewLifecycleOwner, Observer {
             if (it){
-                showUndoSnacBar()
+                showUndoSnackBar()
                 viewModel.undoCompleted()
             }
         })
@@ -77,7 +75,7 @@ class MainLinesFragment : Fragment() {
 
     }
 
-    private fun showUndoSnacBar() {
+    private fun showUndoSnackBar() {
         Snackbar.make(requireView(),"Deleted Successfully",Snackbar.LENGTH_SHORT)
             .setAction("UNDO") {
                 viewModel.undoDeleting()

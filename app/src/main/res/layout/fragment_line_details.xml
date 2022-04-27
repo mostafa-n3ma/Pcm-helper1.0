@@ -109,7 +109,7 @@
                                 android:layout_weight="1"
                                 android:gravity="end"
                                 android:paddingEnd="16dp"
-                                android:text="@{viewModel.finalLine.work_date}"
+                                android:text="@{viewModel.finalLine.start_work_date}"
                                 android:textSize="@dimen/text_normal_size"
                                 tools:text="27/3/2022" />
 
@@ -718,6 +718,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout android:id="@+id/end_point_bottom_sheet_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -755,7 +756,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Add End Point"
+                            android:text="Finishing"
                             android:textColor="@color/design_default_color_primary"
                             android:textSize="@dimen/text_normal_size" />
                         <Button
@@ -765,7 +766,7 @@
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:gravity="center"
                             android:layout_weight="1"
-                            android:onClick="@{()->viewModel.closeEndPointBottomSheet()}"
+                            android:onClick="@{()->viewModel.closeFinishBottomSheet()}"
                             />
 
 
@@ -782,7 +783,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:hint="Gps"
+                        android:hint="End Point Gps"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -829,17 +830,36 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:startIconDrawable="@drawable/start_point">
+                    app:startIconDrawable="@drawable/start_current">
 
                     <AutoCompleteTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
                         android:inputType="numberDecimal"
                         android:text="@={viewModel.i_end}"
                         />
 
 
                 </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="End Date"
+                    app:endIconMode="clear_text"
+                    app:startIconDrawable="@drawable/end_work_date">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:inputType="date"
+                        android:text="@={viewModel.end_work_date}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
 
 
                 <androidx.cardview.widget.CardView
@@ -854,10 +874,10 @@
                         app:icon="@drawable/end_option"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Add "
+                        android:text="Finish"
                         android:textSize="@dimen/text_normal_size"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:onClick="@{()->viewModel.addEndPointButtonClicked()}"
+                        android:onClick="@{()->viewModel.finishButtonClicked()}"
                         />
 
                 </androidx.cardview.widget.CardView>
@@ -865,6 +885,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout android:id="@+id/note_bottom_sheet_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -1167,18 +1188,41 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:hint="Work Date"
+                        android:hint="ٍStart Date"
                         app:endIconMode="clear_text"
-                        app:startIconDrawable="@drawable/work_date">
+                        app:startIconDrawable="@drawable/start_work_date">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/work_date_txt"
+                            android:id="@+id/start_work_date_txt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
-                            android:inputType="numberDecimal"
-                            android:text="@={viewModel.work_date}" />
+                            android:inputType="date"
+                            android:text="@={viewModel.start_work_date}" />
                     </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="End Date"
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/end_work_date">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/end_date_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="date"
+                            android:text="@={viewModel.end_work_date}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

@@ -55,9 +55,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
-                    android:hint="Work Date"
+                    android:hint="Starting Date"
                     app:endIconMode="clear_text"
-                    app:startIconDrawable="@drawable/work_date">
+                    app:startIconDrawable="@drawable/start_work_date">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/work_date_txt"
@@ -65,7 +65,7 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
                         android:inputType="date"
-                        android:text="@={viewModel.work_date}" />
+                        android:text="@={viewModel.start_work_date}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout

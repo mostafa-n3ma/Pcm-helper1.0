@@ -86,12 +86,11 @@
                     tools:text="1000m" />
 
                 <TextView
-                    android:id="@+id/line_date"
+                    android:id="@+id/line_end_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:text="@{pipeLine.work_date}"
-                    android:textSize="@dimen/text_normal_size"
+                    android:textSize="@dimen/text_smale_size"
                     app:layout_constraintBaseline_toBaselineOf="@+id/line_length"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:text="25/3/2022" />

@@ -92,9 +92,11 @@ class LineDetailsFragment : Fragment() {
         binding.viewModel = viewModel
 
         pointsAdapter = PointsAdapter(PointListener {
-            Toast.makeText(requireContext(), "${it.db}", Toast.LENGTH_SHORT).show()
-            viewModel.deletePoint(it)
-            pointsAdapter.notifyDataSetChanged()
+//            Toast.makeText(requireContext(), "${it.db}", Toast.LENGTH_SHORT).show()
+//            viewModel.deletePoint(it)
+//            pointsAdapter.notifyDataSetChanged()
+
+
         })
 
 
@@ -171,28 +173,28 @@ class LineDetailsFragment : Fragment() {
 
 
         //end point bottom sheet
-        viewModel.openEndPointBottomSheet.observe(viewLifecycleOwner, Observer {
+        viewModel.openFinishBottomSheet.observe(viewLifecycleOwner, Observer {
             if (it) {
                 endPointBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
-                viewModel.openEndPointBottomSheetCompleted()
+                viewModel.openFinishBottomSheetCompleted()
                 binding.fabAddPoint.visibility = View.INVISIBLE
                 checkPermissionsAndLocationSettingsAndGetLocation()
             }
         })
-        viewModel.closeEndPointBottomSheet.observe(viewLifecycleOwner, Observer {
+        viewModel.closeFinishBottomSheet.observe(viewLifecycleOwner, Observer {
             if (it) {
                 hideKeyboard()
                 viewModel.closeBottomSheetWithDelay(endPointBottomSheet)
-                viewModel.closeEndPointBottomSheetCompleted()
+                viewModel.closeFinishBottomSheetCompleted()
                 binding.fabAddPoint.visibility = View.VISIBLE
                 locationManager.removeUpdates(locationListener)
             }
         })
-        viewModel.addEndPointButtonClicked.observe(viewLifecycleOwner, Observer {
+        viewModel.finishButtonClicked.observe(viewLifecycleOwner, Observer {
             if (it) {
                 hideKeyboard()
                 viewModel.closeBottomSheetWithDelay(endPointBottomSheet)
-                viewModel.addEndPointButtonClickedCompleted()
+                viewModel.finishButtonClickedCompleted()
                 binding.fabAddPoint.visibility = View.VISIBLE
             }
         })
@@ -322,7 +324,7 @@ class LineDetailsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.end_point_option -> {
-                viewModel.openEndPointBottomSheet()
+                viewModel.openFinishBottomSheet()
 
                 return true
             }
@@ -485,7 +487,7 @@ class LineDetailsFragment : Fragment() {
         row1.createCell(0).setCellValue("Length:")
         row1.createCell(1).setCellValue(line.length)
         row1.createCell(2).setCellValue("WorkDate:")
-        row1.createCell(3).setCellValue(line.work_date)
+        row1.createCell(3).setCellValue(line.start_work_date)
         row1.createCell(4).setCellValue("Input current:")
         row1.createCell(5).setCellValue(line.input)
         row1.createCell(6).setCellValue("Start_current:")

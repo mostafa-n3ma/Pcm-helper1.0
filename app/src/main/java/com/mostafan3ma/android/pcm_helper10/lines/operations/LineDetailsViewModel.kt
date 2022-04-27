@@ -29,7 +29,8 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
     val ogm = MutableLiveData<String>()
     val type = MutableLiveData<String>()
     val length = MutableLiveData<String>()
-    val work_date = MutableLiveData<String>()
+    val start_work_date = MutableLiveData<String>()
+    val end_work_date = MutableLiveData<String>()
     val i_start = MutableLiveData<String>()
     val startPoint = MutableLiveData<String>()
     val startPoint_x = MutableLiveData<String>()
@@ -198,41 +199,42 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
 
 
 
-    //End Point Events
-    private val _openEndPointBottomSheet=MutableLiveData<Boolean>()
-    val openEndPointBottomSheet:LiveData<Boolean>get() = _openEndPointBottomSheet
-    fun openEndPointBottomSheet(){
-        _openEndPointBottomSheet.value=true
+    //Finish Bottom Sheet Events
+    private val _openFinishBottomSheet=MutableLiveData<Boolean>()
+    val openFinishBottomSheet:LiveData<Boolean>get() = _openFinishBottomSheet
+    fun openFinishBottomSheet(){
+        _openFinishBottomSheet.value=true
     }
-    fun openEndPointBottomSheetCompleted(){
-        _openEndPointBottomSheet.value=false
+    fun openFinishBottomSheetCompleted(){
+        _openFinishBottomSheet.value=false
     }
     /////////////////////////
-    private val _closeEndPointBottomSheet=MutableLiveData<Boolean>()
-    val closeEndPointBottomSheet:LiveData<Boolean>get() = _closeEndPointBottomSheet
-    fun closeEndPointBottomSheet(){
-        _closeEndPointBottomSheet.value=true
+    private val _closeFinishBottomSheet=MutableLiveData<Boolean>()
+    val closeFinishBottomSheet:LiveData<Boolean>get() = _closeFinishBottomSheet
+    fun closeFinishBottomSheet(){
+        _closeFinishBottomSheet.value=true
     }
-    fun closeEndPointBottomSheetCompleted(){
-        _closeEndPointBottomSheet.value=false
+    fun closeFinishBottomSheetCompleted(){
+        _closeFinishBottomSheet.value=false
     }
     ///////////////////
-    private val _addEndPointButtonClicked=MutableLiveData<Boolean>()
-    val addEndPointButtonClicked:LiveData<Boolean>get() = _addEndPointButtonClicked
-    fun addEndPointButtonClicked(){
-        _addEndPointButtonClicked.value=true
-        updateLinesEndPointAndEndCurrent()
+    private val _finishButtonClicked=MutableLiveData<Boolean>()
+    val finishButtonClicked:LiveData<Boolean>get() = _finishButtonClicked
+    fun finishButtonClicked(){
+        _finishButtonClicked.value=true
+        updateLineWithFinishingData()
     }
-    fun addEndPointButtonClickedCompleted(){
-        _addEndPointButtonClicked.value=false
+    fun finishButtonClickedCompleted(){
+        _finishButtonClicked.value=false
     }
-    private fun updateLinesEndPointAndEndCurrent() {
+    private fun updateLineWithFinishingData() {
         endPoint_x.value=gpsX.value
         endPoint_y.value=gpsY.value
         endPoint.value=gpsX_Y.value
         selectedLine.end_point_x=endPoint_x.value
         selectedLine.end_point_y=endPoint_y.value
         selectedLine.i_end=i_end.value
+        selectedLine.end_work_date=end_work_date.value
         viewModelScope.launch {
             repository.updateLine(selectedLine)
             updateFinalLine()
@@ -316,7 +318,8 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
         selectedLine.let {
             it.name=name.value
             it.length=length.value
-            it.work_date=work_date.value
+            it.start_work_date=start_work_date.value
+            it.end_work_date=end_work_date.value
             it.i_start=i_start.value
             it.i_end=i_end.value
             it.work_team=work_team.value
@@ -349,7 +352,8 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
         finalLine.value=selectedLine
         name.value = selectedLine.name?:""
         ogm.value =selectedLine.ogm?:""
-        work_date.value =selectedLine.work_date?:""
+        start_work_date.value =selectedLine.start_work_date?:""
+        end_work_date.value=selectedLine.end_work_date?:""
         length.value =selectedLine.length?:""
         type.value =selectedLine.type?:""
         i_start.value =selectedLine.i_start?:""
@@ -387,9 +391,9 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
 
 
 
-        _openEndPointBottomSheet.value=false
-        _closeEndPointBottomSheet.value=false
-        _addEndPointButtonClicked.value=false
+        _openFinishBottomSheet.value=false
+        _closeFinishBottomSheet.value=false
+        _finishButtonClicked.value=false
 
 
 
