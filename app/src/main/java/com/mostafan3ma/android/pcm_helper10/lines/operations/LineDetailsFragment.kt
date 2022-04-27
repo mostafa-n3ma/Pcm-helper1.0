@@ -32,6 +32,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.mostafan3ma.android.pcm_helper10.BuildConfig
 import com.mostafan3ma.android.pcm_helper10.PcmApp
 import com.mostafan3ma.android.pcm_helper10.R
+import com.mostafan3ma.android.pcm_helper10.Utils.hideKeyboard
 import com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine
 import com.mostafan3ma.android.pcm_helper10.databinding.FragmentLineDetailsBinding
 import com.mostafan3ma.android.pcm_helper10.lines.operations.Points.PointListener
@@ -122,14 +123,16 @@ class LineDetailsFragment : Fragment() {
             if (it) {
                 viewModel.addNewPointToPipeList()
                 pointsAdapter.notifyDataSetChanged()
-                pointBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
+                hideKeyboard()
+                viewModel.closeBottomSheetWithDelay(pointBottomSheet)
                 viewModel.addPointButtonClickedComplete()
                 binding.fabAddPoint.visibility = View.VISIBLE
             }
         })
         viewModel.closePointBottomSheet.observe(viewLifecycleOwner, Observer {
             if (it) {
-                pointBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
+                hideKeyboard()
+                viewModel.closeBottomSheetWithDelay(pointBottomSheet)
                 viewModel.closePointBottomSheetCompleted()
                 binding.fabAddPoint.visibility = View.VISIBLE
                 locationManager.removeUpdates(locationListener)
@@ -177,7 +180,8 @@ class LineDetailsFragment : Fragment() {
         })
         viewModel.closeEndPointBottomSheet.observe(viewLifecycleOwner, Observer {
             if (it) {
-                endPointBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
+                hideKeyboard()
+                viewModel.closeBottomSheetWithDelay(endPointBottomSheet)
                 viewModel.closeEndPointBottomSheetCompleted()
                 binding.fabAddPoint.visibility = View.VISIBLE
                 locationManager.removeUpdates(locationListener)
@@ -185,7 +189,8 @@ class LineDetailsFragment : Fragment() {
         })
         viewModel.addEndPointButtonClicked.observe(viewLifecycleOwner, Observer {
             if (it) {
-                endPointBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
+                hideKeyboard()
+                viewModel.closeBottomSheetWithDelay(endPointBottomSheet)
                 viewModel.addEndPointButtonClickedCompleted()
                 binding.fabAddPoint.visibility = View.VISIBLE
             }
@@ -202,14 +207,16 @@ class LineDetailsFragment : Fragment() {
         })
         viewModel.closeNoteBottomSheet.observe(viewLifecycleOwner, Observer {
             if (it) {
-                noteBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
+                hideKeyboard()
+                viewModel.closeBottomSheetWithDelay(noteBottomSheet)
                 viewModel.closeNoteBottomSheetComplete()
                 binding.fabAddPoint.visibility = View.VISIBLE
             }
         })
         viewModel.addNoteClicked.observe(viewLifecycleOwner, Observer {
             if (it) {
-                noteBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
+                hideKeyboard()
+                viewModel.closeBottomSheetWithDelay(noteBottomSheet)
                 viewModel.addNoteClickedComplete()
                 binding.fabAddPoint.visibility = View.VISIBLE
             }
@@ -226,15 +233,18 @@ class LineDetailsFragment : Fragment() {
         })
         viewModel.closeEditBottomSheet.observe(viewLifecycleOwner, Observer {
             if (it) {
-                editBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
+                hideKeyboard()
+                viewModel.closeBottomSheetWithDelay(editBottomSheet)
                 viewModel.closeEditBottomSheetComplete()
                 binding.fabAddPoint.visibility = View.VISIBLE
             }
         })
 
-        viewModel.editSaveButtonClicked.observe(viewLifecycleOwner, Observer {
+        viewModel.editSaveButtonClicked.observe(viewLifecycleOwner, Observer { it ->
             if (it) {
                 viewModel.editSaveButtonClickedComplete()
+                hideKeyboard()
+                viewModel.closeBottomSheetWithDelay(editBottomSheet)
                 editBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
                 binding.fabAddPoint.visibility = View.VISIBLE
 
@@ -344,8 +354,6 @@ class LineDetailsFragment : Fragment() {
     fun checkStoragePermissionAndExportFile() {
         if (storagePermissionsApproved()) {
             exportFile()
-
-
         } else {
             requestPermissions(
                 arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
@@ -649,8 +657,8 @@ class LineDetailsFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         checkDeviceLocationSettingsAndGetLocationUpdates(false)
+        hideKeyboard()
     }
 
 }

@@ -1,12 +1,15 @@
 package com.mostafan3ma.android.pcm_helper10.lines.operations
 
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.lifecycle.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.mostafan3ma.android.pcm_helper10.Utils.CoordinateConversion
 import com.mostafan3ma.android.pcm_helper10.data.source.PipeLinesRepository
 import com.mostafan3ma.android.pcm_helper10.data.source.database.DamagePoint
 import com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LineDetailsViewModel(private val repository: PipeLinesRepository,  val selectedLine: PipeLine) : ViewModel() {
@@ -326,8 +329,17 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
         }
     }
 
-
-
+    fun closeBottomSheetWithDelay(bottomSheet: BottomSheetBehavior<LinearLayout>) {
+        //since the keyboard was anyone me and stopping the bottom sheet from full collapsing and stopping on the medal
+//        don't know way actually but wat I know that hiding the keyboard and collapsing the bottom sheet together
+//        will cause a kind of lacking in the bottom sheet
+//        so I decided to delay the bottom sheet collapsing until the keyboard is hidden
+        viewModelScope.launch {
+            delay(100).let {
+                bottomSheet.state=BottomSheetBehavior.STATE_COLLAPSED
+            }
+        }
+    }
 
 
     init {
