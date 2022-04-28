@@ -33,8 +33,6 @@ import com.mostafan3ma.android.pcm_helper10.PcmApp
 import com.mostafan3ma.android.pcm_helper10.R
 import com.mostafan3ma.android.pcm_helper10.databinding.FragmentAddLineBinding
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -89,11 +87,10 @@ class AddLineFragment : Fragment() {
         getCurrentDate()
         return binding.root
     }
-
     private fun getCurrentDate() {
         val sdf: SimpleDateFormat = SimpleDateFormat("dd/M/yyyy")
         val currentDate: String = sdf.format(Date())
-        viewModel.work_date.postValue(currentDate)
+        viewModel.start_work_date.postValue(currentDate)
     }
 
     private fun setDropDawnMenus(binding: FragmentAddLineBinding) {

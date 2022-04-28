@@ -13,6 +13,8 @@ import android.location.LocationRequest
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.util.Log
 import android.view.*
 import android.widget.ArrayAdapter
@@ -255,7 +257,24 @@ class LineDetailsFragment : Fragment() {
         })
 
 
+        binding.moreDetailsBtn.setOnClickListener {
+            if (binding.expandableLayout.visibility==View.GONE){
+                TransitionManager.beginDelayedTransition(binding.lineMainCardView, AutoTransition())
+                binding.expandableLayout.visibility=View.VISIBLE
+                binding.moreDetailsBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up_arrow, 0, 0, 0);
 
+
+
+
+                binding.moreDetailsBtn.text="Hide Details"
+            }else{
+                TransitionManager.beginDelayedTransition(binding.lineMainCardView, AutoTransition())
+                binding.expandableLayout.visibility=View.GONE
+                binding.moreDetailsBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down_arrow, 0, 0, 0);
+                binding.moreDetailsBtn.text="More Details"
+
+            }
+        }
 
 
 

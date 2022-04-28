@@ -21,309 +21,449 @@
             tools:context=".lines.operations.LineDetailsFragment">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/line_name_cardview"
+                android:id="@+id/line_main_card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/line_name"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingStart="16dp"
-                        android:text="@{viewModel.finalLine.name}"
-                        android:textSize="@dimen/text_large_size"
-                        android:textStyle="bold"
-                        tools:text="AD4-13-3H" />
-
-                    <TextView
-                        android:id="@+id/line_ogm"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingEnd="16dp"
-                        android:text="@{viewModel.finalLine.ogm}"
-                        android:textSize="@dimen/text_normal_size"
-                        tools:text="OGM8" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-
-            <LinearLayout
-                android:id="@+id/line_details_lenear"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/line_name_cardview">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/line_type"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:paddingStart="16dp"
-                                android:text="@{viewModel.finalLine.type}"
-                                android:textSize="@dimen/text_normal_size"
-                                tools:text="OIL" />
-
-                            <TextView
-                                android:id="@+id/lion_length"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="@{viewModel.finalLine.length}"
-                                android:textSize="@dimen/text_normal_size"
-                                tools:text="2300m" />
-
-                            <TextView
-                                android:id="@+id/line_work_date"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="end"
-                                android:paddingEnd="16dp"
-                                android:text="@{viewModel.finalLine.start_work_date}"
-                                android:textSize="@dimen/text_normal_size"
-                                tools:text="27/3/2022" />
-
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingStart="16dp"
-                                android:text="Start Point:"
-                                android:textSize="@dimen/text_normal_size" />
-
-                            <TextView
-                                android:id="@+id/line_start_point"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="end"
-                                android:paddingEnd="16dp"
-                                android:text="@{viewModel.startPoint}"
-                                android:textSize="@dimen/text_normal_size"
-                                tools:text="551268;3589331" />
-
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingStart="16dp"
-                                android:text="End Point:"
-                                android:textSize="@dimen/text_normal_size" />
-
-                            <TextView
-                                android:id="@+id/line_end_point"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="end"
-                                android:paddingEnd="16dp"
-                                android:text="@{viewModel.endPoint}"
-                                android:textSize="@dimen/text_normal_size"
-                                tools:text="551248;3589220" />
-
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp">
-
+                    android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/line_name"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:paddingStart="16dp"
-                            android:text="start current:"
-                            android:textSize="@dimen/text_normal_size" />
-
+                            android:text="@{viewModel.finalLine.name}"
+                            android:textSize="@dimen/text_large_size"
+                            android:textStyle="bold"
+                            style="@style/TextAppearance.AppCompat.Headline"
+                            tools:text="AD4-13-3H" />
 
                         <TextView
-                            android:id="@+id/line_i_start"
-                            android:layout_width="match_parent"
+                            android:id="@+id/line_ogm"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@{viewModel.finalLine.i_start}"
+                            android:paddingEnd="16dp"
                             android:textSize="@dimen/text_normal_size"
-                            tools:text="500mA" />
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                            android:text="@{viewModel.finalLine.ogm}"
+                            tools:text="OGM8" />
+
                     </LinearLayout>
+                    <Button android:id="@+id/more_details_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:drawableLeft="@drawable/down_arrow"
+                        android:layout_gravity="center"
+                        android:text="more details"
+                        android:textColor="#8A8686"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:visibility="visible"
+                        />
 
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-
-                    >
-
-                    <LinearLayout
+                    <LinearLayout android:id="@+id/expandable_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingStart="16dp"
-                            android:text="end current:"
-                            android:textSize="@dimen/text_normal_size" />
-
-
-                        <TextView
-                            android:id="@+id/line_i_end"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        >
+                        <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@{viewModel.finalLine.i_end}"
-                            android:textSize="@dimen/text_normal_size"
-                            tools:text="50mA" />
+                            android:layout_marginBottom="2dp"
+                            android:elevation="16dp"
+                            >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:text="Length:"
+                                    android:gravity="start"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/length_txt"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@{viewModel.finalLine.length}"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                    tools:text="2500m" />
+
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:elevation="16dp"
+                            >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:text="Type:"
+                                    android:gravity="start"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/type_txt"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@{viewModel.finalLine.ogm}"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                    tools:text="Oil" />
+
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:elevation="16dp"
+                            >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:text="Input:"
+                                    android:gravity="start"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/input_txt"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@{viewModel.finalLine.input}"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                    tools:text="1A" />
+
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:elevation="16dp"
+                            >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:text="Start Date:"
+                                    android:gravity="start"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/start_work_date_detail_txt"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@{viewModel.finalLine.start_work_date}"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                    tools:text="2/5/2022" />
+
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:elevation="16dp"
+                            >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:text="End Date:"
+                                    android:gravity="start"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/end_work_date_txt"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@{viewModel.finalLine.end_work_date}"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                    tools:text="7/5/2022" />
+
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:elevation="16dp"
+                            >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:text="Work Team:"
+                                    android:gravity="start"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/work_team_detail_txt"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@{viewModel.finalLine.work_team}"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                    tools:text="Mostafa &amp; Weam" />
+
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:elevation="16dp"
+                            android:layout_marginBottom="2dp"
+                            >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:text="Output Current:"
+                                    android:gravity="start"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                                    />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:text="Start :"
+                                        android:gravity="start"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                                        />
+
+                                    <TextView
+                                        android:id="@+id/i_start_txt"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="@{viewModel.finalLine.i_start}"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                        tools:text="960mA" />
+
+
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:text="End :"
+                                        android:gravity="start"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                                        />
+
+                                    <TextView
+                                        android:id="@+id/i_end_txt"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="@{viewModel.finalLine.i_end}"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                        tools:text="50mA" />
+
+
+                                </LinearLayout>
+
+
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:elevation="16dp"
+                            android:layout_marginBottom="2dp"
+                            >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:text="Gps:"
+                                    android:gravity="start"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                                    />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:text="Start Point:"
+                                        android:gravity="start"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                                        />
+
+                                    <TextView
+                                        android:id="@+id/start_point_txt"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="@{viewModel.startPoint}"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                        tools:text="552369;3598662" />
+
+
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:text="End Point:"
+                                        android:gravity="start"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                                        />
+
+                                    <TextView
+                                        android:id="@+id/end_point_txt"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="@{viewModel.endPoint}"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                        tools:text="552369;3598662" />
+
+
+                                </LinearLayout>
+
+
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:elevation="16dp"
+                            >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:text="Note:"
+                                    android:gravity="start"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/note_detail_txt"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@{viewModel.finalLine.extra_note}"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                    tools:text="lost the current after 1500 m \nlost the current after 1500 m " />
+
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
                     </LinearLayout>
 
-                </androidx.cardview.widget.CardView>
 
 
-            </LinearLayout>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/point_titles"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:elevation="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/line_details_lenear">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="NO."
-                        android:textSize="@dimen/text_smale_size" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:text="Dp"
-                        android:textSize="@dimen/text_smale_size" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:text="Depth"
-                        android:textSize="@dimen/text_smale_size" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:text="current1"
-                        android:textSize="@dimen/text_smale_size" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:text="current2"
-                        android:textSize="@dimen/text_smale_size" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:text="   GPS   "
-                        android:textSize="@dimen/text_smale_size" />
                 </LinearLayout>
 
+
             </androidx.cardview.widget.CardView>
+
 
             <LinearLayout
                 android:id="@+id/recycler_linear"
@@ -334,7 +474,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/point_titles">
+                app:layout_constraintTop_toBottomOf="@+id/line_main_card_view">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/points_recycler"
