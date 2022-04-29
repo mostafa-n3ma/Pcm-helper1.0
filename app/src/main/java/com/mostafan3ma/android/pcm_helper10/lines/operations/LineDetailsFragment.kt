@@ -255,34 +255,36 @@ class LineDetailsFragment : Fragment() {
 
             }
         })
-
-
         binding.moreDetailsBtn.setOnClickListener {
-            if (binding.expandableLayout.visibility==View.GONE){
-                TransitionManager.beginDelayedTransition(binding.lineMainCardView, AutoTransition())
-                binding.expandableLayout.visibility=View.VISIBLE
-                binding.moreDetailsBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up_arrow, 0, 0, 0);
-
-
-
-
-                binding.moreDetailsBtn.text="Hide Details"
-            }else{
-                TransitionManager.beginDelayedTransition(binding.lineMainCardView, AutoTransition())
-                binding.expandableLayout.visibility=View.GONE
-                binding.moreDetailsBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down_arrow, 0, 0, 0);
-                binding.moreDetailsBtn.text="More Details"
-
-            }
+            checkExpandableCardView()
         }
-
-
-
-
-
         setHasOptionsMenu(true)
 
         return binding.root
+    }
+
+     private fun checkExpandableCardView() {
+        if (binding.expandableLayout.visibility == View.GONE) {
+            TransitionManager.beginDelayedTransition(binding.lineMainCardView, AutoTransition())
+            binding.expandableLayout.visibility = View.VISIBLE
+            binding.moreDetailsBtn.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.up_arrow,
+                0,
+                0,
+                0
+            );
+            binding.moreDetailsBtn.text = "Hide Details"
+        } else {
+            TransitionManager.beginDelayedTransition(binding.lineMainCardView, AutoTransition())
+            binding.expandableLayout.visibility = View.GONE
+            binding.moreDetailsBtn.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.down_arrow,
+                0,
+                0,
+                0
+            );
+            binding.moreDetailsBtn.text = "More Details"
+        }
     }
 
     private fun setDropDownMenus() {
@@ -328,7 +330,7 @@ class LineDetailsFragment : Fragment() {
 
     private fun setUpendPointBottomSheet(): BottomSheetBehavior<LinearLayout> {
         val endPointBottomSheet =
-            BottomSheetBehavior.from(binding.endPointBottomSheetLayout).apply {
+            BottomSheetBehavior.from(binding.finishBottomSheetLayout).apply {
                 isDraggable = false
             }
         return endPointBottomSheet

@@ -348,6 +348,10 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
     }
 
 
+
+
+
+
     init {
         finalLine.value=selectedLine
         name.value = selectedLine.name?:""

@@ -35,12 +35,29 @@ class LinesAdapter(private val clickListener:LineListener,private val longListen
 class LineViewHolder(private val binding:LineItemBinding):RecyclerView.ViewHolder(binding.root){
     fun bind(item: PipeLine){
         binding.pipeLine=item
-        if(item.end_work_date!!.isEmpty()){
-            binding.lineEndDate.text="Not Finished yet"
-            binding.lineEndDate.setTextColor(Color.RED)
-        }else{
-            binding.lineEndDate.text=item.end_work_date
+//        if(item.end_work_date!!.isEmpty()){
+//            binding.lineEndDate.text="Not Finished yet"
+//            binding.lineEndDate.setTextColor(Color.RED)
+//        }else{
+//            binding.lineEndDate.text=item.end_work_date
+//        }
+
+        when(item.end_work_date){
+            ""->{
+                binding.lineEndDate.text="Not Finished yet"
+                binding.lineEndDate.setTextColor(Color.RED)
+            }
+            else->{
+                binding.lineEndDate.text=item.end_work_date
+
+            }
         }
+        when(item.type){
+            "Oil"->binding.lineType.setTextColor(Color.RED)
+            else->binding.lineType.setTextColor(Color.GREEN)
+        }
+
+
         binding.executePendingBindings()
     }
     companion object{

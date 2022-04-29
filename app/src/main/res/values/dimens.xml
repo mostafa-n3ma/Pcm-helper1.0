@@ -1,6 +1,6 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="card_view_corner">20dp</dimen>
+    <dimen name="card_view_corner">10dp</dimen>
     <dimen name="text_normal_size">24sp</dimen>
     <dimen name="text_large_size">35sp</dimen>
     <dimen name="text_smale_size">18sp</dimen>

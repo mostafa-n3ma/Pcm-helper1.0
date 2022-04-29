@@ -2,7 +2,7 @@ package com.mostafan3ma.android.pcm_helper10.data.source.database
 
 import androidx.room.*
 
-@Database(entities = [PipeLine::class], version = 2, exportSchema = false)
+@Database(entities = [PipeLine::class], version = 3, exportSchema = false)
 @TypeConverters(DataConverter::class)
 abstract class LineDataBase :RoomDatabase(){
     abstract fun getLineDao(): LineDao

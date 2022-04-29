@@ -18,472 +18,559 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#C7C4CA"
             tools:context=".lines.operations.LineDetailsFragment">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/line_main_card_view"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent"
+                >
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <LinearLayout
+                    android:orientation="vertical"
+                    >
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/line_main_card_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_margin="5dp"
+                        android:elevation="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                        <TextView
-                            android:id="@+id/line_name"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:paddingStart="16dp"
-                            android:text="@{viewModel.finalLine.name}"
-                            android:textSize="@dimen/text_large_size"
-                            android:textStyle="bold"
-                            style="@style/TextAppearance.AppCompat.Headline"
-                            tools:text="AD4-13-3H" />
-
-                        <TextView
-                            android:id="@+id/line_ogm"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingEnd="16dp"
-                            android:textSize="@dimen/text_normal_size"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                            android:text="@{viewModel.finalLine.ogm}"
-                            tools:text="OGM8" />
-
-                    </LinearLayout>
-                    <Button android:id="@+id/more_details_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:drawableLeft="@drawable/down_arrow"
-                        android:layout_gravity="center"
-                        android:text="more details"
-                        android:textColor="#8A8686"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                        android:visibility="visible"
-                        />
-
-                    <LinearLayout android:id="@+id/expandable_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="gone"
-                        >
-                        <androidx.cardview.widget.CardView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="2dp"
-                            android:elevation="16dp"
-                            >
+                            android:orientation="vertical">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
 
                                 <TextView
+                                    android:id="@+id/line_name"
+                                    style="@style/TextAppearance.AppCompat.Headline"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:paddingStart="16dp"
+                                    android:text="@{viewModel.finalLine.name}"
+                                    android:textSize="@dimen/text_large_size"
+                                    android:textStyle="bold"
+                                    tools:text="AD4-13-3H" />
+
+                                <TextView
+                                    android:id="@+id/line_ogm"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:text="Length:"
-                                    android:gravity="start"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/length_txt"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:text="@{viewModel.finalLine.length}"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                                    tools:text="2500m" />
-
-
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="2dp"
-                            android:elevation="16dp"
-                            >
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:text="Type:"
-                                    android:gravity="start"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/type_txt"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
+                                    android:paddingEnd="16dp"
                                     android:text="@{viewModel.finalLine.ogm}"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                                    tools:text="Oil" />
-
+                                    android:textSize="@dimen/text_normal_size"
+                                    style="@style/TextAppearance.MaterialComponents.Body2"
+                                    tools:text="OGM8" />
 
                             </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="2dp"
-                            android:elevation="16dp"
-                            >
-                            <LinearLayout
-                                android:layout_width="match_parent"
+
+                            <Button
+                                android:id="@+id/more_details_btn"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:layout_gravity="center"
+                                android:drawableLeft="@drawable/down_arrow"
+                                android:text="more details"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textColor="#8A8686"
+                                android:visibility="visible" />
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:text="Input:"
-                                    android:gravity="start"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/input_txt"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:text="@{viewModel.finalLine.input}"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                                    tools:text="1A" />
-
-
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="2dp"
-                            android:elevation="16dp"
-                            >
                             <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:text="Start Date:"
-                                    android:gravity="start"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/start_work_date_detail_txt"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:text="@{viewModel.finalLine.start_work_date}"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                                    tools:text="2/5/2022" />
-
-
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="2dp"
-                            android:elevation="16dp"
-                            >
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:text="End Date:"
-                                    android:gravity="start"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/end_work_date_txt"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:text="@{viewModel.finalLine.end_work_date}"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                                    tools:text="7/5/2022" />
-
-
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="2dp"
-                            android:elevation="16dp"
-                            >
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:text="Work Team:"
-                                    android:gravity="start"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/work_team_detail_txt"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:text="@{viewModel.finalLine.work_team}"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                                    tools:text="Mostafa &amp; Weam" />
-
-
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:elevation="16dp"
-                            android:layout_marginBottom="2dp"
-                            >
-                            <LinearLayout
+                                android:id="@+id/expandable_layout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                >
+                                android:visibility="visible">
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:text="Output Current:"
-                                    android:gravity="start"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                                    />
-
-                                <LinearLayout
+                                <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
+                                    android:layout_marginBottom="2dp"
+                                    android:elevation="16dp">
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="8dp"
-                                        android:text="Start :"
-                                        android:gravity="start"
-                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                                        />
-
-                                    <TextView
-                                        android:id="@+id/i_start_txt"
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="@{viewModel.finalLine.i_start}"
-                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                                        tools:text="960mA" />
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="8dp"
+                                            android:gravity="start"
+                                            android:text="Length:"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+                                        <TextView
+                                            android:id="@+id/length_txt"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:text="@{viewModel.finalLine.length}"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                            tools:text="2500m" />
 
 
-                                </LinearLayout>
-                                <LinearLayout
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
+                                    android:layout_marginBottom="2dp"
+                                    android:elevation="16dp">
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="8dp"
-                                        android:text="End :"
-                                        android:gravity="start"
-                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                                        />
-
-                                    <TextView
-                                        android:id="@+id/i_end_txt"
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="@{viewModel.finalLine.i_end}"
-                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                                        tools:text="50mA" />
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="8dp"
+                                            android:gravity="start"
+                                            android:text="Type:"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+                                        <TextView
+                                            android:id="@+id/type_txt"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:text="@{viewModel.finalLine.type}"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                            tools:text="Oil" />
 
 
-                                </LinearLayout>
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="2dp"
+                                    android:elevation="16dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="8dp"
+                                            android:gravity="start"
+                                            android:text="Input:"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+                                        <TextView
+                                            android:id="@+id/input_txt"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:text="@{viewModel.finalLine.input}"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                            tools:text="1A" />
 
 
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
 
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="2dp"
+                                    android:elevation="16dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="8dp"
+                                            android:gravity="start"
+                                            android:text="Start Date:"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+                                        <TextView
+                                            android:id="@+id/start_work_date_detail_txt"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:text="@{viewModel.finalLine.start_work_date}"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                            tools:text="2/5/2022" />
+
+
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="2dp"
+                                    android:elevation="16dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="8dp"
+                                            android:gravity="start"
+                                            android:text="End Date:"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+                                        <TextView
+                                            android:id="@+id/end_work_date_txt"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:text="@{viewModel.finalLine.end_work_date}"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                            tools:text="7/5/2022" />
+
+
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="2dp"
+                                    android:elevation="16dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="8dp"
+                                            android:gravity="start"
+                                            android:text="Work Team:"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+                                        <TextView
+                                            android:id="@+id/work_team_detail_txt"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:text="@{viewModel.finalLine.work_team}"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                            tools:text="Mostafa &amp; Weam" />
+
+
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="2dp"
+                                    android:elevation="16dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="8dp"
+                                            android:gravity="start"
+                                            android:text="Output Current:"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginStart="8dp"
+                                                android:gravity="start"
+                                                android:text="Start :"
+                                                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+
+                                            <TextView
+                                                android:id="@+id/i_start_txt"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:text="@{viewModel.finalLine.i_start}"
+                                                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                                tools:text="960mA" />
+
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginStart="8dp"
+                                                android:gravity="start"
+                                                android:text="End :"
+                                                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+
+                                            <TextView
+                                                android:id="@+id/i_end_txt"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:text="@{viewModel.finalLine.i_end}"
+                                                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                                tools:text="50mA" />
+
+
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="2dp"
+                                    android:elevation="16dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="8dp"
+                                            android:gravity="start"
+                                            android:text="Gps:"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginStart="8dp"
+                                                android:gravity="start"
+                                                android:text="Start Point:"
+                                                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+
+                                            <TextView
+                                                android:id="@+id/start_point_txt"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:text="@{viewModel.startPoint}"
+                                                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                                tools:text="552369;3598662" />
+
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginStart="8dp"
+                                                android:gravity="start"
+                                                android:text="End Point:"
+                                                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+
+                                            <TextView
+                                                android:id="@+id/end_point_txt"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:text="@{viewModel.endPoint}"
+                                                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                                tools:text="552369;3598662" />
+
+
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:elevation="16dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="8dp"
+                                            android:gravity="start"
+                                            android:text="Note:"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+                                        <TextView
+                                            android:id="@+id/note_detail_txt"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:text="@{viewModel.finalLine.extra_note}"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                            tools:text="lost the current after 1500 m \nlost the current after 1500 m " />
+
+
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
                             </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-                        <androidx.cardview.widget.CardView
+
+
+                        </LinearLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:elevation="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/line_main_card_view">
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:elevation="16dp"
-                            android:layout_marginBottom="2dp"
-                            >
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/TextAppearance.AppCompat.Headline"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:gravity="start"
+                                android:text="Damage Points:" />
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                >
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:text="Gps:"
-                                    android:gravity="start"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                                    />
+                                    android:layout_margin="5dp"
+                                    android:text="NO."
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
+                                <TextView
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:text="Dp"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="8dp"
-                                        android:text="Start Point:"
-                                        android:gravity="start"
-                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                                        />
-
-                                    <TextView
-                                        android:id="@+id/start_point_txt"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="@{viewModel.startPoint}"
-                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                                        tools:text="552369;3598662" />
-
-
-                                </LinearLayout>
-                                <LinearLayout
-                                    android:layout_width="match_parent"
+                                <TextView
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:text="Depth"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="8dp"
-                                        android:text="End Point:"
-                                        android:gravity="start"
-                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                                        />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:text="current1"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
-                                    <TextView
-                                        android:id="@+id/end_point_txt"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="@{viewModel.endPoint}"
-                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                                        tools:text="552369;3598662" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:text="current2"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
-
-                                </LinearLayout>
-
-
-
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:text="   GPS   "
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
                             </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:elevation="16dp"
-                            >
-                            <LinearLayout
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/points_recycler"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                >
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:text="Note:"
-                                    android:gravity="start"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/note_detail_txt"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:text="@{viewModel.finalLine.extra_note}"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                                    tools:text="lost the current after 1500 m \nlost the current after 1500 m " />
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                tools:itemCount="12"
+                                tools:listitem="@layout/point_item" />
 
 
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-                    </LinearLayout>
+                        </LinearLayout>
 
-
-
+                    </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
 
 
-            </androidx.cardview.widget.CardView>
+            </ScrollView>
 
 
-            <LinearLayout
-                android:id="@+id/recycler_linear"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/line_main_card_view">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/points_recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:itemCount="12"
-                    tools:listitem="@layout/point_item" />
-            </LinearLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -535,209 +622,214 @@
             app:behavior_peekHeight="0dp"
             app:layout_behavior="@string/bottom_sheet_behavior"
            >
-
-            <LinearLayout
-                android:id="@+id/test_layout"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:elevation="10dp"
-                android:orientation="vertical">
-
-                <androidx.cardview.widget.CardView
+                android:layout_height="match_parent"
+                >
+                <LinearLayout
+                    android:id="@+id/test_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_margin="2dp"
                     android:elevation="10dp"
-                    app:cardCornerRadius="10dp">
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:elevation="10dp"
+                        app:cardCornerRadius="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Add New Point"
+                                android:textColor="@color/design_default_color_primary"
+                                android:textSize="@dimen/text_normal_size" />
+
+                            <Button
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:onClick="@{()->viewModel.closePointBottomSheet()}"
+                                app:icon="@drawable/ic_baseline_cancel_24" />
+
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <TextView
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/dp_field"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Add New Point"
-                            android:textColor="@color/design_default_color_primary"
-                            android:textSize="@dimen/text_normal_size" />
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:hint="DP"
+                            app:endIconMode="clear_text">
 
-                        <Button
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="wrap_content"
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/dp_edit_txt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="number"
+                                android:maxLength="2"
+                                android:text="@={viewModel.dp}" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/depth_field"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:onClick="@{()->viewModel.closePointBottomSheet()}"
-                            app:icon="@drawable/ic_baseline_cancel_24" />
+                            android:hint="Depth"
+                            app:endIconMode="clear_text">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/depth_edit_txt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="numberDecimal"
+                                android:maxLength="3"
+                                android:text="@={viewModel.depth}" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/c1_field"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_weight="1"
+                            android:hint="Current1"
+                            app:endIconMode="clear_text">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/c1_edit_txt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="number"
+                                android:maxLength="3"
+                                android:text="@={viewModel.current1}" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/c2_field"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_weight="1"
+                            android:hint="Current2"
+                            app:endIconMode="clear_text">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/c2_edit_txt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionDone"
+                                android:inputType="number"
+                                android:maxLength="3"
+                                android:text="@={viewModel.current2}" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
 
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/dp_field"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:hint="DP"
-                        app:endIconMode="clear_text">
+                        android:layout_height="wrap_content">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/dp_edit_txt"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/gps_field"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:imeOptions="actionNext"
-                            android:inputType="number"
-                            android:maxLength="2"
-                            android:text="@={viewModel.dp}" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:hint="Gps"
+                            app:helperText="@{viewModel.accuracy}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:startIconDrawable="@drawable/start_point">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/start_point_auto_txt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="none"
+                                android:text="@{viewModel.gpsX_Y}" />
 
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/depth_field"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <ProgressBar
+                            android:id="@+id/start_point_progressField"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:indeterminateTint="@color/design_default_color_primary"
+                            android:visibility="@{viewModel.progressVisibility}"
+                            app:layout_constraintBottom_toBottomOf="@id/gps_field"
+                            app:layout_constraintEnd_toEndOf="@id/gps_field"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="@id/gps_field"
+                            app:layout_constraintTop_toTopOf="@id/gps_field" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_weight="1"
-                        android:hint="Depth"
-                        app:endIconMode="clear_text">
+                        android:layout_gravity="center"
+                        android:layout_margin="16dp"
+                        android:elevation="10dp">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/depth_edit_txt"
+                        <Button
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:imeOptions="actionNext"
-                            android:inputType="numberDecimal"
-                            android:maxLength="3"
-                            android:text="@={viewModel.depth}" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_gravity="center"
+                            android:onClick="@{()->viewModel.addPointButtonClicked()}"
+                            android:text="Add Point"
+                            android:textSize="@dimen/text_normal_size"
+                            app:icon="@drawable/add_point"
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/c1_field"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_weight="1"
-                        android:hint="Current1"
-                        app:endIconMode="clear_text">
+                            />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/c1_edit_txt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:imeOptions="actionNext"
-                            android:inputType="number"
-                            android:maxLength="3"
-                            android:text="@={viewModel.current1}" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/c2_field"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_weight="1"
-                        android:hint="Current2"
-                        app:endIconMode="clear_text">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/c2_edit_txt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:imeOptions="actionDone"
-                            android:inputType="number"
-                            android:maxLength="3"
-                            android:text="@={viewModel.current2}" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
+                    </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/gps_field"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:hint="Gps"
-                        app:helperText="@{viewModel.accuracy}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:startIconDrawable="@drawable/start_point">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/start_point_auto_txt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="none"
-                            android:text="@{viewModel.gpsX_Y}" />
-
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <ProgressBar
-                        android:id="@+id/start_point_progressField"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:indeterminateTint="@color/design_default_color_primary"
-                        android:visibility="@{viewModel.progressVisibility}"
-                        app:layout_constraintBottom_toBottomOf="@id/gps_field"
-                        app:layout_constraintEnd_toEndOf="@id/gps_field"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="@id/gps_field"
-                        app:layout_constraintTop_toTopOf="@id/gps_field" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="16dp"
-                    android:elevation="10dp">
-
-                    <Button
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:onClick="@{()->viewModel.addPointButtonClicked()}"
-                        android:text="Add Point"
-                        android:textSize="@dimen/text_normal_size"
-                        app:icon="@drawable/add_point"
-
-                        />
-
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
+            </ScrollView>
 
         </LinearLayout>
         <LinearLayout  android:id="@+id/Bend_bottom_sheet_layout"
@@ -859,14 +951,13 @@
 
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/end_point_bottom_sheet_layout"
+        <LinearLayout android:id="@+id/finish_bottom_sheet_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:background="@drawable/shap_add_bottom_sheet"
             app:behavior_peekHeight="0dp"
-            app:layout_behavior="@string/bottom_sheet_behavior"
-           >
+            app:layout_behavior="@string/bottom_sheet_behavior">
 
             <LinearLayout
                 android:id="@+id/end_point_layout"
@@ -912,117 +1003,135 @@
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
-                <androidx.constraintlayout.widget.ConstraintLayout
+
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    >
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/end_point_gps_field"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:hint="End Point Gps"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:helperText="@{viewModel.accuracy}"
-                        app:startIconDrawable="@drawable/start_point">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
 
-                        <AutoCompleteTextView
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/end_point_gps_field"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="16dp"
+                                android:hint="End Point Gps"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:helperText="@{viewModel.accuracy}"
+                                app:startIconDrawable="@drawable/start_point">
+
+                                <AutoCompleteTextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="none"
+                                    android:text="@{viewModel.gpsX_Y}"
+                                    />
+
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <ProgressBar
+                                android:id="@+id/end_point_progressField"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:indeterminateTint="@color/design_default_color_primary"
+                                app:layout_constraintBottom_toBottomOf="@id/end_point_gps_field"
+                                app:layout_constraintEnd_toEndOf="@id/end_point_gps_field"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="@id/end_point_gps_field"
+                                app:layout_constraintTop_toTopOf="@id/end_point_gps_field"
+                                android:visibility="@{viewModel.progressVisibility}"
+
+                                />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/end_current_field"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="none"
-                            android:text="@{viewModel.gpsX_Y}"
-                            />
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:hint="End current"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:startIconDrawable="@drawable/start_current">
+
+                            <AutoCompleteTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="numberDecimal"
+                                android:text="@={viewModel.i_end}"
+                                />
 
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:hint="End Date"
+                            app:endIconMode="clear_text"
+                            app:startIconDrawable="@drawable/end_work_date">
 
-                    <ProgressBar
-                        android:id="@+id/end_point_progressField"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:indeterminateTint="@color/design_default_color_primary"
-                        app:layout_constraintBottom_toBottomOf="@id/end_point_gps_field"
-                        app:layout_constraintEnd_toEndOf="@id/end_point_gps_field"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="@id/end_point_gps_field"
-                        app:layout_constraintTop_toTopOf="@id/end_point_gps_field"
-                        android:visibility="@{viewModel.progressVisibility}"
-
-                        />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/end_current_field"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:hint="End current"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:startIconDrawable="@drawable/start_current">
-
-                    <AutoCompleteTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="numberDecimal"
-                        android:text="@={viewModel.i_end}"
-                        />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:hint="End Date"
-                    app:endIconMode="clear_text"
-                    app:startIconDrawable="@drawable/end_work_date">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionDone"
-                        android:inputType="date"
-                        android:text="@={viewModel.end_work_date}" />
-                </com.google.android.material.textfield.TextInputLayout>
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionDone"
+                                android:inputType="text"
+                                android:text="@={viewModel.end_work_date}" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
 
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:elevation="10dp"
-                    android:layout_margin="16dp"
-                    >
-                    <Button
-                        android:layout_gravity="center"
-                        app:icon="@drawable/end_option"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Finish"
-                        android:textSize="@dimen/text_normal_size"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:onClick="@{()->viewModel.finishButtonClicked()}"
-                        />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:elevation="10dp"
+                            android:layout_margin="16dp"
+                            >
+                            <Button
+                                android:layout_gravity="center"
+                                app:icon="@drawable/end_option"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Finish"
+                                android:textSize="@dimen/text_normal_size"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                android:onClick="@{()->viewModel.finishButtonClicked()}"
+                                />
 
-                </androidx.cardview.widget.CardView>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+                </ScrollView>
 
             </LinearLayout>
+
+
 
         </LinearLayout>
 
@@ -1337,7 +1446,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
-                            android:inputType="date"
+                            android:inputType="text"
                             android:text="@={viewModel.start_work_date}" />
                     </com.google.android.material.textfield.TextInputLayout>
                     <com.google.android.material.textfield.TextInputLayout
@@ -1355,7 +1464,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
-                            android:inputType="date"
+                            android:inputType="text"
                             android:text="@={viewModel.end_work_date}" />
                     </com.google.android.material.textfield.TextInputLayout>
 

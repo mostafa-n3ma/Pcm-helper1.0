@@ -64,7 +64,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
-                        android:inputType="date"
+                        android:inputType="text"
                         android:text="@={viewModel.start_work_date}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
