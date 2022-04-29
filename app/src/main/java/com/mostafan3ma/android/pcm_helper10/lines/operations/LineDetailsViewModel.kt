@@ -136,25 +136,15 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
     }
 
 
-    //Point events
-    private val _closePointBottomSheet = MutableLiveData<Boolean>()
-    val closePointBottomSheet: LiveData<Boolean> get() = _closePointBottomSheet
-    fun closePointBottomSheet() {
-        _closePointBottomSheet.value = true
+    //Point sheet events
+    val pointBottomSheetState=MutableLiveData<Boolean>()
+    fun openPointSheet(){
+        pointBottomSheetState.value=true
     }
-    fun closePointBottomSheetCompleted() {
-        _closePointBottomSheet.value = false
+    fun closePointSheet(){
+        pointBottomSheetState.value=false
     }
-    ////////////////////////
-    private val _openPointBottomSheet = MutableLiveData<Boolean>()
-    val openPointBottomSheet: LiveData<Boolean> get() = _openPointBottomSheet
-    fun openPointBottomSheet() {
-        _openPointBottomSheet.value = true
-    }
-    fun openPointBottomSheetCompleted() {
-        _openPointBottomSheet.value = false
-    }
-/////////////////////////////
+
     private val _addPointButtonClicked = MutableLiveData<Boolean>()
     val addPointButtonClicked: LiveData<Boolean> get() = _addPointButtonClicked
     fun addPointButtonClicked() {
@@ -168,25 +158,11 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
 
 
 
-    //Bend Events
-    private val _openBendBottomSheet = MutableLiveData<Boolean>()
-    val openBendBottomSheet: LiveData<Boolean> get() = _openBendBottomSheet
-    fun openBendBottomSheet() {
-        _openBendBottomSheet.value = true
-    }
-    fun openBendBottomSheetCompleted() {
-        _openBendBottomSheet.value = false
-    }
-    //////// ////////////////////////
-    private val _closeBendBottomSheet = MutableLiveData<Boolean>()
-    val closeBendBottomSheet: LiveData<Boolean> get() = _closeBendBottomSheet
-    fun closeBendBottomSheet() {
-        _closeBendBottomSheet.value = true
-    }
-    fun closeBendBottomSheetCompleted() {
-        _closeBendBottomSheet.value = false
-    }
-    /////////////////////////////
+    //Bend Sheet Events
+    val bendSheetState=MutableLiveData<Boolean>()
+    fun openBendSheet(){ bendSheetState.value=true }
+    fun closeBendSheet(){ bendSheetState.value=false }
+    //
     private val _addBendButtonClicked = MutableLiveData<Boolean>()
     val addBendButtonClicked: LiveData<Boolean> get() = _addBendButtonClicked
     fun addBendButtonClicked() {
@@ -195,27 +171,17 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
     fun addBendButtonClickedComplete() {
         _addBendButtonClicked.value = false
     }
-
+    //////////////////////
 
 
 
     //Finish Bottom Sheet Events
-    private val _openFinishBottomSheet=MutableLiveData<Boolean>()
-    val openFinishBottomSheet:LiveData<Boolean>get() = _openFinishBottomSheet
-    fun openFinishBottomSheet(){
-        _openFinishBottomSheet.value=true
+    val finishSheetState=MutableLiveData<Boolean>()
+    fun openFinishSheet(){
+        finishSheetState.value=true
     }
-    fun openFinishBottomSheetCompleted(){
-        _openFinishBottomSheet.value=false
-    }
-    /////////////////////////
-    private val _closeFinishBottomSheet=MutableLiveData<Boolean>()
-    val closeFinishBottomSheet:LiveData<Boolean>get() = _closeFinishBottomSheet
-    fun closeFinishBottomSheet(){
-        _closeFinishBottomSheet.value=true
-    }
-    fun closeFinishBottomSheetCompleted(){
-        _closeFinishBottomSheet.value=false
+    fun closeFinishSheet(){
+        finishSheetState.value=false
     }
     ///////////////////
     private val _finishButtonClicked=MutableLiveData<Boolean>()
@@ -245,22 +211,12 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
 
 
     ///extra note events
-    private val _openNoteBottomSheet=MutableLiveData<Boolean>()
-    val openNoteBottomSheet:LiveData<Boolean>get() = _openNoteBottomSheet
-    fun openNoteBottomSheet(){
-        _openNoteBottomSheet.value=true
+    val noteSheetState=MutableLiveData<Boolean>()
+    fun openNoteSheet(){
+        noteSheetState.value=true
     }
-    fun openNoteBottomSheetComplete(){
-        _openNoteBottomSheet.value=false
-    }
-    ///////////////////////
-    private val _closeNoteBottomSheet=MutableLiveData<Boolean>()
-    val closeNoteBottomSheet:LiveData<Boolean>get() = _closeNoteBottomSheet
-    fun closeNoteBottomSheet(){
-        _closeNoteBottomSheet.value=true
-    }
-    fun closeNoteBottomSheetComplete(){
-        _closeNoteBottomSheet.value=false
+    fun closeNoteSheet(){
+        noteSheetState.value=false
     }
     /////////
     private val _addNoteClicked=MutableLiveData<Boolean>()
@@ -282,27 +238,13 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
 
 
 
-
-
-
-
     //edit bottom sheet
-    private val _openEditBottomSheet=MutableLiveData<Boolean>()
-    val openEditBottomSheet:LiveData<Boolean>get() = _openEditBottomSheet
-    fun openEditBottomSheet(){
-        _openEditBottomSheet.value=true
+    val editSheetState=MutableLiveData<Boolean>()
+    fun openEditSheet(){
+        editSheetState.value=true
     }
-    fun openEditBottomSheetComplete(){
-        _openEditBottomSheet.value=false
-    }
-    ////////////////
-    private val _closeEditBottomSheet=MutableLiveData<Boolean>()
-    val closeEditBottomSheet:LiveData<Boolean>get() = _closeEditBottomSheet
-    fun closeEditBottomSheet(){
-        _closeEditBottomSheet.value=true
-    }
-    fun closeEditBottomSheetComplete(){
-        _closeEditBottomSheet.value=false
+    fun closeEditSheet(){
+        editSheetState.value=false
     }
     /////////
     private val _editSaveButtonClicked=MutableLiveData<Boolean>()
@@ -378,8 +320,6 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
         depth.value = ""
         current1.value = ""
         current2.value = ""
-        _closePointBottomSheet.value = false
-        _openPointBottomSheet.value = false
         _addPointButtonClicked.value = false
         gpsX.value=""
         gpsY.value=""
@@ -388,29 +328,27 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
         accuracy.value=""
         progressVisibility.value= View.VISIBLE
 
-        _closeBendBottomSheet.value=false
-        _openBendBottomSheet.value=false
+
         _addBendButtonClicked.value=false
+        bendSheetState.value=false
 
 
-
-
-        _openFinishBottomSheet.value=false
-        _closeFinishBottomSheet.value=false
         _finishButtonClicked.value=false
+        finishSheetState.value=false
 
 
 
-        _openNoteBottomSheet.value=false
-        _closeNoteBottomSheet.value=false
+
+
+
+        noteSheetState.value=false
         _addNoteClicked.value=false
 
 
 
 
 
-        _openEditBottomSheet.value=false
-        _closeEditBottomSheet.value=false
+        editSheetState.value=false
         _editSaveButtonClicked.value=false
 
 
@@ -419,6 +357,11 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
         comingInput.value=""
         comingOgm.value=""
         comingType.value=""
+
+
+
+
+        pointBottomSheetState.value=false
 
     }
 

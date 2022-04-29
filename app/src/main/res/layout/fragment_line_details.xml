@@ -91,7 +91,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:visibility="visible">
+                                android:visibility="gone">
 
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
@@ -594,7 +594,7 @@
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{()-> viewModel.openBendBottomSheet()}"
+                android:onClick="@{()-> viewModel.openBendSheet()}"
                 app:fab_icon="@drawable/bend3"
                 fab:fab_colorNormal="@color/white"
                 fab:fab_colorPressed="@color/design_default_color_primary_dark"
@@ -604,7 +604,7 @@
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{()-> viewModel.openPointBottomSheet()}"
+                android:onClick="@{()-> viewModel.openPointSheet()}"
                 fab:fab_colorNormal="#FFF"
                 fab:fab_colorPressed="@color/design_default_color_primary"
                 fab:fab_icon="@drawable/add_point_primary_color"
@@ -621,7 +621,43 @@
             android:background="@drawable/shap_add_bottom_sheet"
             app:behavior_peekHeight="0dp"
             app:layout_behavior="@string/bottom_sheet_behavior"
+            android:orientation="vertical"
            >
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:elevation="10dp"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Add New Point"
+                        android:textColor="@color/design_default_color_primary"
+                        android:textSize="@dimen/text_normal_size" />
+
+                    <Button
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:onClick="@{()->viewModel.closePointSheet()}"
+                        app:icon="@drawable/ic_baseline_cancel_24" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -634,41 +670,7 @@
                     android:elevation="10dp"
                     android:orientation="vertical">
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:elevation="10dp"
-                        app:cardCornerRadius="10dp">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="Add New Point"
-                                android:textColor="@color/design_default_color_primary"
-                                android:textSize="@dimen/text_normal_size" />
-
-                            <Button
-                                style="@style/Widget.MaterialComponents.Button.TextButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:onClick="@{()->viewModel.closePointBottomSheet()}"
-                                app:icon="@drawable/ic_baseline_cancel_24" />
-
-
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -694,8 +696,6 @@
                                 android:maxLength="2"
                                 android:text="@={viewModel.dp}" />
                         </com.google.android.material.textfield.TextInputLayout>
-
-
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/depth_field"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -716,7 +716,6 @@
                                 android:maxLength="3"
                                 android:text="@={viewModel.depth}" />
                         </com.google.android.material.textfield.TextInputLayout>
-
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/c1_field"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -737,7 +736,6 @@
                                 android:maxLength="3"
                                 android:text="@={viewModel.current1}" />
                         </com.google.android.material.textfield.TextInputLayout>
-
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/c2_field"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -876,7 +874,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:onClick="@{()->viewModel.closeBendBottomSheet()}"
+                            android:onClick="@{()->viewModel.closeBendSheet()}"
                             app:icon="@drawable/ic_baseline_cancel_24" />
 
 
@@ -950,7 +948,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
         <LinearLayout android:id="@+id/finish_bottom_sheet_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -997,7 +994,7 @@
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:gravity="center"
                             android:layout_weight="1"
-                            android:onClick="@{()->viewModel.closeFinishBottomSheet()}"
+                            android:onClick="@{()->viewModel.closeFinishSheet()}"
                             />
 
 
@@ -1134,7 +1131,6 @@
 
 
         </LinearLayout>
-
         <LinearLayout android:id="@+id/note_bottom_sheet_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -1182,7 +1178,7 @@
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:gravity="center"
                             android:layout_weight="1"
-                            android:onClick="@{()->viewModel.closeNoteBottomSheet()}"
+                            android:onClick="@{()->viewModel.closeNoteSheet()}"
                             />
 
 
@@ -1279,7 +1275,7 @@
                         style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:gravity="center"
                         android:layout_weight="1"
-                        android:onClick="@{()->viewModel.closeEditBottomSheet()}"
+                        android:onClick="@{()->viewModel.closeEditSheet()}"
                         />
 
 
