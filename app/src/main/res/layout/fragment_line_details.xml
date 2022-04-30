@@ -498,58 +498,6 @@
                                 android:gravity="start"
                                 android:text="Damage Points:" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:text="NO."
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:layout_weight="1"
-                                    android:text="Dp"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:layout_weight="1"
-                                    android:text="Depth"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:layout_weight="1"
-                                    android:text="current1"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:layout_weight="1"
-                                    android:text="current2"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:layout_weight="1"
-                                    android:text="   GPS   "
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
-                            </LinearLayout>
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/points_recycler"

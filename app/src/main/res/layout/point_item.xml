@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="point"
             type="com.mostafan3ma.android.pcm_helper10.data.source.database.DamagePoint" />
@@ -11,104 +12,237 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        >
+        android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+            android:id="@+id/point_cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:elevation="16dp"
+            app:cardCornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
             <LinearLayout
-                android:id="@+id/point_item_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/point_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:text="@{Integer.toString(point.no)}"
-                    android:textSize="@dimen/text_normal_size"
-                    tools:text="1)" />
-
-                <TextView
-                    android:id="@+id/point_db"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:text="@{point.db}"
-                    android:textSize="@dimen/text_normal_size"
-                    tools:text="45" />
-
-                <TextView
-                    android:id="@+id/point_depth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:text="@{point.depth}"
-                    android:textSize="@dimen/text_normal_size"
-                    tools:text="1.2m" />
-
-                <TextView
-                    android:id="@+id/point_current1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:text="@{point.current1}"
-                    android:textSize="@dimen/text_normal_size"
-                    tools:text="500mA" />
-
-                <TextView
-                    android:id="@+id/point_current2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:text="@{point.current2}"
-                    android:textSize="@dimen/text_normal_size"
-                    tools:text="481mA" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:background="#EFE9E9"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="8dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/design_default_color_primary_dark"
+                        android:orientation="vertical" />
 
                     <TextView
-                        android:id="@+id/point_gps_x"
+                        android:id="@+id/point_no"
+                        style="@style/TextAppearance.MaterialComponents.Headline5"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@{point.gps_x}"
-                        android:textSize="@dimen/text_smale_size"
-                        tools:text="551235" />
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:gravity="center"
+                        android:text="@{Integer.toString(point.no)}"
+                        tools:text="1" />
 
-                    <TextView
-                        android:id="@+id/point_gps_y"
-                        android:layout_width="wrap_content"
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+                    <LinearLayout
+                        android:id="@+id/point_item_layout"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@{point.gps_y}"
-                        android:textSize="@dimen/text_smale_size"
-                        tools:text="3598221" />
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="dp"
+
+                                >
+
+                                <AutoCompleteTextView
+                                    android:id="@+id/point_db"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:focusable="false"
+                                    android:gravity="center"
+                                    android:inputType="none"
+                                    android:text="@{point.db}"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                                    tools:text="45" />
+
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="depth">
+
+                                <AutoCompleteTextView
+                                    android:id="@+id/point_depth"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:focusable="false"
+                                    android:gravity="center"
+                                    android:inputType="none"
+                                    android:text="@{point.depth}"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                                    tools:text="1.2m" />
+
+
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="current1"
+
+                                >
+
+                                <AutoCompleteTextView
+                                    android:id="@+id/point_current1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:focusable="false"
+                                    android:gravity="center"
+                                    android:inputType="none"
+                                    android:text="@{point.current1}"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                                    tools:text="500" />
+
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="current2">
+
+                                <AutoCompleteTextView
+                                    android:id="@+id/point_current2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:focusable="false"
+                                    android:gravity="center"
+                                    android:inputType="none"
+                                    android:text="@{point.current2}"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                                    tools:text="481" />
+
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                            <ImageButton
+                                android:id="@+id/point_arrow_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="5dp"
+                                android:background="@drawable/down_arrow"
+                                 />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/point_expandable_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        >
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Gps"
+                            >
+                            <AutoCompleteTextView
+                                android:id="@+id/point_gps_txt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusable="false"
+                                android:inputType="none"
+                                android:paddingLeft="5dp"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                                 />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:hint="Note"
+                            >
+                            <AutoCompleteTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusable="false"
+                                android:inputType="none"
+                                android:paddingLeft="5dp"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                                android:text="some not for the single pointsome not for the single pointsome not for the single pointsome not for the single point"
+                                />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            >
+                            <Button
+                                android:id="@+id/edit_point_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                android:drawableLeft="@drawable/edit_popup"
+                                android:text="edit"
+                                />
+                            <Button
+                                android:id="@+id/delete_point_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                android:drawableLeft="@drawable/delete24"
+                                android:text="delete"
+                                />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
+
+
 
         </androidx.cardview.widget.CardView>
 
@@ -116,3 +250,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
+
+
+
+

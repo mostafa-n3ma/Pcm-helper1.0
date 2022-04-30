@@ -95,8 +95,8 @@ class LineDetailsFragment : Fragment() {
 
         pointsAdapter = PointsAdapter(PointListener {
 //            Toast.makeText(requireContext(), "${it.db}", Toast.LENGTH_SHORT).show()
-//            viewModel.deletePoint(it)
-//            pointsAdapter.notifyDataSetChanged()
+            viewModel.deletePoint(it)
+            pointsAdapter.notifyDataSetChanged()
 
         })
 

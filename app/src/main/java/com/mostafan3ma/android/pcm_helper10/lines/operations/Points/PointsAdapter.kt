@@ -1,13 +1,21 @@
 package com.mostafan3ma.android.pcm_helper10.lines.operations.Points
 
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.mostafan3ma.android.pcm_helper10.R
 import com.mostafan3ma.android.pcm_helper10.data.source.database.DamagePoint
 import com.mostafan3ma.android.pcm_helper10.databinding.BendItemBinding
 import com.mostafan3ma.android.pcm_helper10.databinding.PointItemBinding
+import kotlinx.android.synthetic.main.bend_item.view.*
+import kotlinx.android.synthetic.main.fragment_line_details.view.*
+import kotlinx.android.synthetic.main.point_item.view.*
+import kotlinx.android.synthetic.main.point_item.view.delete_point_btn
 import java.lang.ClassCastException
 
 private const val POINT_ITEM_VIEW_TYPE=1
@@ -38,13 +46,26 @@ class PointsAdapter(private val clickListener:PointListener)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val pointItem=getItem(position)
-        holder.itemView.setOnClickListener {
-            clickListener.onClick(pointItem)
-        }
+
+
+
 
         when(holder){
-            is PointViewHolder-> holder.bindPoint(pointItem)
-            is BendViewHolder-> holder.bindBend(pointItem)
+            is PointViewHolder-> {
+                holder.bindPoint(pointItem)
+                holder.itemView.delete_point_btn.setOnClickListener {
+                    clickListener.onClick(pointItem)
+                }
+                holder.itemView.point_gps_txt.setText("${pointItem.gps_x};${pointItem.gps_y}")
+            }
+
+            is BendViewHolder-> {
+                holder.bindBend(pointItem)
+                holder.itemView.delete_point_btn.setOnClickListener {
+                    clickListener.onClick(pointItem)
+                }
+                holder.itemView.bend_gps_txt.setText("${pointItem.gps_x};${pointItem.gps_y}")
+            }
         }
 
     }
@@ -59,6 +80,17 @@ class PointViewHolder(private val binding:PointItemBinding):RecyclerView.ViewHol
     fun bindPoint(pointItem:DamagePoint){
         binding.point=pointItem
         binding.executePendingBindings()
+        binding.pointArrowBtn.setOnClickListener {
+            if (binding.pointExpandableLayout.visibility==View.GONE){
+                TransitionManager.beginDelayedTransition(binding.pointCardView, AutoTransition())
+                binding.pointExpandableLayout.visibility = View.VISIBLE
+                binding.pointArrowBtn.setBackgroundResource(R.drawable.up_arrow)
+            }else{
+                TransitionManager.beginDelayedTransition(binding.pointCardView, AutoTransition())
+                binding.pointExpandableLayout.visibility = View.GONE
+                binding.pointArrowBtn.setBackgroundResource(R.drawable.down_arrow)
+            }
+        }
     }
     companion object{
         fun from(parent:ViewGroup):PointViewHolder{
@@ -67,6 +99,7 @@ class PointViewHolder(private val binding:PointItemBinding):RecyclerView.ViewHol
             return PointViewHolder(binding)
         }
     }
+
 }
 
 
@@ -74,6 +107,18 @@ class BendViewHolder(private val binding:BendItemBinding):RecyclerView.ViewHolde
     fun bindBend(bendItem:DamagePoint){
         binding.bend=bendItem
         binding.executePendingBindings()
+        binding.bendArrowBtn.setOnClickListener {
+            if (binding.bendExpandableLayout.visibility==View.GONE){
+                TransitionManager.beginDelayedTransition(binding.bendCardView, AutoTransition())
+                binding.bendExpandableLayout.visibility = View.VISIBLE
+                binding.bendArrowBtn.setBackgroundResource(R.drawable.up_arrow)
+            }else{
+                TransitionManager.beginDelayedTransition(binding.bendCardView, AutoTransition())
+                binding.bendExpandableLayout.visibility = View.GONE
+                binding.bendArrowBtn.setBackgroundResource(R.drawable.down_arrow)
+            }
+        }
+
     }
     companion object{
         fun from(parent: ViewGroup):BendViewHolder{
@@ -82,6 +127,7 @@ class BendViewHolder(private val binding:BendItemBinding):RecyclerView.ViewHolde
             return BendViewHolder(binding)
         }
     }
+
 
 }
 
