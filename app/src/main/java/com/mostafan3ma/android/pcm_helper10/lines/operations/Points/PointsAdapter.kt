@@ -13,14 +13,13 @@ import com.mostafan3ma.android.pcm_helper10.data.source.database.DamagePoint
 import com.mostafan3ma.android.pcm_helper10.databinding.BendItemBinding
 import com.mostafan3ma.android.pcm_helper10.databinding.PointItemBinding
 import kotlinx.android.synthetic.main.bend_item.view.*
-import kotlinx.android.synthetic.main.fragment_line_details.view.*
 import kotlinx.android.synthetic.main.point_item.view.*
 import kotlinx.android.synthetic.main.point_item.view.delete_point_btn
 import java.lang.ClassCastException
 
 private const val POINT_ITEM_VIEW_TYPE=1
 private const val BEND_ITEM_VIEW_TYPE=0
-class PointsAdapter(private val clickListener:PointListener)
+class PointsAdapter(private val deleteListener:DeleteListener,private val editListener: EditListener)
     :ListAdapter<DamagePoint,RecyclerView.ViewHolder>(PointDiffCallBack())
 {
 
@@ -54,15 +53,18 @@ class PointsAdapter(private val clickListener:PointListener)
             is PointViewHolder-> {
                 holder.bindPoint(pointItem)
                 holder.itemView.delete_point_btn.setOnClickListener {
-                    clickListener.onClick(pointItem)
+                    deleteListener.onDelete(pointItem)
                 }
                 holder.itemView.point_gps_txt.setText("${pointItem.gps_x};${pointItem.gps_y}")
+                holder.itemView.edit_point_btn.setOnClickListener {
+                    editListener.onEdit(pointItem)
+                }
             }
 
             is BendViewHolder-> {
                 holder.bindBend(pointItem)
-                holder.itemView.delete_point_btn.setOnClickListener {
-                    clickListener.onClick(pointItem)
+                holder.itemView.delete_bend_btn.setOnClickListener {
+                    deleteListener.onDelete(pointItem)
                 }
                 holder.itemView.bend_gps_txt.setText("${pointItem.gps_x};${pointItem.gps_y}")
             }
@@ -144,6 +146,10 @@ class PointDiffCallBack : DiffUtil.ItemCallback<DamagePoint>() {
 }
 
 
-class PointListener(val clickListener: (point: DamagePoint) -> Unit) {
-    fun onClick(point: DamagePoint) = clickListener(point)
+class DeleteListener(val deleteListener: (point: DamagePoint) -> Unit) {
+    fun onDelete(point: DamagePoint) = deleteListener(point)
+}
+
+class EditListener(val editListener:(point:DamagePoint)->Unit){
+    fun onEdit(point: DamagePoint)=editListener(point)
 }

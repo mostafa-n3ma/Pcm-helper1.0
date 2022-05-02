@@ -37,7 +37,8 @@ import com.mostafan3ma.android.pcm_helper10.R
 import com.mostafan3ma.android.pcm_helper10.Utils.hideKeyboard
 import com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine
 import com.mostafan3ma.android.pcm_helper10.databinding.FragmentLineDetailsBinding
-import com.mostafan3ma.android.pcm_helper10.lines.operations.Points.PointListener
+import com.mostafan3ma.android.pcm_helper10.lines.operations.Points.DeleteListener
+import com.mostafan3ma.android.pcm_helper10.lines.operations.Points.EditListener
 import com.mostafan3ma.android.pcm_helper10.lines.operations.Points.PointsAdapter
 import org.apache.poi.hssf.usermodel.HSSFSheet
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
@@ -50,6 +51,7 @@ class LineDetailsFragment : Fragment() {
     private lateinit var pointsAdapter: PointsAdapter
     private lateinit var binding: FragmentLineDetailsBinding
     private lateinit var pointBottomSheet: BottomSheetBehavior<LinearLayout>
+    private lateinit var editPointBottomSheet: BottomSheetBehavior<LinearLayout>
     private lateinit var bendBottomSheet: BottomSheetBehavior<LinearLayout>
     private lateinit var finishBottomSheet: BottomSheetBehavior<LinearLayout>
     private lateinit var noteBottomSheet: BottomSheetBehavior<LinearLayout>
@@ -62,6 +64,7 @@ class LineDetailsFragment : Fragment() {
             (requireContext().applicationContext as PcmApp).repository, args.selectedLine
         )
     }
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,31 +96,21 @@ class LineDetailsFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        pointsAdapter = PointsAdapter(PointListener {
+        pointsAdapter = PointsAdapter(DeleteListener {
 //            Toast.makeText(requireContext(), "${it.db}", Toast.LENGTH_SHORT).show()
             viewModel.deletePoint(it)
             pointsAdapter.notifyDataSetChanged()
 
+        }, EditListener {editedPoint->
+            viewModel.setEditedPoint(editedPoint)
+            viewModel.openEditPointSheet()
         })
-
 
         viewModel.finalLine.observe(viewLifecycleOwner, Observer {
             pointsAdapter.submitList(it.points)
         })
 
         binding.pointsRecycler.adapter = pointsAdapter
-        pointBottomSheet = setUpPointBottomSheet()
-        bendBottomSheet = setUpBendBottomSheet()
-        finishBottomSheet = setUpFinishBottomSheet()
-        noteBottomSheet = setUpNoteBottomSheet()
-        editBottomSheet = setUpEditBottomSheet()
-
-
-
-
-
-
-
 
 
         binding.moreDetailsBtn.setOnClickListener {
@@ -128,7 +121,58 @@ class LineDetailsFragment : Fragment() {
         return binding.root
     }
 
-     private fun checkExpandableCardView() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        pointBottomSheet = setUpPointBottomSheet()
+        editPointBottomSheet = setUpEditPointBottomSheet()
+        bendBottomSheet = setUpBendBottomSheet()
+        finishBottomSheet = setUpFinishBottomSheet()
+        noteBottomSheet = setUpNoteBottomSheet()
+        editBottomSheet = setUpEditBottomSheet()
+
+
+    }
+
+
+
+
+
+
+
+
+
+    private fun setUpEditPointBottomSheet(): BottomSheetBehavior<LinearLayout> {
+        editPointBottomSheet= BottomSheetBehavior.from(binding.editPointBottomSheetLayout).apply {
+            isDraggable=false
+        }
+        viewModel.editPointSheetState.observe(viewLifecycleOwner, Observer {isOpen->
+        when(isOpen){
+            true->{
+                editPointBottomSheet.state=BottomSheetBehavior.STATE_EXPANDED
+                binding.fabAddPoint.visibility=View.INVISIBLE
+                checkPermissionsAndLocationSettingsAndGetLocation()
+            }
+            false->{
+                editPointBottomSheet.state=BottomSheetBehavior.STATE_COLLAPSED
+                binding.fabAddPoint.visibility=View.VISIBLE
+
+            }
+        }
+        })
+        viewModel.editPointButtonClicked.observe(viewLifecycleOwner, Observer { clicked->
+            if (clicked){
+                viewModel.editPointButtonClickedComplete()
+                pointsAdapter.notifyDataSetChanged()
+                viewModel.closeEditPointSheet()
+                binding.fabAddPoint.visibility=View.VISIBLE
+            }
+
+        })
+        return editPointBottomSheet
+    }
+
+    private fun checkExpandableCardView() {
         if (binding.expandableLayout.visibility == View.GONE) {
             TransitionManager.beginDelayedTransition(binding.lineMainCardView, AutoTransition())
             binding.expandableLayout.visibility = View.VISIBLE

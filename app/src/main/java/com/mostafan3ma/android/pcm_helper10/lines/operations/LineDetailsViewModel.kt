@@ -11,7 +11,7 @@ import com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class LineDetailsViewModel(private val repository: PipeLinesRepository,  val selectedLine: PipeLine) : ViewModel() {
+class LineDetailsViewModel(private val repository: PipeLinesRepository, private val selectedLine: PipeLine) : ViewModel() {
     private var converter: CoordinateConversion = CoordinateConversion()
 
 
@@ -86,6 +86,13 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
             updateFinalLine()
         }
     }
+
+
+
+
+
+
+
     private fun getPointsNo():Int{
         var pointNO:Int=0
         selectedLine.points.map { point->
@@ -105,7 +112,7 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
         )
     }
 
-    private fun reInitPointsLiveValues(){
+    private fun resetPointLiveValues(){
         dp.value=""
         depth.value=""
         current1.value=""
@@ -116,7 +123,7 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
         viewModelScope.launch {
             repository.updatePointsList(selectedLine.id, selectedLine.points)
             updateFinalLine()
-            reInitPointsLiveValues()
+            resetPointLiveValues()
         }
 
 
@@ -154,6 +161,75 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
         _addPointButtonClicked.value = false
     }
 ///////////////
+
+
+    //edit point Bottom Sheet event
+    private val _editedPoint=MutableLiveData<DamagePoint?>()
+    val editedPoint:LiveData<DamagePoint?>get() = _editedPoint
+    val includeNewGps=MutableLiveData<Boolean>(false)
+
+
+
+    fun setEditedPoint(editedPoint: DamagePoint){
+        _editedPoint.value=editedPoint
+    }
+
+
+
+    val editPointSheetState=MutableLiveData<Boolean>()
+    fun openEditPointSheet(){
+        editPointSheetState.value=true
+    }
+    fun closeEditPointSheet(){
+        editPointSheetState.value=false
+    }
+    private val _editPointButtonClicked=MutableLiveData<Boolean>()
+    val editPointButtonClicked:LiveData<Boolean>get() = _editPointButtonClicked
+    fun editPointButtonClicked(){
+        editPoint(_editedPoint.value!!)
+        _editPointButtonClicked.value=true
+    }
+    fun editPointButtonClickedComplete(){
+        _editPointButtonClicked.value=false
+    }
+
+    private fun editPoint(point: DamagePoint){
+        selectedLine.points.find {
+            it.no==point.no
+        }.let {
+            it?.db=_editedPoint.value?.db
+            it?.depth=_editedPoint.value?.depth
+            it?.current1=editedPoint.value?.current1
+            it?.current2=editedPoint.value?.current2
+            if (includeNewGps.value == true){
+                it?.gps_x=gpsX.value
+                it?.gps_y=gpsY.value
+            }
+
+        }
+        includeNewGps.value=false
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -320,13 +396,16 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
         depth.value = ""
         current1.value = ""
         current2.value = ""
-        _addPointButtonClicked.value = false
+
         gpsX.value=""
         gpsY.value=""
         gpsX_Y.value=""
 
         accuracy.value=""
         progressVisibility.value= View.VISIBLE
+
+        _addPointButtonClicked.value = false
+        pointBottomSheetState.value=false
 
 
         _addBendButtonClicked.value=false
@@ -353,6 +432,11 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
 
 
 
+        _editedPoint.value=null
+        editPointSheetState.value=false
+        _editPointButtonClicked.value=false
+
+
 
         comingInput.value=""
         comingOgm.value=""
@@ -361,7 +445,8 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository,  val sel
 
 
 
-        pointBottomSheetState.value=false
+
+
 
     }
 

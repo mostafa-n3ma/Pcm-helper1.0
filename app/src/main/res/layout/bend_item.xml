@@ -137,16 +137,9 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             >
+
                             <Button
-                                android:id="@+id/edit_point_btn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                android:drawableLeft="@drawable/edit_popup"
-                                android:text="edit"
-                                />
-                            <Button
-                                android:id="@+id/delete_point_btn"
+                                android:id="@+id/delete_bend_btn"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
