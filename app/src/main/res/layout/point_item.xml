@@ -209,8 +209,7 @@
                                 android:inputType="none"
                                 android:paddingLeft="5dp"
                                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                                android:text="some not for the single pointsome not for the single pointsome not for the single pointsome not for the single point"
-                                />
+                                android:text="@{point.note}"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
                         <LinearLayout

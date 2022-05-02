@@ -53,6 +53,7 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
     val current2 = MutableLiveData<String>()
     val gpsX = MutableLiveData<String>()
     val gpsY = MutableLiveData<String>()
+    val point_note=MutableLiveData<String>()
 
 
 
@@ -108,7 +109,7 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
     private fun getNewPointInfo(): DamagePoint {
         return DamagePoint(
             getNextPointNo(), dp.value, depth.value, current1.value, current2.value,
-            gpsX.value, gpsY.value
+            gpsX.value, gpsY.value,point_note.value
         )
     }
 
@@ -117,6 +118,7 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
         depth.value=""
         current1.value=""
         current2.value=""
+        point_note.value=""
     }
     fun addNewPointToPipeList() {
         selectedLine.points.add(getNewPointInfo())
@@ -201,10 +203,12 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
             it?.depth=_editedPoint.value?.depth
             it?.current1=editedPoint.value?.current1
             it?.current2=editedPoint.value?.current2
+            it?.note=editedPoint.value?.note
             if (includeNewGps.value == true){
                 it?.gps_x=gpsX.value
                 it?.gps_y=gpsY.value
             }
+
 
         }
         includeNewGps.value=false
@@ -400,6 +404,7 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
         gpsX.value=""
         gpsY.value=""
         gpsX_Y.value=""
+        point_note.value=""
 
         accuracy.value=""
         progressVisibility.value= View.VISIBLE

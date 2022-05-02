@@ -52,6 +52,7 @@ data class DamagePoint(
     var current2: String? = null,
     var gps_x: String? = null,
     var gps_y: String? = null,
+    var note:String?=null,
     var is_point:Boolean=true
 ):Parcelable
 // var is_point value  declare if it is a point or a bend
