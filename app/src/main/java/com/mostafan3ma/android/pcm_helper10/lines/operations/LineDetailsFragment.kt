@@ -150,11 +150,13 @@ class LineDetailsFragment : Fragment() {
         when(isOpen){
             true->{
                 editPointBottomSheet.state=BottomSheetBehavior.STATE_EXPANDED
+                binding.editingDpField.requestFocus()
                 binding.fabAddPoint.visibility=View.INVISIBLE
                 checkPermissionsAndLocationSettingsAndGetLocation()
             }
             false->{
-                editPointBottomSheet.state=BottomSheetBehavior.STATE_COLLAPSED
+                hideKeyboard()
+                viewModel.closeBottomSheetWithDelay(editPointBottomSheet)
                 binding.fabAddPoint.visibility=View.VISIBLE
 
             }
