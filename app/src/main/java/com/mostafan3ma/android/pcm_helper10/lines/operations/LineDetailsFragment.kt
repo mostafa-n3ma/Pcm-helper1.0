@@ -26,6 +26,7 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
@@ -40,9 +41,12 @@ import com.mostafan3ma.android.pcm_helper10.databinding.FragmentLineDetailsBindi
 import com.mostafan3ma.android.pcm_helper10.lines.operations.Points.DeleteListener
 import com.mostafan3ma.android.pcm_helper10.lines.operations.Points.EditListener
 import com.mostafan3ma.android.pcm_helper10.lines.operations.Points.PointsAdapter
+import kotlinx.coroutines.launch
 import org.apache.poi.hssf.usermodel.HSSFSheet
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
-import java.io.*
+import org.apache.poi.ss.util.CellRangeAddress
+import java.io.File
+import java.io.FileOutputStream
 
 
 class LineDetailsFragment : Fragment() {
@@ -85,8 +89,6 @@ class LineDetailsFragment : Fragment() {
         }
 
     }
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -97,7 +99,6 @@ class LineDetailsFragment : Fragment() {
         binding.viewModel = viewModel
 
         pointsAdapter = PointsAdapter(DeleteListener {
-//            Toast.makeText(requireContext(), "${it.db}", Toast.LENGTH_SHORT).show()
             viewModel.deletePoint(it)
             pointsAdapter.notifyDataSetChanged()
 
@@ -114,7 +115,9 @@ class LineDetailsFragment : Fragment() {
 
 
         binding.moreDetailsBtn.setOnClickListener {
-            checkExpandableCardView()
+            viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+                checkExpandableCardView()
+            }
         }
         setHasOptionsMenu(true)
 
@@ -123,58 +126,63 @@ class LineDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            pointBottomSheet = setUpPointBottomSheet()
+            editPointBottomSheet = setUpEditPointBottomSheet()
+            bendBottomSheet = setUpBendBottomSheet()
+            finishBottomSheet = setUpFinishBottomSheet()
+            noteBottomSheet = setUpNoteBottomSheet()
+            editBottomSheet = setUpEditBottomSheet()
 
-        pointBottomSheet = setUpPointBottomSheet()
-        editPointBottomSheet = setUpEditPointBottomSheet()
-        bendBottomSheet = setUpBendBottomSheet()
-        finishBottomSheet = setUpFinishBottomSheet()
-        noteBottomSheet = setUpNoteBottomSheet()
-        editBottomSheet = setUpEditBottomSheet()
+        }
+    }
 
 
+    override fun onResume() {
+        super.onResume()
+        binding.pointsRecycler.adapter = pointsAdapter
+
+    }
+
+
+    //option Menu
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.details_menu, menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.end_point_option -> {
+                viewModel.openFinishSheet()
+
+                return true
+            }
+            R.id.note_option -> {
+                viewModel.openNoteSheet()
+                return true
+            }
+            R.id.share_option -> {
+                checkStoragePermissionAndExportFile()
+                return true
+            }
+            R.id.edit_option -> {
+                viewModel.openEditSheet()
+                return true
+            }
+            R.id.settings_option -> {
+                return true
+            }
+            else -> return false
+
+        }
     }
 
 
 
 
 
-
-
-
-
-    private fun setUpEditPointBottomSheet(): BottomSheetBehavior<LinearLayout> {
-        editPointBottomSheet= BottomSheetBehavior.from(binding.editPointBottomSheetLayout).apply {
-            isDraggable=false
-        }
-        viewModel.editPointSheetState.observe(viewLifecycleOwner, Observer {isOpen->
-        when(isOpen){
-            true->{
-                editPointBottomSheet.state=BottomSheetBehavior.STATE_EXPANDED
-                binding.editingDpField.requestFocus()
-                binding.fabAddPoint.visibility=View.INVISIBLE
-                checkPermissionsAndLocationSettingsAndGetLocation()
-            }
-            false->{
-                hideKeyboard()
-                viewModel.closeBottomSheetWithDelay(editPointBottomSheet)
-                binding.fabAddPoint.visibility=View.VISIBLE
-
-            }
-        }
-        })
-        viewModel.editPointButtonClicked.observe(viewLifecycleOwner, Observer { clicked->
-            if (clicked){
-                viewModel.editPointButtonClickedComplete()
-                pointsAdapter.notifyDataSetChanged()
-                viewModel.closeEditPointSheet()
-                binding.fabAddPoint.visibility=View.VISIBLE
-            }
-
-        })
-        return editPointBottomSheet
-    }
-
-    private fun checkExpandableCardView() {
+    //expandable  Details Card View
+    private  suspend fun checkExpandableCardView() {
         if (binding.expandableLayout.visibility == View.GONE) {
             TransitionManager.beginDelayedTransition(binding.lineMainCardView, AutoTransition())
             binding.expandableLayout.visibility = View.VISIBLE
@@ -198,33 +206,105 @@ class LineDetailsFragment : Fragment() {
         }
     }
 
-    private fun setDropDownMenus() {
-        val ogms = resources.getStringArray(R.array.ogms)
-        val ogmAdapter = ArrayAdapter(requireContext(), R.layout.drop_dwon_item, ogms)
-        binding.ogmAutoTxt.setAdapter(ogmAdapter)
 
-        val inputs = resources.getStringArray(R.array.inputs)
-        val inputsAdapter = ArrayAdapter(requireContext(), R.layout.drop_dwon_item, inputs)
-        binding.inputAutoTxt.setAdapter(inputsAdapter)
-
-
-        val types = resources.getStringArray(R.array.types)
-        val typeAdapter =
-            object : ArrayAdapter<String?>(requireContext(), R.layout.drop_dwon_item, types) {
-                private val typeColors = listOf(Color.RED, Color.GREEN)
-                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                    val view = super.getView(position, convertView, parent)
-                    if (view is TextView) {
-                        view.setBackgroundColor(typeColors[position])
-                    }
-                    return view
+    //Bottom Sheets
+    private suspend fun setUpBendBottomSheet(): BottomSheetBehavior<LinearLayout> {
+        val bendBottomSheet = BottomSheetBehavior.from(binding.BendBottomSheetLayout).apply {
+            isDraggable = false
+        }
+        //Bend Bottom Sheet
+        viewModel.bendSheetState.observe(viewLifecycleOwner, Observer {
+            when(it){
+                true->{
+                    bendBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
+                    binding.fabAddPoint.visibility = View.INVISIBLE
+                    binding.fabAddPoint.collapse()
+                    checkPermissionsAndLocationSettingsAndGetLocation()
+                }
+                false->{
+                    hideKeyboard()
+                    viewModel.closeBottomSheetWithDelay(bendBottomSheet)
+                    binding.fabAddPoint.visibility = View.VISIBLE
+                    locationManager.removeUpdates(locationListener)
                 }
             }
-        binding.typeAutoTxt.setAdapter(typeAdapter)
-
+        })
+        viewModel.addBendButtonClicked.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                viewModel.addNewBendToPipeList()
+                pointsAdapter.notifyDataSetChanged()
+                hideKeyboard()
+                viewModel.closeBottomSheetWithDelay(bendBottomSheet)
+                viewModel.addBendButtonClickedComplete()
+                binding.fabAddPoint.visibility = View.VISIBLE
+                viewModel.closeBendSheet()
+            }
+        })
+        return bendBottomSheet
     }
+    private suspend fun setUpPointBottomSheet(): BottomSheetBehavior<LinearLayout> {
+        val pointBottomSheet = BottomSheetBehavior.from(binding.pointBottomSheetLayout).apply {
+            isDraggable = false
+        }
+        viewModel.pointBottomSheetState.observe(viewLifecycleOwner, Observer {
+            if (it){
+                pointBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
+                binding.dpField.requestFocus()
+                binding.fabAddPoint.visibility = View.INVISIBLE
+                binding.fabAddPoint.collapse()
+                checkPermissionsAndLocationSettingsAndGetLocation()
+            }else{
+                hideKeyboard()
+                viewModel.closeBottomSheetWithDelay(pointBottomSheet)
+                binding.fabAddPoint.visibility = View.VISIBLE
+                locationManager.removeUpdates(locationListener)
+            }
+        })
+        viewModel.addPointButtonClicked.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                viewModel.addNewPointToPipeList()
+                pointsAdapter.notifyDataSetChanged()
+                hideKeyboard()
+                viewModel.closeBottomSheetWithDelay(pointBottomSheet)
+                viewModel.addPointButtonClickedComplete()
+                binding.fabAddPoint.visibility = View.VISIBLE
+                viewModel.closePointSheet()
+            }
+        })
+        return pointBottomSheet
+    }
+    private suspend fun setUpEditPointBottomSheet(): BottomSheetBehavior<LinearLayout> {
+        editPointBottomSheet= BottomSheetBehavior.from(binding.editPointBottomSheetLayout).apply {
+            isDraggable=false
+        }
+        viewModel.editPointSheetState.observe(viewLifecycleOwner, Observer {isOpen->
+            when(isOpen){
+                true->{
+                    editPointBottomSheet.state=BottomSheetBehavior.STATE_EXPANDED
+                    binding.editingDpField.requestFocus()
+                    binding.fabAddPoint.visibility=View.INVISIBLE
+                    checkPermissionsAndLocationSettingsAndGetLocation()
+                }
+                false->{
+                    hideKeyboard()
+                    viewModel.closeBottomSheetWithDelay(editPointBottomSheet)
+                    binding.fabAddPoint.visibility=View.VISIBLE
 
-    private fun setUpEditBottomSheet(): BottomSheetBehavior<LinearLayout> {
+                }
+            }
+        })
+        viewModel.editPointButtonClicked.observe(viewLifecycleOwner, Observer { clicked->
+            if (clicked){
+                viewModel.editPointButtonClickedComplete()
+                pointsAdapter.notifyDataSetChanged()
+                viewModel.closeEditPointSheet()
+                binding.fabAddPoint.visibility=View.VISIBLE
+            }
+
+        })
+        return editPointBottomSheet
+    }
+    private suspend fun setUpEditBottomSheet(): BottomSheetBehavior<LinearLayout> {
         editBottomSheet = BottomSheetBehavior.from(binding.editBottomSheetLayout).apply {
             isDraggable = false
         }
@@ -257,8 +337,7 @@ class LineDetailsFragment : Fragment() {
         setDropDownMenus()
         return editBottomSheet
     }
-
-    private fun setUpNoteBottomSheet(): BottomSheetBehavior<LinearLayout> {
+    private  suspend fun setUpNoteBottomSheet(): BottomSheetBehavior<LinearLayout> {
         noteBottomSheet = BottomSheetBehavior.from(binding.noteBottomSheetLayout).apply {
             isDraggable = false
         }
@@ -289,8 +368,7 @@ class LineDetailsFragment : Fragment() {
         })
         return noteBottomSheet
     }
-
-    private fun setUpFinishBottomSheet(): BottomSheetBehavior<LinearLayout> {
+    private suspend fun setUpFinishBottomSheet(): BottomSheetBehavior<LinearLayout> {
         val endPointBottomSheet =
             BottomSheetBehavior.from(binding.finishBottomSheetLayout).apply {
                 isDraggable = false
@@ -322,46 +400,40 @@ class LineDetailsFragment : Fragment() {
         })
         return endPointBottomSheet
     }
+    private fun setDropDownMenus() {
+        val ogms = resources.getStringArray(R.array.ogms)
+        val ogmAdapter = ArrayAdapter(requireContext(), R.layout.drop_dwon_item, ogms)
+        binding.ogmAutoTxt.setAdapter(ogmAdapter)
+
+        val inputs = resources.getStringArray(R.array.inputs)
+        val inputsAdapter = ArrayAdapter(requireContext(), R.layout.drop_dwon_item, inputs)
+        binding.inputAutoTxt.setAdapter(inputsAdapter)
 
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.details_menu, menu)
+        val types = resources.getStringArray(R.array.types)
+        val typeAdapter =
+            object : ArrayAdapter<String?>(requireContext(), R.layout.drop_dwon_item, types) {
+                private val typeColors = listOf(Color.RED, Color.GREEN)
+                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                    val view = super.getView(position, convertView, parent)
+                    if (view is TextView) {
+                        view.setBackgroundColor(typeColors[position])
+                    }
+                    return view
+                }
+            }
+        binding.typeAutoTxt.setAdapter(typeAdapter)
+
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.end_point_option -> {
-                viewModel.openFinishSheet()
 
-                return true
-            }
-            R.id.note_option -> {
-                viewModel.openNoteSheet()
-                return true
-            }
-            R.id.share_option -> {
-                checkStoragePermissionAndExportFile()
-                return true
-            }
-            R.id.edit_option -> {
-                viewModel.openEditSheet()
-                return true
-            }
-            R.id.settings_option -> {
-                return true
-            }
-            else -> return false
 
-        }
-    }
-
+    // storage permissions and export file
     fun storagePermissionsApproved(): Boolean {
         return ActivityCompat.checkSelfPermission(
             requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE
         ) == PackageManager.PERMISSION_GRANTED
     }
-
     fun checkStoragePermissionAndExportFile() {
         if (storagePermissionsApproved()) {
             exportFile()
@@ -372,8 +444,6 @@ class LineDetailsFragment : Fragment() {
             )
         }
     }
-
-
     private fun exportFile() {
         var theFile: File = requireContext().filesDir
         theFile = File(theFile, getString(R.string.app_name))
@@ -394,12 +464,14 @@ class LineDetailsFragment : Fragment() {
 
 
         try {
-            val line = args.selectedLine
+            val line = viewModel.finalLine.value
             val fos: FileOutputStream = FileOutputStream(theFile)
             val workbook = HSSFWorkbook()
             val sheet = workbook.createSheet("${args.selectedLine.name}")
-            initLabels(sheet, line)
+            initLabels(sheet, line!!)
             setPointsCells(sheet, line)
+
+
             workbook.write(fos)
             fos.flush()
             fos.close()
@@ -425,63 +497,12 @@ class LineDetailsFragment : Fragment() {
 
     }
 
-    private fun setPointsCells(sheet: HSSFSheet, line: PipeLine) {
-        var rowNum = 4
-        for (point in line.points) {
-            val rowX = sheet.createRow(rowNum)
-            if (point.is_point) {
-                rowX.createCell(0).setCellValue(point.no.toString())
-                rowX.createCell(1).setCellValue(point.db)
-                rowX.createCell(2).setCellValue(point.depth)
-                rowX.createCell(3).setCellValue(point.current1)
-                rowX.createCell(4).setCellValue(point.current2)
-                rowX.createCell(5).setCellValue(point.gps_x)
-                rowX.createCell(6).setCellValue(point.gps_y)
-
-                val x_coordinate: Double = (point.gps_x?.toDouble())?.minus(42.2) ?: 0.0
-                val y_coordinate: Double = (point.gps_y?.toDouble())?.minus(481.7) ?: 0.0
-
-                rowX.createCell(7).setCellValue("$x_coordinate;$y_coordinate")
-            } else {
-                rowX.createCell(0).setCellValue("")
-                rowX.createCell(1).setCellValue("")
-                rowX.createCell(2).setCellValue("")
-                rowX.createCell(3).setCellValue("")
-                rowX.createCell(4).setCellValue("Bend")
-                rowX.createCell(5).setCellValue(point.gps_x)
-                rowX.createCell(6).setCellValue(point.gps_y)
-
-                val x_coordinate: Double = (point.gps_x?.toDouble())?.minus(42.2) ?: 0.0
-                val y_coordinate: Double = (point.gps_y?.toDouble())?.minus(481.7) ?: 0.0
-
-                rowX.createCell(7).setCellValue("$x_coordinate;$y_coordinate")
-            }
-            rowNum += 1
-        }
-        setEndPointRow(sheet, line, rowNum)
-    }
-
-    private fun setEndPointRow(sheet: HSSFSheet, line: PipeLine, rowNum: Int) {
-        val endRow = sheet.createRow(rowNum)
-        endRow.createCell(4).setCellValue("End Point:")
-        endRow.createCell(5).setCellValue(line.end_point_x)
-        endRow.createCell(6).setCellValue(line.end_point_y)
-        if (line.end_point_x!!.isNotEmpty() && line.end_point_y!!.isNotEmpty()) {
-            val x_coordinate: Double = (line.end_point_x?.toDouble())?.minus(42.2) ?: 0.0
-            val y_coordinate: Double = (line.end_point_y?.toDouble())?.minus(481.7) ?: 0.0
-            endRow.createCell(7).setCellValue("$x_coordinate;$y_coordinate")
-        } else {
-            endRow.createCell(7).setCellValue("")
-        }
-
-
-    }
-
     private fun initLabels(sheet: HSSFSheet, line: PipeLine) {
         //later for styles https://poi.apache.org/components/spreadsheet/quick-guide.html
         //https://poi.apache.org/components/spreadsheet/quick-guide.html#MergedCells
 
         val row0 = sheet.createRow(0)
+
         row0.createCell(0).setCellValue("Pipe Line:")
         row0.createCell(1).setCellValue(line.name)
         row0.createCell(2).setCellValue("OGM")
@@ -522,79 +543,77 @@ class LineDetailsFragment : Fragment() {
         val x_coordinate: Double = (line.start_point_x?.toDouble())?.minus(42.2) ?: 0.0
         val y_coordinate: Double = (line.start_point_y?.toDouble())?.minus(481.7) ?: 0.0
 
-        row3.createCell(7).setCellValue("$x_coordinate;$y_coordinate")
+        row3.createCell(7).setCellValue("$x_coordinate,$y_coordinate")
 
 
     }
+    private fun setPointsCells(sheet: HSSFSheet, line: PipeLine) {
+        var rowNum = 4
+        for (point in line.points) {
+            val rowX = sheet.createRow(rowNum)
+            if (point.is_point) {
+                rowX.createCell(0).setCellValue(point.no.toString())
+                rowX.createCell(1).setCellValue(point.db)
+                rowX.createCell(2).setCellValue(point.depth)
+                rowX.createCell(3).setCellValue(point.current1)
+                rowX.createCell(4).setCellValue(point.current2)
+                rowX.createCell(5).setCellValue(point.gps_x)
+                rowX.createCell(6).setCellValue(point.gps_y)
+                rowX.createCell(7).setCellValue(point.note)
 
+                val x_coordinate: Double = (point.gps_x?.toDouble())?.minus(42.2) ?: 0.0
+                val y_coordinate: Double = (point.gps_y?.toDouble())?.minus(481.7) ?: 0.0
 
-    private fun setUpBendBottomSheet(): BottomSheetBehavior<LinearLayout> {
-        val bendBottomSheet = BottomSheetBehavior.from(binding.BendBottomSheetLayout).apply {
-            isDraggable = false
+                rowX.createCell(7).setCellValue("$x_coordinate,$y_coordinate")
+                rowX.createCell(8).setCellValue("${point.note}")
+
+            } else {
+                rowX.createCell(0).setCellValue("")
+                rowX.createCell(1).setCellValue("")
+                rowX.createCell(2).setCellValue("")
+                rowX.createCell(3).setCellValue("")
+                rowX.createCell(4).setCellValue("Bend")
+                rowX.createCell(5).setCellValue(point.gps_x)
+                rowX.createCell(6).setCellValue(point.gps_y)
+
+                val x_coordinate: Double = (point.gps_x?.toDouble())?.minus(42.2) ?: 0.0
+                val y_coordinate: Double = (point.gps_y?.toDouble())?.minus(481.7) ?: 0.0
+
+                rowX.createCell(7).setCellValue("$x_coordinate,$y_coordinate")
+                rowX.createCell(8).setCellValue("${point.note}")
+            }
+            rowNum += 1
         }
-        //Bend Bottom Sheet
-        viewModel.bendSheetState.observe(viewLifecycleOwner, Observer {
-            when(it){
-                true->{
-                    bendBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
-                    binding.fabAddPoint.visibility = View.INVISIBLE
-                    binding.fabAddPoint.collapse()
-                    checkPermissionsAndLocationSettingsAndGetLocation()
-                }
-                false->{
-                    bendBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
-                    binding.fabAddPoint.visibility = View.VISIBLE
-                    locationManager.removeUpdates(locationListener)
-                }
-            }
-        })
-        viewModel.addBendButtonClicked.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                viewModel.addNewBendToPipeList()
-                pointsAdapter.notifyDataSetChanged()
-                bendBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
-                viewModel.addBendButtonClickedComplete()
-                binding.fabAddPoint.visibility = View.VISIBLE
-                viewModel.closeBendSheet()
-            }
-        })
-        return bendBottomSheet
+        setEndPointRow(sheet, line, rowNum)
     }
-
-
-    private fun setUpPointBottomSheet(): BottomSheetBehavior<LinearLayout> {
-        val pointBottomSheet = BottomSheetBehavior.from(binding.pointBottomSheetLayout).apply {
-            isDraggable = false
+    private fun setEndPointRow(sheet: HSSFSheet, line: PipeLine, rowNum: Int) {
+        val endRow = sheet.createRow(rowNum)
+        endRow.createCell(4).setCellValue("End Point:")
+        endRow.createCell(5).setCellValue(line.end_point_x)
+        endRow.createCell(6).setCellValue(line.end_point_y)
+        if (line.end_point_x!!.isNotEmpty() && line.end_point_y!!.isNotEmpty()) {
+            val x_coordinate: Double = (line.end_point_x?.toDouble())?.minus(42.2) ?: 0.0
+            val y_coordinate: Double = (line.end_point_y?.toDouble())?.minus(481.7) ?: 0.0
+            endRow.createCell(7).setCellValue("$x_coordinate,$y_coordinate")
+        } else {
+            endRow.createCell(7).setCellValue("")
         }
-        viewModel.pointBottomSheetState.observe(viewLifecycleOwner, Observer {
-            if (it){
-                pointBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
-                binding.dpField.requestFocus()
-                binding.fabAddPoint.visibility = View.INVISIBLE
-                binding.fabAddPoint.collapse()
-                checkPermissionsAndLocationSettingsAndGetLocation()
-            }else{
-                hideKeyboard()
-                viewModel.closeBottomSheetWithDelay(pointBottomSheet)
-                binding.fabAddPoint.visibility = View.VISIBLE
-                locationManager.removeUpdates(locationListener)
-            }
-        })
-        viewModel.addPointButtonClicked.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                viewModel.addNewPointToPipeList()
-                pointsAdapter.notifyDataSetChanged()
-                hideKeyboard()
-                viewModel.closeBottomSheetWithDelay(pointBottomSheet)
-                viewModel.addPointButtonClickedComplete()
-                binding.fabAddPoint.visibility = View.VISIBLE
-                viewModel.closePointSheet()
-            }
-        })
-        return pointBottomSheet
+        val noteRow=sheet.createRow(rowNum+1).apply {
+            createCell(0).setCellValue("Line Note")
+            createCell(1).setCellValue(line.extra_note)
+        }
+
+
+
+
+
     }
 
 
+
+
+
+    //Location
     private fun checkPermissionsAndLocationSettingsAndGetLocation() {
         if (permissionsApproved()) {
             checkDeviceLocationSettingsAndGetLocationUpdates()
@@ -602,7 +621,6 @@ class LineDetailsFragment : Fragment() {
             requestLocationPermissions()
         }
     }
-
     private fun requestLocationPermissions() {
         val permissions = arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -610,8 +628,6 @@ class LineDetailsFragment : Fragment() {
         )
         requestPermissions(permissions, LOCATION_PERMISSIONS_REQUEST_CODE)
     }
-
-
     private fun permissionsApproved(): Boolean {
         val fine: Boolean = (
                 PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
@@ -699,8 +715,6 @@ class LineDetailsFragment : Fragment() {
 
 
     }
-
-
     private fun showSneakBar() {
         Snackbar.make(
             requireView(),
@@ -716,7 +730,6 @@ class LineDetailsFragment : Fragment() {
                 })
             }.show()
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         checkDeviceLocationSettingsAndGetLocationUpdates(false)

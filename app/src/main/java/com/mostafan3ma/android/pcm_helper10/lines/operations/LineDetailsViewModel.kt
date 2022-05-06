@@ -19,6 +19,7 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
     val comingOgm=MutableLiveData<String>()
     val comingType=MutableLiveData<String>()
     val comingInput=MutableLiveData<String>()
+
     fun updateFinalLine(){
         viewModelScope.launch {
             finalLine.value= repository.getPipeLine(selectedLine.id)
@@ -136,7 +137,7 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
 
     }
      fun addNewBendToPipeList(){
-        val newBend=DamagePoint(no = 0, gps_x = gpsX.value, gps_y = gpsY.value, is_point = false)
+        val newBend=DamagePoint(no = 0, gps_x = gpsX.value, gps_y = gpsY.value, is_point = false, note = point_note.value)
         selectedLine.points.add(newBend)
         viewModelScope.launch {
             repository.updatePointsList(selectedLine.id, selectedLine.points)
@@ -196,7 +197,7 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
     }
 
     private fun editPoint(point: DamagePoint){
-        selectedLine.points.find {
+        finalLine.value?.points?.find {
             it.no==point.no
         }.let {
             it?.db=_editedPoint.value?.db
@@ -210,6 +211,9 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
             }
 
 
+        }
+        viewModelScope.launch {
+            repository.updateLine(finalLine.value!!)
         }
         includeNewGps.value=false
     }
@@ -450,10 +454,9 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
 
 
 
-
-
-
     }
+
+
 
 
     @Suppress("UNCHECKED_CAST")
