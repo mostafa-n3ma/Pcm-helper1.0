@@ -542,9 +542,10 @@ class LineDetailsFragment : Fragment() {
                 Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
             )
         }
-
+        deletionPath=theFile
         startActivity(chooser)
     }
+    private var deletionPath:File?=null
 
     private fun initLabels(sheet: HSSFSheet, line: PipeLine) {
         //later for styles https://poi.apache.org/components/spreadsheet/quick-guide.html
@@ -785,12 +786,17 @@ class LineDetailsFragment : Fragment() {
         hideKeyboard()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        //delete the file that created for this pipe line from the cache dir when living the fragment
+        deletionPath?.delete()
+    }
+
 }
 
 private const val LOCATION_PERMISSIONS_REQUEST_CODE = 1
 private const val REQUEST_TURN_DEVICE_LOCATION_ON = 2
 private const val WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 3
-
 private const val TAG = "LineDetailsFragment"
 
 
