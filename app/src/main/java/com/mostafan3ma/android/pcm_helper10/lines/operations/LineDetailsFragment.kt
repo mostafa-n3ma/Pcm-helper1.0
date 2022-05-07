@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.graphics.Color
 import android.location.LocationListener
 import android.location.LocationManager
@@ -462,7 +463,14 @@ class LineDetailsFragment : Fragment() {
         }
     }
     private fun exportFile() {
-        var theFile: File = requireContext().filesDir
+
+//        val path: File = File(requireContext().cacheDir, "PcmRecords")
+//        val newFile = File(path, "${viewModel.finalLine.value?.name}")
+
+
+
+
+        var theFile: File = requireContext().cacheDir
         theFile = File(theFile, getString(R.string.app_name))
         if (!theFile.exists()) {
             if (theFile.mkdir()) {
@@ -474,9 +482,9 @@ class LineDetailsFragment : Fragment() {
             }
         }
 
-        theFile = File(theFile, "${args.selectedLine.name}.xls")
+        theFile = File(theFile, "${viewModel.finalLine.value?.name}.xls")
         if (theFile.exists()) {
-            Log.i(TAG, "exportFile: file ${args.selectedLine.name}.xls is exist")
+            Log.i(TAG, "exportFile: file ${viewModel.finalLine.value?.name}.xls is exist")
         }
 
 
@@ -485,10 +493,13 @@ class LineDetailsFragment : Fragment() {
             val fos: FileOutputStream = FileOutputStream(theFile)
             val workbook = HSSFWorkbook()
             val sheet = workbook.createSheet("${args.selectedLine.name}")
+
             initLabels(sheet, line!!)
             setPointsCells(sheet, line)
 
-
+            for(i in 0..10){
+             sheet.setColumnWidth(i,5000)
+            }
             workbook.write(fos)
             fos.flush()
             fos.close()
@@ -496,6 +507,10 @@ class LineDetailsFragment : Fragment() {
         } catch (e: Exception) {
             Log.i(TAG, "exportFile: ${e.message}")
         }
+
+
+
+
 
         val path = FileProvider.getUriForFile(
             requireContext(),
@@ -510,8 +525,25 @@ class LineDetailsFragment : Fragment() {
         shareIntent.type = "application/vnd.ms-excel"
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         shareIntent.putExtra(Intent.EXTRA_STREAM, path)
-        startActivity(Intent.createChooser(shareIntent, "share the ${args.selectedLine.name} file"))
+//        startActivity(Intent.createChooser(shareIntent, "share the ${args.selectedLine.name} file"))
+////////////
 
+
+        val chooser = Intent.createChooser(shareIntent, "Share File: ${args.selectedLine.name}")
+
+        val resInfoList: List<ResolveInfo> = requireContext().packageManager
+            .queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY)
+
+        for (resolveInfo in resInfoList) {
+            val packageName = resolveInfo.activityInfo.packageName
+            requireContext().grantUriPermission(
+                packageName,
+                path,
+                Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
+        }
+
+        startActivity(chooser)
     }
 
     private fun initLabels(sheet: HSSFSheet, line: PipeLine) {
