@@ -471,6 +471,7 @@
 
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/recycler_card"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -505,6 +506,7 @@
                                 android:layout_height="wrap_content"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 tools:itemCount="12"
+                                android:visibility="gone"
                                 tools:listitem="@layout/point_item" />
 
 

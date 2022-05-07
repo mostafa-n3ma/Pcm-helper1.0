@@ -373,6 +373,11 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
         }
     }
 
+    var submitted=false
+    fun submit(){
+        submitted=true
+    }
+
 
 
 

@@ -23,8 +23,6 @@ class PointsAdapter(private val deleteListener:DeleteListener,private val editLi
     :ListAdapter<DamagePoint,RecyclerView.ViewHolder>(PointDiffCallBack())
 {
 
-
-
     override fun getItemViewType(position: Int): Int {
         val item: DamagePoint =getItem(position)
         return when(item.is_point){

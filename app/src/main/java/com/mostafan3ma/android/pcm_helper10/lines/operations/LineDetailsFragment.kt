@@ -41,10 +41,10 @@ import com.mostafan3ma.android.pcm_helper10.databinding.FragmentLineDetailsBindi
 import com.mostafan3ma.android.pcm_helper10.lines.operations.Points.DeleteListener
 import com.mostafan3ma.android.pcm_helper10.lines.operations.Points.EditListener
 import com.mostafan3ma.android.pcm_helper10.lines.operations.Points.PointsAdapter
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.apache.poi.hssf.usermodel.HSSFSheet
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
-import org.apache.poi.ss.util.CellRangeAddress
 import java.io.File
 import java.io.FileOutputStream
 
@@ -101,15 +101,29 @@ class LineDetailsFragment : Fragment() {
         pointsAdapter = PointsAdapter(DeleteListener {
             viewModel.deletePoint(it)
             pointsAdapter.notifyDataSetChanged()
-
         }, EditListener {editedPoint->
             viewModel.setEditedPoint(editedPoint)
             viewModel.openEditPointSheet()
         })
 
-        viewModel.finalLine.observe(viewLifecycleOwner, Observer {
-            pointsAdapter.submitList(it.points)
+        viewModel.finalLine.observe(viewLifecycleOwner, Observer {currentPipe->
+            if (viewModel.submitted){
+                pointsAdapter.submitList(currentPipe.points)
+            }else{
+                viewLifecycleOwner.lifecycleScope.launch {
+                    delay(700).let {
+                        pointsAdapter.submitList(currentPipe.points)
+                        viewModel.submit()
+                        transitRecyclerView()
+                    }
+                }
+
+            }
+
+
         })
+
+
 
         binding.pointsRecycler.adapter = pointsAdapter
 
@@ -124,6 +138,11 @@ class LineDetailsFragment : Fragment() {
         return binding.root
     }
 
+    private fun transitRecyclerView() {
+        TransitionManager.beginDelayedTransition(binding.recyclerCard, AutoTransition())
+        binding.pointsRecycler.visibility = View.VISIBLE
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
@@ -136,14 +155,6 @@ class LineDetailsFragment : Fragment() {
 
         }
     }
-
-
-    override fun onResume() {
-        super.onResume()
-        binding.pointsRecycler.adapter = pointsAdapter
-
-    }
-
 
     //option Menu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -232,7 +243,6 @@ class LineDetailsFragment : Fragment() {
         viewModel.addBendButtonClicked.observe(viewLifecycleOwner, Observer {
             if (it) {
                 viewModel.addNewBendToPipeList()
-                pointsAdapter.notifyDataSetChanged()
                 hideKeyboard()
                 viewModel.closeBottomSheetWithDelay(bendBottomSheet)
                 viewModel.addBendButtonClickedComplete()
