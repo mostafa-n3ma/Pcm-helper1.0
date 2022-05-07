@@ -63,6 +63,7 @@ class LineDetailsFragment : Fragment() {
 
     private lateinit var locationManager: LocationManager
     private lateinit var locationListener: LocationListener
+    private var fragmentInitializing:Boolean = true
     val viewModel by viewModels<LineDetailsViewModel> {
         LineDetailsViewModel.LineDetailsViewModelFactory(
             (requireContext().applicationContext as PcmApp).repository, args.selectedLine
@@ -73,6 +74,9 @@ class LineDetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
 
 
 
@@ -107,15 +111,15 @@ class LineDetailsFragment : Fragment() {
         })
 
         viewModel.finalLine.observe(viewLifecycleOwner, Observer {currentPipe->
-            if (viewModel.submitted){
+            if (!fragmentInitializing){
                 pointsAdapter.submitList(currentPipe.points)
             }else{
                 viewLifecycleOwner.lifecycleScope.launch {
                     delay(700).let {
                         pointsAdapter.submitList(currentPipe.points)
-                        viewModel.submit()
                         transitRecyclerView()
                     }
+                    fragmentInitializing=false
                 }
 
             }
@@ -137,6 +141,9 @@ class LineDetailsFragment : Fragment() {
 
         return binding.root
     }
+
+
+
 
     private fun transitRecyclerView() {
         TransitionManager.beginDelayedTransition(binding.recyclerCard, AutoTransition())
