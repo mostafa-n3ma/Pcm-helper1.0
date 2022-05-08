@@ -24,6 +24,13 @@
             app:exitAnim="@anim/fad_out"
             app:popEnterAnim="@anim/fad_in"
             app:popExitAnim="@anim/fad_out" />
+        <action
+            android:id="@+id/action_LinesMainFragment_to_aboutFragment2"
+            app:destination="@id/aboutFragment"
+            app:enterAnim="@anim/slid_in_from_right"
+            app:exitAnim="@anim/slid_out_to_left"
+            app:popEnterAnim="@anim/slid_in_from_left"
+            app:popExitAnim="@anim/slid_out_to_right" />
     </fragment>
     <fragment
         android:id="@+id/DetailsFragment"
@@ -53,4 +60,16 @@
             app:popUpTo="@id/LinesMainFragment"
             app:popUpToInclusive="false" />
     </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.mostafan3ma.android.pcm_helper10.extraFragments.AboutFragment"
+        android:label="AboutFragment"
+        tools:layout="@layout/fragment_about"
+        />
+    <fragment
+        android:id="@+id/instructionsFragment"
+        android:name="com.mostafan3ma.android.pcm_helper10.extraFragments.InstructionsFragment"
+        android:label="InstructionsFragment"
+        tools:layout="@layout/fragment_instructions"
+        />
 </navigation>

@@ -188,9 +188,7 @@ class LineDetailsFragment : Fragment() {
                 viewModel.openEditSheet()
                 return true
             }
-            R.id.settings_option -> {
-                return true
-            }
+
             else -> return false
 
         }
@@ -791,7 +789,6 @@ class LineDetailsFragment : Fragment() {
         //delete the file that created for this pipe line from the cache dir when living the fragment
         deletionPath?.delete()
     }
-
 }
 
 private const val LOCATION_PERMISSIONS_REQUEST_CODE = 1

@@ -34,12 +34,6 @@
                 android:icon="@drawable/edit_option"
                 app:showAsAction="never"
                 />
-            <item
-                android:id="@+id/settings_option"
-                android:title="Settings"
-                android:icon="@drawable/setting_option"
-                app:showAsAction="never"
-                />
 
 
         </menu>

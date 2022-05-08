@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/aboutFragment"
+    android:icon="@drawable/edit_popup"
+    android:title="About"
+    />
+<item android:id="@+id/instructionsFragment"
+    android:icon="@drawable/document"
+    android:title="Instructions"
+    />
+<item android:id="@+id/settings_drawer_item"
+    android:icon="@drawable/setting_option"
+    android:title="Settings"
+    />
+
+</menu>
