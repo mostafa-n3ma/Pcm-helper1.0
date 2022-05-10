@@ -10,14 +10,111 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".extraFragments.InstructionsFragment">
-
-        <!-- TODO: Update blank fragment layout -->
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
         <TextView
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/what_does_pipeline_current_mapper_pcm_mean"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textSize="30dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:padding="5dp"
+            android:text="@string/pcm_meaning_body"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/now_the_steps_to_get_started"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textSize="34dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:text="@string/steps_to_fet_started_body"
+            android:padding="5dp"
+            android:autoLink="web"
+            />
+        <HorizontalScrollView
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
-            android:text="Instructions Fragment" />
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/instructions_image1"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/instructions_image2"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/instructions_image3"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/instructions_image4"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/instructions_image44"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/instructions_image5"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/instructions_image6"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/instructions_image7"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/instructions_image8"
+                    />
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+
+
+    </LinearLayout>
+
+</ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
