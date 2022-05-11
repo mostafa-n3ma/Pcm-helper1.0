@@ -19,6 +19,7 @@
         <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/layout/drop_dwon_item.xml" value="0.20906370243693886" />
         <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/layout/fragment_about.xml" value="0.20906370243693886" />
         <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/layout/fragment_add_line.xml" value="0.22" />
+        <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/layout/fragment_contact.xml" value="0.22" />
         <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/layout/fragment_first.xml" value="0.2546875" />
         <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/layout/fragment_instructions.xml" value="0.1449203187250996" />
         <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/layout/fragment_line_details.xml" value="0.3333333333333333" />
@@ -31,7 +32,7 @@
         <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/menu/add_menu.xml" value="0.2546875" />
         <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/menu/details_menu.xml" value="0.20906370243693886" />
         <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/menu/long_clicked_menu.xml" value="0.20906370243693886" />
-        <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/menu/navdrawer_menu.xml" value="0.20906370243693886" />
+        <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/menu/navdrawer_menu.xml" value="0.3333333333333333" />
         <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.167" />
         <entry key="..\:/android release apps/Pcmhelper10/app/src/main/res/xml/provider_paths.xml" value="0.10217300459674049" />
       </map>

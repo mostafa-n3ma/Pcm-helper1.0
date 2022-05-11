@@ -31,6 +31,10 @@
             app:exitAnim="@anim/slid_out_to_left"
             app:popEnterAnim="@anim/slid_in_from_left"
             app:popExitAnim="@anim/slid_out_to_right" />
+        <action
+            android:id="@+id/action_LinesMainFragment_to_contactFragment"
+            app:destination="@id/contactFragment"
+            app:enterAnim="@anim/slid_in_from_right" />
     </fragment>
     <fragment
         android:id="@+id/DetailsFragment"
@@ -72,4 +76,9 @@
         android:label="InstructionsFragment"
         tools:layout="@layout/fragment_instructions"
         />
+    <fragment
+        android:id="@+id/contactFragment"
+        android:name="com.mostafan3ma.android.pcm_helper10.extraFragments.ContactFragment"
+        android:label="Mostafa N3ma"
+        tools:layout="@layout/fragment_contact" />
 </navigation>

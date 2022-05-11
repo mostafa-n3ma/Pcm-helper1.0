@@ -44,7 +44,16 @@ class MainActivity : AppCompatActivity() {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             }
         }
+        binding.navView.menu.getItem(2).setOnMenuItemClickListener { item->
+            Toast.makeText(this,"Contact Clicked",Toast.LENGTH_SHORT).show()
+            Log.i("Mostafa Log", "onCreate: Contact Clicked")
+            navController.navigate(MainLinesFragmentDirections.actionLinesMainFragmentToContactFragment())
+            true
+        }
+
+
         NavigationUI.setupWithNavController(binding.navView,navController)
+
 
 
 

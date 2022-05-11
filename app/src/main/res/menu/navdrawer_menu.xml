@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
 <item android:id="@+id/aboutFragment"
-    android:icon="@drawable/about"
+    android:icon="@drawable/about2"
     android:title="About"
     />
 <item android:id="@+id/instructionsFragment"
     android:icon="@drawable/instructions"
     android:title="Instructions"
     />
-<item android:id="@+id/settings_drawer_item"
-    android:icon="@drawable/setting_option"
-    android:title="Settings"
+<item android:id="@+id/contactOption"
+    android:title="Contact Me"
+    android:icon="@drawable/contact1"
     />
 
 </menu>
