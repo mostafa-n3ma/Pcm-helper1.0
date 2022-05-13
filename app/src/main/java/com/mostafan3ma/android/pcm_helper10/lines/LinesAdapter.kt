@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.mostafan3ma.android.pcm_helper10.R
 import com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine
 import com.mostafan3ma.android.pcm_helper10.databinding.LineItemBinding
 
@@ -35,17 +36,12 @@ class LinesAdapter(private val clickListener:LineListener,private val longListen
 class LineViewHolder(private val binding:LineItemBinding):RecyclerView.ViewHolder(binding.root){
     fun bind(item: PipeLine){
         binding.pipeLine=item
-//        if(item.end_work_date!!.isEmpty()){
-//            binding.lineEndDate.text="Not Finished yet"
-//            binding.lineEndDate.setTextColor(Color.RED)
-//        }else{
-//            binding.lineEndDate.text=item.end_work_date
-//        }
-
         when(item.end_work_date){
             ""->{
                 binding.lineEndDate.text="Not Finished yet"
-                binding.lineEndDate.setTextColor(Color.RED)
+                binding.lineEndDate.apply {
+                    setTextColor(resources.getColor(R.color.oil_txt_color))
+                }
             }
             else->{
                 binding.lineEndDate.text=item.end_work_date
@@ -53,8 +49,12 @@ class LineViewHolder(private val binding:LineItemBinding):RecyclerView.ViewHolde
             }
         }
         when(item.type){
-            "Oil"->binding.lineType.setTextColor(Color.RED)
-            else->binding.lineType.setTextColor(Color.GREEN)
+            "Oil"->binding.lineType.apply {
+                setTextColor(resources.getColor(R.color.oil_txt_color))
+            }
+            else->binding.lineType.apply {
+                setTextColor(resources.getColor(R.color.water_txt_color))
+            }
         }
 
 

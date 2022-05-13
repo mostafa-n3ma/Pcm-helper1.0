@@ -106,11 +106,13 @@ class AddLineFragment : Fragment() {
         val types = resources.getStringArray(R.array.types)
         val typeAdapter =
             object : ArrayAdapter<String?>(requireContext(), R.layout.drop_dwon_item, types) {
-                private val typeColors = listOf(Color.RED, Color.GREEN)
+                private val typeColors: List<Int> =
+                    listOf(resources.getColor(R.color.oil_txt_color)
+                    , resources.getColor(R.color.water_txt_color))
                 override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                     val view = super.getView(position, convertView, parent)
                     if (view is TextView) {
-                        view.setBackgroundColor(typeColors[position])
+                        view.setTextColor(typeColors[position])
                     }
                     return view
                 }

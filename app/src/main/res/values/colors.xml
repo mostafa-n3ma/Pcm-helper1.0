@@ -8,4 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="logo_color">#0741AD</color>
+    <color name="water_txt_color">#034906</color>
+    <color name="oil_txt_color">#A11421</color>
 </resources>

@@ -221,27 +221,6 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //Bend Sheet Events
     val bendSheetState=MutableLiveData<Boolean>()
     fun openBendSheet(){ bendSheetState.value=true }
@@ -361,6 +340,10 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
         }
     }
 
+
+
+
+
     fun closeBottomSheetWithDelay(bottomSheet: BottomSheetBehavior<LinearLayout>) {
         //since the keyboard was anyone me and stopping the bottom sheet from full collapsing and stopping on the medal
 //        don't know way actually but wat I know that hiding the keyboard and collapsing the bottom sheet together
@@ -373,12 +356,40 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
         }
     }
 
+    fun closeOtherSheets(sheetState: MutableLiveData<Boolean>) {
+        when(sheetState){
+            finishSheetState->{
+                pointBottomSheetState.value=false
+                bendSheetState.value=false
+                editPointSheetState.value=false
+                noteSheetState.value=false
+                editSheetState.value=false
+            }
+            noteSheetState->{
+                pointBottomSheetState.value=false
+                bendSheetState.value=false
+                editPointSheetState.value=false
+                finishSheetState.value=false
+                editSheetState.value=false
+            }
+            editSheetState->{
+                pointBottomSheetState.value=false
+                bendSheetState.value=false
+                editPointSheetState.value=false
+                noteSheetState.value=false
+                finishSheetState.value=false
+            }
+            editPointSheetState->{
+                pointBottomSheetState.value=false
+                bendSheetState.value=false
+                editSheetState.value=false
+                noteSheetState.value=false
+                finishSheetState.value=false
+            }
+            else->{}
 
-
-
-
-
-
+        }
+    }
 
 
     init {

@@ -70,7 +70,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:text="Water"
-                    tools:textColor="#025306" />
+                    tools:textColor="@color/water_txt_color" />
 
                 <TextView
                     android:id="@+id/line_length"

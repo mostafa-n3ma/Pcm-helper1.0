@@ -76,13 +76,7 @@ class LineDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
-
-
-
         args = LineDetailsFragmentArgs.fromBundle(requireArguments())
-
 
         locationManager =
             requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -127,12 +121,7 @@ class LineDetailsFragment : Fragment() {
 
 
         })
-
-
-
         binding.pointsRecycler.adapter = pointsAdapter
-
-
         binding.moreDetailsBtn.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launchWhenCreated {
                 checkExpandableCardView()
@@ -225,6 +214,37 @@ class LineDetailsFragment : Fragment() {
 
 
     //Bottom Sheets
+    private suspend fun setUpPointBottomSheet(): BottomSheetBehavior<LinearLayout> {
+        val pointBottomSheet = BottomSheetBehavior.from(binding.pointBottomSheetLayout).apply {
+            isDraggable = false
+        }
+        viewModel.pointBottomSheetState.observe(viewLifecycleOwner, Observer {
+            if (it){
+                pointBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
+                binding.dpField.requestFocus()
+                binding.fabAddPoint.visibility = View.INVISIBLE
+                binding.fabAddPoint.collapse()
+                checkPermissionsAndLocationSettingsAndGetLocation()
+            }else{
+                hideKeyboard()
+                viewModel.closeBottomSheetWithDelay(pointBottomSheet)
+                binding.fabAddPoint.visibility = View.VISIBLE
+                locationManager.removeUpdates(locationListener)
+            }
+        })
+        viewModel.addPointButtonClicked.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                viewModel.addNewPointToPipeList()
+                pointsAdapter.notifyDataSetChanged()
+                hideKeyboard()
+                viewModel.closeBottomSheetWithDelay(pointBottomSheet)
+                viewModel.addPointButtonClickedComplete()
+                binding.fabAddPoint.visibility = View.VISIBLE
+                viewModel.closePointSheet()
+            }
+        })
+        return pointBottomSheet
+    }
     private suspend fun setUpBendBottomSheet(): BottomSheetBehavior<LinearLayout> {
         val bendBottomSheet = BottomSheetBehavior.from(binding.BendBottomSheetLayout).apply {
             isDraggable = false
@@ -258,37 +278,6 @@ class LineDetailsFragment : Fragment() {
         })
         return bendBottomSheet
     }
-    private suspend fun setUpPointBottomSheet(): BottomSheetBehavior<LinearLayout> {
-        val pointBottomSheet = BottomSheetBehavior.from(binding.pointBottomSheetLayout).apply {
-            isDraggable = false
-        }
-        viewModel.pointBottomSheetState.observe(viewLifecycleOwner, Observer {
-            if (it){
-                pointBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
-                binding.dpField.requestFocus()
-                binding.fabAddPoint.visibility = View.INVISIBLE
-                binding.fabAddPoint.collapse()
-                checkPermissionsAndLocationSettingsAndGetLocation()
-            }else{
-                hideKeyboard()
-                viewModel.closeBottomSheetWithDelay(pointBottomSheet)
-                binding.fabAddPoint.visibility = View.VISIBLE
-                locationManager.removeUpdates(locationListener)
-            }
-        })
-        viewModel.addPointButtonClicked.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                viewModel.addNewPointToPipeList()
-                pointsAdapter.notifyDataSetChanged()
-                hideKeyboard()
-                viewModel.closeBottomSheetWithDelay(pointBottomSheet)
-                viewModel.addPointButtonClickedComplete()
-                binding.fabAddPoint.visibility = View.VISIBLE
-                viewModel.closePointSheet()
-            }
-        })
-        return pointBottomSheet
-    }
     private suspend fun setUpEditPointBottomSheet(): BottomSheetBehavior<LinearLayout> {
         editPointBottomSheet= BottomSheetBehavior.from(binding.editPointBottomSheetLayout).apply {
             isDraggable=false
@@ -300,6 +289,8 @@ class LineDetailsFragment : Fragment() {
                     binding.editingDpField.requestFocus()
                     binding.fabAddPoint.visibility=View.INVISIBLE
                     checkPermissionsAndLocationSettingsAndGetLocation()
+                    viewModel.closeOtherSheets(viewModel.editPointSheetState)
+
                 }
                 false->{
                     hideKeyboard()
@@ -330,6 +321,8 @@ class LineDetailsFragment : Fragment() {
                 true->{
                     editBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
                     binding.fabAddPoint.visibility = View.INVISIBLE
+                    viewModel.closeOtherSheets(viewModel.editSheetState)
+
                 }
                 false->{
                     hideKeyboard()
@@ -363,6 +356,8 @@ class LineDetailsFragment : Fragment() {
                 true->{
                     noteBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
                     binding.fabAddPoint.visibility = View.INVISIBLE
+                    viewModel.closeOtherSheets(viewModel.noteSheetState)
+
                 }
                 false->{
                     hideKeyboard()
@@ -396,6 +391,7 @@ class LineDetailsFragment : Fragment() {
                     endPointBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
                     binding.fabAddPoint.visibility = View.INVISIBLE
                     checkPermissionsAndLocationSettingsAndGetLocation()
+                    viewModel.closeOtherSheets(viewModel.finishSheetState)
                 }
                 false->{
                     hideKeyboard()
@@ -429,11 +425,13 @@ class LineDetailsFragment : Fragment() {
         val types = resources.getStringArray(R.array.types)
         val typeAdapter =
             object : ArrayAdapter<String?>(requireContext(), R.layout.drop_dwon_item, types) {
-                private val typeColors = listOf(Color.RED, Color.GREEN)
+                private val typeColors: List<Int> =
+                    listOf(resources.getColor(R.color.oil_txt_color)
+                        , resources.getColor(R.color.water_txt_color))
                 override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                     val view = super.getView(position, convertView, parent)
                     if (view is TextView) {
-                        view.setBackgroundColor(typeColors[position])
+                        view.setTextColor(typeColors[position])
                     }
                     return view
                 }
