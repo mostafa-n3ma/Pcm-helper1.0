@@ -22,7 +22,8 @@ class LinesViewModel(private val repository: PipeLinesRepository) : ViewModel() 
     }
     fun undoDeleting() {
         viewModelScope.launch {
-            _longClickedLine?.let { repository.insertLine(it) }
+//            _longClickedLine?.let { repository.insertLine(it) }
+            repository.insertLine(_longClickedLine!!)
         }
     }
 
@@ -33,12 +34,7 @@ class LinesViewModel(private val repository: PipeLinesRepository) : ViewModel() 
     }
 
 
-
-
-
-
-
-    val  linesList=repository.getAllLines()
+    val  linesList: LiveData<List<PipeLine>> =repository.getAllLines()
 
     private val _navigateToSelectedLine=MutableLiveData<PipeLine?>()
     val navigateToSelectedLine:LiveData<PipeLine?> get() = _navigateToSelectedLine
