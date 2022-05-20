@@ -4,7 +4,6 @@ import android.content.Context
 import com.mostafan3ma.android.pcm_helper10.data.source.DefaultLocalDataSource
 import com.mostafan3ma.android.pcm_helper10.data.source.LocalDataSource.LocalDataSource
 import com.mostafan3ma.android.pcm_helper10.data.source.PipeLinesRepository
-import com.mostafan3ma.android.pcm_helper10.data.source.RemotDataSource.RemoteDataSource
 import com.mostafan3ma.android.pcm_helper10.data.source.database.LineDB
 import com.mostafan3ma.android.pcm_helper10.data.source.database.LineDao
 import com.mostafan3ma.android.pcm_helper10.data.source.database.LineDataBase
@@ -24,7 +23,7 @@ object ServiceLocator {
     }
 
     private fun createPipeLineRepository(context: Context): PipeLinesRepository {
-        val newRepo=PipeLinesRepository(RemoteDataSource,createLocalDataSource(context))
+        val newRepo=PipeLinesRepository(createLocalDataSource(context))
         pipeLinesRepository=newRepo
         return newRepo
     }

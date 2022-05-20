@@ -54,20 +54,6 @@ class MainActivity : AppCompatActivity() {
 
         NavigationUI.setupWithNavController(binding.navView,navController)
 
-
-
-
-
-
-
-//        val navController=findNavController(R.id.nav_host_fragment_content_main)
-//        navController.let {
-//            appBarConfiguration= AppBarConfiguration(navController.graph)
-//            setSupportActionBar(binding.toolbar)
-//            binding.toolbar.setupWithNavController(it,appBarConfiguration)
-//        }
-
-
     }
 
 
@@ -75,12 +61,6 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.nav_host_fragment_content_main)
         return NavigationUI.navigateUp(navController, appBarConfiguration)
-
-
-
-//        val navController = findNavController(R.id.nav_host_fragment_content_main)
-//        return navController.navigateUp(appBarConfiguration)
-//                || super.onSupportNavigateUp()
     }
 
 }

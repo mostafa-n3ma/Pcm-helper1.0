@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
-import android.graphics.Color
 import android.location.LocationListener
 import android.location.LocationManager
 import android.location.LocationRequest
@@ -99,7 +98,6 @@ class LineDetailsFragment : Fragment() {
 
         pointsAdapter = PointsAdapter(DeleteListener {
             viewModel.deletePoint(it)
-            pointsAdapter.notifyDataSetChanged()
         }, EditListener {editedPoint->
             viewModel.setEditedPoint(editedPoint)
             viewModel.openEditPointSheet()

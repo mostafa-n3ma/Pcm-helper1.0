@@ -10,7 +10,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class PipeLinesRepository(
-    private val remoteDataSource: DefaultRemoteDataSource,
     private val localDataSource: DefaultLocalDataSource,
     private val dispatcher:CoroutineDispatcher=Dispatchers.IO
 ) {

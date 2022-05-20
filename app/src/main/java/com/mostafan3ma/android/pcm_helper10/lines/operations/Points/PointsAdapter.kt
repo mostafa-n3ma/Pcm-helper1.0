@@ -52,6 +52,7 @@ class PointsAdapter(private val deleteListener:DeleteListener,private val editLi
                 holder.bindPoint(pointItem)
                 holder.itemView.delete_point_btn.setOnClickListener {
                     deleteListener.onDelete(pointItem)
+
                 }
                 holder.itemView.point_gps_txt.setText("${pointItem.gps_x};${pointItem.gps_y}")
                 holder.itemView.edit_point_btn.setOnClickListener {
