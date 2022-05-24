@@ -98,6 +98,7 @@ class LineDetailsFragment : Fragment() {
 
         pointsAdapter = PointsAdapter(DeleteListener {
             viewModel.deletePoint(it)
+            pointsAdapter.notifyDataSetChanged()
         }, EditListener {editedPoint->
             viewModel.setEditedPoint(editedPoint)
             viewModel.openEditPointSheet()
@@ -267,6 +268,7 @@ class LineDetailsFragment : Fragment() {
         viewModel.addBendButtonClicked.observe(viewLifecycleOwner, Observer {
             if (it) {
                 viewModel.addNewBendToPipeList()
+                pointsAdapter.notifyDataSetChanged()
                 hideKeyboard()
                 viewModel.closeBottomSheetWithDelay(bendBottomSheet)
                 viewModel.addBendButtonClickedComplete()

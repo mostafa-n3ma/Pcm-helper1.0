@@ -73,31 +73,9 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
 
 
 
-    fun deletePoint(point: DamagePoint) {
-        viewModelScope.launch {
-            selectedLine.points.remove(point)
-            val updatedList=selectedLine.points
-            if (point.is_point){
-                updatedList.map {
-                    if (it.no>point.no){
-                        it.no-=1
-                    }
-                }
-            }
-            repository.updatePointsList(selectedLine.id,updatedList)
-            updateFinalLine()
-        }
-    }
-
-
-
-
-
-
-
     private fun getPointsNo():Int{
         var pointNO:Int=0
-        selectedLine.points.map { point->
+        finalLine.value!!.points.map { point->
             if (point.is_point){
                 pointNO+=1
             }
@@ -113,7 +91,6 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
             gpsX.value, gpsY.value,point_note.value
         )
     }
-
     private fun resetPointLiveValues(){
         dp.value=""
         depth.value=""
@@ -122,28 +99,48 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
         point_note.value=""
     }
     fun addNewPointToPipeList() {
-        selectedLine.points.add(getNewPointInfo())
+        finalLine.value?.points?.add(getNewPointInfo())
         viewModelScope.launch {
-            repository.updatePointsList(selectedLine.id, selectedLine.points)
+            repository.updatePointsList(finalLine.value!!.id, finalLine.value!!.points)
             updateFinalLine()
             resetPointLiveValues()
         }
 
-
-
-
-
-
-
     }
-     fun addNewBendToPipeList(){
+
+
+
+    fun addNewBendToPipeList(){
         val newBend=DamagePoint(no = 0, gps_x = gpsX.value, gps_y = gpsY.value, is_point = false, note = point_note.value)
-        selectedLine.points.add(newBend)
+        finalLine.value!!.points.add(newBend)
         viewModelScope.launch {
-            repository.updatePointsList(selectedLine.id, selectedLine.points)
+            repository.updatePointsList(finalLine.value!!.id, finalLine.value!!.points)
+            updateFinalLine()
+            resetPointLiveValues()
+        }
+    }
+
+
+
+
+
+    fun deletePoint(point: DamagePoint) {
+        viewModelScope.launch {
+            finalLine.value!!.points.remove(point)
+            val updatedList=finalLine.value!!.points
+            if (point.is_point){
+                updatedList.map {
+                    if (it.no>point.no){
+                        it.no-=1
+                    }
+                }
+            }
+            repository.updatePointsList(finalLine.value!!.id,updatedList)
             updateFinalLine()
         }
     }
+
+
 
 
     //Point sheet events
@@ -166,12 +163,10 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
 ///////////////
 
 
-    //edit point Bottom Sheet event
+    //edit point Bottom Sheet events
     private val _editedPoint=MutableLiveData<DamagePoint?>()
     val editedPoint:LiveData<DamagePoint?>get() = _editedPoint
     val includeNewGps=MutableLiveData<Boolean>(false)
-
-
 
     fun setEditedPoint(editedPoint: DamagePoint){
         _editedPoint.value=editedPoint
@@ -260,12 +255,12 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
         endPoint_x.value=gpsX.value
         endPoint_y.value=gpsY.value
         endPoint.value=gpsX_Y.value
-        selectedLine.end_point_x=endPoint_x.value
-        selectedLine.end_point_y=endPoint_y.value
-        selectedLine.i_end=i_end.value
-        selectedLine.end_work_date=end_work_date.value
+        finalLine.value!!.end_point_x=endPoint_x.value
+        finalLine.value!!.end_point_y=endPoint_y.value
+        finalLine.value!!.i_end=i_end.value
+        finalLine.value!!.end_work_date=end_work_date.value
         viewModelScope.launch {
-            repository.updateLine(selectedLine)
+            repository.updateLine(finalLine.value!!)
             updateFinalLine()
         }
     }
@@ -292,9 +287,9 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
         _addNoteClicked.value=false
     }
     fun updateLinesNote(){
-        selectedLine.extra_note=extra_note.value
+        finalLine.value!!.extra_note=extra_note.value
         viewModelScope.launch {
-            repository.updateLine(selectedLine)
+            repository.updateLine(finalLine.value!!)
             updateFinalLine()
         }
     }
@@ -464,8 +459,6 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
         comingInput.value=""
         comingOgm.value=""
         comingType.value=""
-
-
 
 
     }
