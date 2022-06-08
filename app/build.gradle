@@ -105,4 +105,7 @@ dependencies {
     implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
 
 
+    implementation "androidx.fragment:fragment-testing:$fragmentVersion"
+    implementation "androidx.test:core:$androidXTestCoreVersion"
+
 }

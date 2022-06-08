@@ -5,7 +5,7 @@ import androidx.room.*
 @Database(entities = [PipeLine::class], version = 3, exportSchema = false)
 @TypeConverters(DataConverter::class)
 abstract class LineDataBase :RoomDatabase(){
-    abstract fun getLineDao(): LineDao
+    abstract fun lineDao(): LineDao
 
 }
 
