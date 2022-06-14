@@ -27,9 +27,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import com.google.android.gms.common.api.ResolvableApiException
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import com.mostafan3ma.android.pcm_helper10.BuildConfig
@@ -662,7 +659,8 @@ class LineDetailsFragment : Fragment() {
     //Location
     private fun checkPermissionsAndLocationSettingsAndGetLocation() {
         if (permissionsApproved()) {
-            checkDeviceLocationSettingsAndGetLocationUpdates()
+//            checkDeviceLocationSettingsAndGetLocationUpdates()
+            isLocationEnabled_UpdateLocation()
         } else {
             requestLocationPermissions()
         }
@@ -698,7 +696,8 @@ class LineDetailsFragment : Fragment() {
         ) {
             showSneakBar()
         } else {
-            checkDeviceLocationSettingsAndGetLocationUpdates()
+//            checkDeviceLocationSettingsAndGetLocationUpdates()
+            isLocationEnabled_UpdateLocation()
         }
 
         if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST_CODE
@@ -716,51 +715,53 @@ class LineDetailsFragment : Fragment() {
 
     }
 
-    @SuppressLint("MissingPermission")
-    private fun checkDeviceLocationSettingsAndGetLocationUpdates(resolve: Boolean = true) {
-        val locationRequest = com.google.android.gms.location.LocationRequest.create().apply {
-            priority = LocationRequest.QUALITY_LOW_POWER
-        }
-        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
-
-        val settingsClint = LocationServices.getSettingsClient(requireActivity())
-        val locationSettingsResponseTask = settingsClint.checkLocationSettings(builder.build())
-
-        locationSettingsResponseTask.addOnFailureListener { exeption ->
-            if (exeption is ResolvableApiException && resolve) {
-                try {
-                    startIntentSenderForResult(
-                        exeption.resolution.intentSender,
-                        REQUEST_TURN_DEVICE_LOCATION_ON,
-                        null,
-                        0, 0, 0,
-                        null
-                    )
-                } catch (sendEx: IntentSender.SendIntentException) {
-                    Log.d(TAG, "Error geting location settings resolution: " + sendEx.message)
-                }
-            } else {
-                Snackbar.make(
-                    this.requireView(),
-                    "Location services must be enabled to use the app", Snackbar.LENGTH_INDEFINITE
-                ).setAction(android.R.string.ok) {
-                    checkDeviceLocationSettingsAndGetLocationUpdates()
-                }.show()
-            }
-
-        }
-
-        locationSettingsResponseTask.addOnCompleteListener {
-            if (it.isSuccessful) {
-                locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, 0, 0.0f, locationListener
-                )
-
-            }
-        }
 
 
+
+
+
+
+private var gps_On=false
+
+@SuppressLint("MissingPermission")
+fun isLocationEnabled_UpdateLocation(){
+    try {
+        gps_On = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    } catch (ex: java.lang.Exception) {
     }
+
+
+
+    if (!gps_On ) {
+
+        Snackbar.make(
+            this.requireView(),
+            "Location services must be enabled to use the app", Snackbar.LENGTH_LONG
+        ).setAction(android.R.string.ok) {
+            startActivityForResult(
+                Intent(
+                    Settings.ACTION_LOCATION_SOURCE_SETTINGS
+                ), REQUEST_TURN_DEVICE_LOCATION_ON
+            )
+        }.show()
+
+    }else{
+        locationManager.requestLocationUpdates(
+            LocationManager.GPS_PROVIDER, 0, 0.0f, locationListener
+        )
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
     private fun showSneakBar() {
         Snackbar.make(
             requireView(),
@@ -776,9 +777,15 @@ class LineDetailsFragment : Fragment() {
                 })
             }.show()
     }
+    @SuppressLint("MissingPermission")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        checkDeviceLocationSettingsAndGetLocationUpdates(false)
+
+        if (requestCode== REQUEST_TURN_DEVICE_LOCATION_ON ){
+            isLocationEnabled_UpdateLocation()
+        }
+
+
         hideKeyboard()
     }
 

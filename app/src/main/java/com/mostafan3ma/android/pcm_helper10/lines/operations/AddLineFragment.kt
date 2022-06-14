@@ -2,11 +2,11 @@ package com.mostafan3ma.android.pcm_helper10.lines.operations
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.LocationListener
 import android.location.LocationManager
 import android.location.LocationRequest
@@ -24,9 +24,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.common.api.ResolvableApiException
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.material.snackbar.Snackbar
 import com.mostafan3ma.android.pcm_helper10.BuildConfig
 import com.mostafan3ma.android.pcm_helper10.PcmApp
@@ -82,11 +79,16 @@ class AddLineFragment : Fragment() {
 
         setDropDawnMenus(binding)
 
-        checkPermissionsAndLocationSettingsAndGetLocation()
 
         getCurrentDate()
         return binding.root
     }
+
+    override fun onResume() {
+        super.onResume()
+        checkPermissionsAndLocationSettingsAndGetLocation()
+    }
+
     private fun getCurrentDate() {
         val sdf: SimpleDateFormat = SimpleDateFormat("dd/M/yyyy")
         val currentDate: String = sdf.format(Date())
@@ -99,16 +101,19 @@ class AddLineFragment : Fragment() {
         val ogmAdapter = ArrayAdapter(requireContext(), R.layout.drop_dwon_item, ogms)
         binding.ogmAutoTxt.setAdapter(ogmAdapter)
 
-        val inputs=resources.getStringArray(R.array.inputs)
-        val inputsAdapter=ArrayAdapter(requireContext(),R.layout.drop_dwon_item,inputs)
+        val inputs = resources.getStringArray(R.array.inputs)
+        val inputsAdapter = ArrayAdapter(requireContext(), R.layout.drop_dwon_item, inputs)
         binding.inputAutoTxt.setAdapter(inputsAdapter)
 
         val types = resources.getStringArray(R.array.types)
         val typeAdapter =
             object : ArrayAdapter<String?>(requireContext(), R.layout.drop_dwon_item, types) {
                 private val typeColors: List<Int> =
-                    listOf(resources.getColor(R.color.oil_txt_color)
-                    , resources.getColor(R.color.water_txt_color))
+                    listOf(
+                        resources.getColor(R.color.oil_txt_color),
+                        resources.getColor(R.color.water_txt_color)
+                    )
+
                 override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                     val view = super.getView(position, convertView, parent)
                     if (view is TextView) {
@@ -123,7 +128,7 @@ class AddLineFragment : Fragment() {
 
     private fun checkPermissionsAndLocationSettingsAndGetLocation() {
         if (permissionsApproved()) {
-            checkDeviceLocationSettingsAndGetLocationUpdates()
+            isLocationEnabled_UpdateLocation()
         } else {
             requestLocationPermissions()
         }
@@ -162,55 +167,42 @@ class AddLineFragment : Fragment() {
         ) {
             showSneakBar()
         } else {
-            checkDeviceLocationSettingsAndGetLocationUpdates()
+            isLocationEnabled_UpdateLocation()
         }
     }
+
+
+
+
+    private var isGps_On=false
 
     @SuppressLint("MissingPermission")
-    private fun checkDeviceLocationSettingsAndGetLocationUpdates(resolve: Boolean = true) {
-        val locationRequest = com.google.android.gms.location.LocationRequest.create().apply {
-            priority = LocationRequest.QUALITY_LOW_POWER
-        }
-        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
-
-        val settingsClint = LocationServices.getSettingsClient(requireActivity())
-        val locationSettingsResponseTask = settingsClint.checkLocationSettings(builder.build())
-
-        locationSettingsResponseTask.addOnFailureListener { exeption ->
-            if (exeption is ResolvableApiException && resolve) {
-                try {
-                    startIntentSenderForResult(
-                        exeption.resolution.intentSender,
-                        REQUEST_TURN_DEVICE_LOCATION_ON,
-                        null,
-                        0, 0, 0,
-                        null
-                    )
-                } catch (sendEx: IntentSender.SendIntentException) {
-                    Log.d(TAG, "Error geting location settings resolution: " + sendEx.message)
-                }
-            } else {
-                Snackbar.make(
-                    this.requireView(),
-                    "Location services must be enabled to use the app", Snackbar.LENGTH_INDEFINITE
-                ).setAction(android.R.string.ok) {
-                    checkDeviceLocationSettingsAndGetLocationUpdates()
-                }.show()
-            }
-
+    private fun isLocationEnabled_UpdateLocation(){
+        try {
+            isGps_On = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        } catch (ex: java.lang.Exception) {
         }
 
-        locationSettingsResponseTask.addOnCompleteListener {
-            if (it.isSuccessful) {
-                locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, 0, 0.0f, locationListener
+        if (!isGps_On ) {
+            Snackbar.make(
+                this.requireView(),
+                "Location services must be enabled to use the app", Snackbar.LENGTH_LONG
+            ).setAction(android.R.string.ok) {
+               startActivityForResult(
+                    Intent(
+                        Settings.ACTION_LOCATION_SOURCE_SETTINGS
+                    ),REQUEST_TURN_DEVICE_LOCATION_ON
                 )
+            }.show()
 
-            }
+        }else{
+            locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER, 0, 0.0f, locationListener
+            )
         }
-
-
     }
+
+
 
 
     private fun showSneakBar() {
@@ -231,7 +223,10 @@ class AddLineFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        checkDeviceLocationSettingsAndGetLocationUpdates(false)
+        if (requestCode== REQUEST_TURN_DEVICE_LOCATION_ON ){
+            isLocationEnabled_UpdateLocation()
+        }
+
     }
 }
 

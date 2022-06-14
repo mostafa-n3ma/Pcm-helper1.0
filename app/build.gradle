@@ -66,8 +66,6 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
 
 
-    implementation "com.google.android.gms:play-services-location:$playServicesVersion"
-    implementation "com.google.android.gms:play-services-maps:$playServicesVersion"
 
 
     //floating action button

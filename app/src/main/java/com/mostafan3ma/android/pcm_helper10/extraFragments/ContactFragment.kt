@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.android.gms.common.wrappers.Wrappers.packageManager
 import com.google.android.material.snackbar.Snackbar
 import com.mostafan3ma.android.pcm_helper10.databinding.FragmentContactBinding
 
