@@ -109,8 +109,9 @@ class AddLineViewModel(private val repository: PipeLinesRepository) : ViewModel(
     class AddLineViewModelFactory(
         private val repository: PipeLinesRepository
     ) : ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>) =
+        override fun <T : ViewModel> create(modelClass: Class<T>) =
             (AddLineViewModel(repository) as T)
+
     }
 
 

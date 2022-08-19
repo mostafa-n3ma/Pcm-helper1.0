@@ -801,5 +801,3 @@ private const val REQUEST_TURN_DEVICE_LOCATION_ON = 2
 private const val WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 3
 private const val TAG = "LineDetailsFragment"
 
-
-

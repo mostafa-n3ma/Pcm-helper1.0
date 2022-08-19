@@ -93,3 +93,6 @@ class LineListener(val clickListener: (line: PipeLine) -> Unit) {
 class LongClickListener(val longListener:(line:PipeLine,view: View)->Unit){
     fun onLongClick(line: PipeLine,view: View)=longListener(line,view)
 }
+
+
+

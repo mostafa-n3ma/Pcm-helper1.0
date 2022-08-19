@@ -469,7 +469,7 @@ class LineDetailsViewModel(private val repository: PipeLinesRepository, private 
     @Suppress("UNCHECKED_CAST")
     class LineDetailsViewModelFactory(private val repository: PipeLinesRepository,private val selectedLine: PipeLine) :
         ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return (LineDetailsViewModel(repository,selectedLine) as T)
         }
     }

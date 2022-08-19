@@ -3,10 +3,13 @@ package com.mostafan3ma.android.pcm_helper10.lines
 import android.os.Bundle
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.longClick
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.mostafan3ma.android.pcm_helper10.R
@@ -19,13 +22,15 @@ import com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.hamcrest.core.IsEqual
 
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 
 @MediumTest
 @RunWith(AndroidJUnit4::class)
@@ -107,13 +112,13 @@ class MainLinesFragmentTest {
     val mainCoroutineRule = MainCoroutineRule()
 
     @get:Rule
-    var instantExecutorRule= InstantTaskExecutorRule()
+    var instantExecutorRule = InstantTaskExecutorRule()
 
     @Before
     fun setUp() {
         localDataSource = FakeDataSource(initList)
-        repository=PipeLinesRepository(localDataSource,Dispatchers.Main)
-        ServiceLocator.pipeLinesRepository=repository
+        repository = PipeLinesRepository(localDataSource, Dispatchers.Main)
+        ServiceLocator.pipeLinesRepository = repository
     }
 
     @After
@@ -123,15 +128,55 @@ class MainLinesFragmentTest {
 
 
     @Test
-    fun displayFragment_TwoPipeInList()=mainCoroutineRule.runBlockingTest {
+    fun displayFragment_TwoPipeInList() = mainCoroutineRule.runBlockingTest {
 
-       launchFragmentInContainer<MainLinesFragment>(Bundle(), R.style.Theme_Pcmhelper10)
-        onView(withId(R.id.fab_add_line)).check(matches(isDisplayed()))
+        launchFragmentInContainer<MainLinesFragment>(Bundle(), R.style.Theme_Pcmhelper10)
 
-
+        onView(withText("line1")).check(matches(isDisplayed()))
+        onView(withText("line2")).check(matches(isDisplayed()))
     }
 
 
+    @Test
+    fun displayFragment_clickFabBtn_NavigateToAddLineFragment() {
+        val fragmentScenario =
+            launchFragmentInContainer<MainLinesFragment>(Bundle(), R.style.Theme_Pcmhelper10)
+        val mockNav = mock(NavController::class.java)
+        fragmentScenario.onFragment {
+            Navigation.setViewNavController(it.view!!, mockNav)
+        }
+
+        onView(withId(R.id.fab_add_line)).perform(click())
+        verify(mockNav).navigate(
+            MainLinesFragmentDirections.actionLinesMainFragmentToAddLineFragment()
+        )
+    }
 
 
+    @Test
+    fun clickLineItem_NavigateToDetailsFragment() {
+
+        val fragmentScenario =
+            launchFragmentInContainer<MainLinesFragment>(Bundle(), R.style.Theme_Pcmhelper10)
+        val mockNav = mock(NavController::class.java)
+        fragmentScenario.onFragment {
+            Navigation.setViewNavController(it.view!!, mockNav)
+        }
+        onView(withText("line1")).perform(click())
+
+        verify(mockNav).navigate(
+            MainLinesFragmentDirections.actionLinesMainFragmentToDetailsFragment(initList[0])
+        )
+
+    }
+
+    @Test
+    fun longClickOnItem_PopUpMenuDisplayed_DeleteLine1() = runBlockingTest {
+        val fragmentScenario =
+            launchFragmentInContainer<MainLinesFragment>(Bundle(), R.style.Theme_Pcmhelper10)
+        onView(withText("line1")).perform(longClick())
+        onView(withText("Delete")).perform(click())
+
+        assertThat(repository.getPipeLine(1), IsEqual(null))
+    }
 }
