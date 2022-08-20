@@ -2,6 +2,7 @@ package com.mostafan3ma.android.pcm_helper10.lines.operations
 
 import android.os.Bundle
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.core.view.get
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
@@ -12,6 +13,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
+import com.getbase.floatingactionbutton.FloatingActionsMenu
 import com.mostafan3ma.android.pcm_helper10.R
 import com.mostafan3ma.android.pcm_helper10.ServiceLocator
 import com.mostafan3ma.android.pcm_helper10.Utils.FakeDataSource
@@ -19,6 +21,7 @@ import com.mostafan3ma.android.pcm_helper10.Utils.MainCoroutineRule
 import com.mostafan3ma.android.pcm_helper10.data.source.PipeLinesRepository
 import com.mostafan3ma.android.pcm_helper10.data.source.database.DamagePoint
 import com.mostafan3ma.android.pcm_helper10.data.source.database.PipeLine
+import kotlinx.android.synthetic.main.fragment_line_details.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.After
@@ -143,7 +146,13 @@ class LineDetailsFragmentTest {
     fun clickOnFabAddPoint_openFloatingActionMenu(){
         val bundle=LineDetailsFragmentArgs(initList[0]).toBundle()
         val fragmentScenario= launchFragmentInContainer<LineDetailsFragment>(bundle,R.style.Theme_Pcmhelper10)
-        onView(withId(R.id.fab_add_point)).perform(click())
+        fragmentScenario.onFragment {
+            it.fab_add_point.expand()
+            val fab_menu: FloatingActionsMenu =it.fab_add_point
+            fab_menu.get(1).performClick()
+        }
+
+        Thread.sleep(5000)
     }
 
 

@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.VisibleForTesting
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
@@ -794,6 +795,14 @@ fun isLocationEnabled_UpdateLocation(){
         //delete the file that created for this pipe line from the cache dir when living the fragment
         deletionPath?.delete()
     }
+
+    @VisibleForTesting
+    fun expand_Fab_Menu(){
+        val fab_menu=binding.fabAddPoint
+        fab_menu.expand()
+    }
+
+
 }
 
 private const val LOCATION_PERMISSIONS_REQUEST_CODE = 1
