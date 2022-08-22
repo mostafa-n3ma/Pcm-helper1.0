@@ -1,5 +1,5 @@
 PCM App Description:
-About:\n
+About:
 Welcome
 I am Mostafa Nema and this is the PCM assistant Application
 I work as a technical examiner in the surface engineering department of Al-Waha Oil Company, which operates the Al-Ahdab oil field / Wasit / Iraq
