@@ -91,15 +91,15 @@ Then we go and start the examination along the line
 
 
 **At each potential corrosion point, we record the following readings**
-⁃ db Electricity Leakage Rate.
-⁃ Outgoing current at the beginning and end of the Pipeline
-⁃ GPS coordinates of the point
+- db Electricity Leakage Rate.
+- Outgoing current at the beginning and end of the Pipeline
+- GPS coordinates of the point
 
 
 **When finished, we record the readings:**
-⁃ Final Electricity current 
-⁃ End point coordinates
-⁃ End Work Date
+- Final Electricity current 
+- End point coordinates
+- End Work Date
 
 This information is saved in the application, and when you want to prepare the report, we produce the excel file for the line. The application prepares it in advance and you can share it and send it to the computer directly and complete the map work by copying the coordinates from the file and dropping them directly on the map
 finished ✅
