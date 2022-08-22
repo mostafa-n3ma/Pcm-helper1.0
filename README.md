@@ -104,4 +104,4 @@ Then we go and start the examination along the line
 This information is saved in the application, and when you want to prepare the report, we produce the excel file for the line. The application prepares it in advance and you can share it and send it to the computer directly and complete the map work by copying the coordinates from the file and dropping them directly on the map
 finished ✅
 
-!(https://i.ibb.co/njn7DYZ/instructions-image1.jpg)
+![](https://i.ibb.co/njn7DYZ/instructions-image1.jpg)
