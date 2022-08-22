@@ -105,3 +105,10 @@ This information is saved in the application, and when you want to prepare the r
 finished ✅
 
 ![](https://i.ibb.co/njn7DYZ/instructions-image1.jpg)
+![](https://i.ibb.co/QJv01Tr/instructions-image2.jpg)
+![](https://i.ibb.co/94SW510/instructions-image3.jpg)
+![](https://i.ibb.co/Qnrr85k/instructions-image4.jpg)
+![](https://i.ibb.co/3cz6g6m/instructions-image5.jpg)
+![](https://i.ibb.co/FsDPPNh/instructions-image6.jpg)
+![](https://i.ibb.co/fS7366P/instructions-image8.jpg)
+![](https://i.ibb.co/DQ5FdJN/instructions-image44.jpg)
